@@ -1,0 +1,298 @@
+# Normatividad
+
+Una de las mediciones fundamentales en la evaluación del impacto de los programas PAES y PEAMA es hacer una validación de la normatividad vigente y aplicable para la cohorte 2011-01, esto debido a que la normatividad refleja que las zonas de impacto de los programas sean las realmente escaladas, que se pertenezca a las poblaciones a quien va realmente dirigida y que se les esten dando las oportunidades que estan reglamentadas por ley y que aportan a la inclusión educativa en la Universidad Nacional de Colombia:
+
+```{r,eval=TRUE,echo=FALSE,results='hide',warning=FALSE,error=FALSE,message=FALSE}
+library("tidyverse")
+load("NORMAS.RData")
+load("CUPOS.RData")
+load("CUPOS_PEAMA.RData")
+load("P2011_1.RData")
+load("ADMITIDOS_2.RData")
+PAES <- P2011_1 %>% filter(TIPO_INS=="PAES",ADMITIDO=="Sí")
+load("ADMITIDOS_PEAMA.RData")
+PEAMA <- ADMITIDOS_PEAMA
+PEAMA_2 <- P2011_1 %>% filter(TIPO_INS=="PEAMA",ADMITIDO=="Sí")
+PUNTAJE <- P2011_1 %>% filter(TIPO_INS=="Regular",ADMITIDO=="Sí") %>% mutate(P=min(PTOTAL,na.rm = TRUE)) %>%  distinct(P)
+rm(P2011_1);gc()
+
+```
+
+```{r,echo=FALSE}
+knitr::kable(
+  NORMAS, booktabs = TRUE,
+  caption = 'Normatividad vigente y aplicable para la cohorte de estudio'
+)
+```
+
+## Validación de la normatividad vigente y aplicable a los PAES
+
+### Puntaje en examen de admisión
+
+Se observa que los mayores puntajes de admisión los presentan los estudiantes PAES correspondientes a los mejores bachilleres de municipios pobres (con una mediana de 575,1268), seguido por los PAES indigenas (mediana de 533.4272) y finalmente los PAES afrocolombianos, palenqueros y raizales (mediana de 520.6273). Se observa además (en rojo) el puntaje de admisión del último admitido de manera regular y se encuentra que los estudiantes PAES tienen puntajes de admisión que son iguales o superiores a ese puntaje (451,2525).
+
+```{r,echo=FALSE}
+df <- PAES %>% select(PAES,PTOTAL) %>% filter(is.na(PTOTAL)==FALSE)
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(PAES,PTOTAL, fill=PAES)) +
+  geom_boxplot(show.legend = FALSE) +
+  scale_fill_manual(values = color) +
+  xlab("Programa PAES") +
+  ylab("Puntaje en el examen de admisión") + 
+  theme_classic() + 
+  ggtitle(label = "Puntaje total de admisión de los admitidos PAES", subtitle =  "(Cohorte 2011-01)") +
+  geom_hline(yintercept = PUNTAJE$P,color="red") + 
+  coord_flip()
+```
+
+
+### Razón de admitidos PAES por programa vs. la cantidad de cupos ofertados por el programa curricular
+
+A continuación se hace una comparación de la admisión de cada uno de los grupos PAES contra los estudiantes regulares. Esto persigue dos objetivos: Darnos una idea del porcentaje de aspirantes que son admitidos para cada uno de los programas PAES a cada uno los programas curriculares y compararlo con lo observado en los estudiantes de admisión Regular. Tambien se desea observar el cumplimiento de las normas de ingreso de los individuos en donde se define que de los cupos ofertados por carreras se debe destinar al menos el 2% para los estudiantes de cada uno de los programas PAES considerados en esta investigación.
+
+```{r,echo=FALSE, warning=FALSE, message=FALSE}
+ADMITIDOS_3 <- ADMITIDOS_0 %>% 
+  filter(ASP_RAYA_TIPO %in% c("Regular","Afrocolombianos","MBMP","IND") ) %>%
+  group_by(ADM_SEDE_NOMBRE, ADM_CARRERA_NOMBRE,ASP_RAYA_TIPO) %>%
+  count() %>%
+  spread(ASP_RAYA_TIPO,n) %>% 
+  left_join(CUPOS %>% select(ADM_CARRERA_NOMBRE,CUPO_RESOLUCION))  %>% 
+  mutate("Regular"=Regular*100/CUPO_RESOLUCION,
+         "Población afrocolombiana"=Afrocolombianos*100/CUPO_RESOLUCION, 
+         "Comunidades indígenas"=IND*100/CUPO_RESOLUCION,
+         "Mejores bachilleres de municipios pobres"=MBMP*100/CUPO_RESOLUCION) %>% gather("PROGRAMA","PORCENTAJE",`Población afrocolombiana`,`Comunidades indígenas`,`Mejores bachilleres de municipios pobres`)
+
+```
+
+
+Primero para el caso de la sede Bogotá se tiene que la razón de admitidos PAES comparada con el número de cupos ofertados por programa curricular es en todos los casos superior al 2% y que además las aspiraciones de carreras suelen ser muy similares para los tres grupos en la sede Bogotá, excepto que para los mejores bachilleres de municipios pobres donde los mayores porcentajes de admitidos son en Ingeniería Eléctrica y Química.
+
+En los casos de la sede Medellín y la sede Manizales se observa que en la mayoría de los casos la razón de admitidos PAES por programa curricular contra la cantidad de cupos disponibles está en 2% o es superior, en unos pocos casos es inferior al 2% pero recordemos que la norma es sensible a un redondeo de la cantidad de cupos que les corresponden a los programas. Por otra parte, para la sede Palmira, todos los programas tienen una razón superior al 2%. A diferencia de la sede Bogotá en las demás sedes se observan muy diferentes las aspiraciones a los diferentes programas que se ofrecen cuando comparamos entre los diferentes programas PAES.
+
+Si comparamos a los admitidos con los aspirantes para cada programa curricular y programa PAES obtenemos el porcentaje de admisión, que también se puede ver como un índice de absorción específico. En el caso de la sede Bogotá y de la sede Manizales se tiene que los porcentajes de admisión dentro de los programas especiales de admisión son mayores comparados con los porcentajes de admisión para los admitidos regulares, excepto por unos pocos casos.
+
+No ocurre lo mismo para las sedes Medellín y Palmira, en el primero se tienen muchos casos donde la porcentaje de admitidos es mayor en los programas PAES comparados con los regulares, así mismo se tienen muchos casos donde el porcentaje de admitidos regulares es mayor comparado con el de admitidos PAES por programa. En el caso de la sede Palmira se observa que en la mayoría de casos los admitidos por programa tienen una mayor proporción comparados con la proporción que existe dentro de cada uno de los programas PAES.
+
+```{r,echo=FALSE, warning=FALSE}
+df <- ADMITIDOS_3 %>% filter(ADM_SEDE_NOMBRE=="Bogotá")
+color <- c("#1E90FF", "#6E8B3D", "#B23AEE")
+ggplot(df, aes(color=PROGRAMA))+ 
+  geom_line(aes(ADM_CARRERA_NOMBRE, PORCENTAJE, group = PROGRAMA ), show.legend = FALSE) +
+  geom_area(aes(ADM_CARRERA_NOMBRE, PORCENTAJE, group = PROGRAMA ), show.legend = FALSE, alpha=0.2) +
+  geom_point(aes(ADM_CARRERA_NOMBRE, PORCENTAJE), show.legend = FALSE) + 
+  coord_flip() + 
+  labs(fill="Programa PAES") +
+  ylab("Porcentaje de admitidos PAES") +
+  xlab("Carreras") +
+  ggtitle(label = "Admitidos PAES a la sede Bogotá por carrera", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) +
+  theme_classic() + 
+  geom_hline(yintercept = 2, color="black") +
+  facet_wrap(~PROGRAMA) 
+```
+
+
+```{r,echo=FALSE, warning=FALSE}
+df <- ADMITIDOS_3 %>% filter(ADM_SEDE_NOMBRE=="Medellín")
+color <- c("#1E90FF", "#6E8B3D", "#B23AEE")
+ggplot(df, aes(color=PROGRAMA))+ 
+  geom_line(aes(ADM_CARRERA_NOMBRE, PORCENTAJE, group = PROGRAMA ), show.legend = FALSE) +
+  geom_area(aes(ADM_CARRERA_NOMBRE, PORCENTAJE, group = PROGRAMA ), show.legend = FALSE, alpha=0.2) +
+  geom_point(aes(ADM_CARRERA_NOMBRE, PORCENTAJE), show.legend = FALSE) + 
+  coord_flip() + 
+  labs(fill="Programa PAES") +
+  ylab("Porcentaje de admitidos PAES") +
+  xlab("Carreras") +
+  ggtitle(label = "Admitidos PAES a la sede Medellín por carrera", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) +
+  theme_classic() + 
+  geom_hline(yintercept = 2, color="black") +
+  facet_wrap(~PROGRAMA) 
+```
+
+```{r,echo=FALSE, warning=FALSE}
+df <- ADMITIDOS_3 %>% filter(ADM_SEDE_NOMBRE=="Manizales")
+color <- c("#1E90FF", "#6E8B3D", "#B23AEE")
+ggplot(df, aes(color=PROGRAMA))+ 
+  geom_line(aes(ADM_CARRERA_NOMBRE, PORCENTAJE, group = PROGRAMA ), show.legend = FALSE) +
+  geom_area(aes(ADM_CARRERA_NOMBRE, PORCENTAJE, group = PROGRAMA ), show.legend = FALSE, alpha=0.2) +
+  geom_point(aes(ADM_CARRERA_NOMBRE, PORCENTAJE), show.legend = FALSE) + 
+  coord_flip() + 
+  labs(fill="Programa PAES") +
+  ylab("Porcentaje de admitidos PAES") +
+  xlab("Carreras") +
+  ggtitle(label = "Admitidos PAES a la sede Manizales por carrera", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) +
+  theme_classic() + 
+  geom_hline(yintercept = 2, color="black") +
+  facet_wrap(~PROGRAMA)
+```
+
+```{r,echo=FALSE, warning=FALSE}
+df <- ADMITIDOS_3 %>% filter(ADM_SEDE_NOMBRE=="Palmira")
+color <- c("#1E90FF", "#6E8B3D", "#B23AEE")
+ggplot(df, aes(color=PROGRAMA))+ 
+  geom_line(aes(ADM_CARRERA_NOMBRE, PORCENTAJE, group = PROGRAMA ), show.legend = FALSE) +
+  geom_area(aes(ADM_CARRERA_NOMBRE, PORCENTAJE, group = PROGRAMA ), show.legend = FALSE, alpha=0.2) +
+  geom_point(aes(ADM_CARRERA_NOMBRE, PORCENTAJE), show.legend = FALSE) + 
+  coord_flip() + 
+  labs(fill="Programa PAES") +
+  ylab("Porcentaje de admitidos PAES") +
+  xlab("Carreras") +
+  ggtitle(label = "Admitidos PAES a la sede Palmira por carrera", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) +
+  theme_classic() + 
+  geom_hline(yintercept = 2, color="black") +
+  facet_wrap(~PROGRAMA) 
+```
+
+
+
+## Validación de la normatividad vigente y aplicable a los PEAMA
+
+### Puntaje total de admisión
+
+```{r,echo=FALSE}
+df <- PEAMA %>% select(`SEDE PRESENCIA NACIONAL`,PUNTAJE_TOTAL)
+df$PUNTAJE_TOTAL <- as.numeric(df$PUNTAJE_TOTAL)
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df, aes(`SEDE PRESENCIA NACIONAL`,PUNTAJE_TOTAL, fill=`SEDE PRESENCIA NACIONAL`)) +
+  geom_boxplot(show.legend = FALSE) +
+  scale_fill_manual(values = color) +
+  xlab("Sede de presencia nacional") +
+  ylab("Puntaje estandar de admisión") + 
+  theme_classic() + 
+  ggtitle(label = "Puntaje total de admisión de los admitidos PEAMA", subtitle =  "(Cohorte 2011-01)") +
+  geom_hline(yintercept = as.numeric(PUNTAJE$P),color="red")
+```
+
+
+
+### Departamento de residencia de los admitidos
+
+```{r,echo=FALSE}
+df <- PEAMA_2 %>% group_by(DEP_RES,ADM_SEDE_NOMBRE) %>% summarise("ADMITIDOS"=n())
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+ggplot(df %>% filter(ADM_SEDE_NOMBRE=="Amazonía") , aes(DEP_RES, ADMITIDOS)) + 
+  geom_bar(stat = "identity", position = "dodge", fill = color[1]) + 
+  coord_flip() + 
+  ggtitle(label = "Admitidos PEAMA - Amazonía por departamento de residencia", subtitle =  "(Cohorte 2011-01)") +
+  xlab("Departamento") +
+  ylab("Admitidos") + 
+  theme_classic() 
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+ggplot(df %>% filter(ADM_SEDE_NOMBRE=="Caribe") , aes(DEP_RES, ADMITIDOS)) + 
+  geom_bar(stat = "identity", position = "dodge", fill = color[2]) + 
+  coord_flip() + 
+  ggtitle(label = "Admitidos PEAMA - Caribe por departamento de residencia", subtitle =  "(Cohorte 2011-01)") +
+  xlab("Departamento") +
+  ylab("Admitidos") + 
+  theme_classic() 
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+ggplot(df %>% filter(ADM_SEDE_NOMBRE=="Orinoquía") , aes(DEP_RES, ADMITIDOS)) + 
+  geom_bar(stat = "identity", position = "dodge", fill = color[3]) + 
+  coord_flip() + 
+  ggtitle(label = "Admitidos PEAMA - Orinoquía por departamento de residencia", subtitle =  "(Cohorte 2011-01)") +
+  xlab("Departamento") +
+  ylab("Admitidos") + 
+  theme_classic() 
+```
+
+### Cupos por programa
+
+```{r,echo=FALSE, warning=FALSE}
+PEAMA[PEAMA$PROGRAMA=="Bogotá Contaduría Pública","PROGRAMA"] <- "Bogotá Contaduría"
+PEAMA[PEAMA$PROGRAMA=="Bogotá Ciencia Política","PROGRAMA"] <- "Bogotá Ciencia política"
+PEAMA[PEAMA$PROGRAMA=="Bogotá Ingeniería de Sistemas y Computación","PROGRAMA"] <- "Bogotá Ingeniería de Sistemas"
+PEAMA[PEAMA$PROGRAMA=="Manizales Administración de Empresas (Diurno)","PROGRAMA"] <- "Manizales Administración de Empresas (diurna)"
+PEAMA[PEAMA$PROGRAMA=="Manizales Gestión Cultural y Comunicativa","PROGRAMA"] <- "Manizales Gestión cultural"
+PEAMA[PEAMA$PROGRAMA=="Medellín Ciencia Política","PROGRAMA"] <- "Medellín Ciencia política"
+
+## Bogotá
+
+P <- PEAMA %>% group_by(PROGRAMA,`SEDE PRESENCIA NACIONAL`) %>% summarise("ADMITIDOS"=n()) %>% ungroup()
+df <- CUPOS_PEAMA %>% filter(SEDE=="Bogotá") %>% left_join(P,by=c("PROGRAMA"="PROGRAMA","SPN"="SEDE PRESENCIA NACIONAL"))
+
+df2 <- PEAMA %>% group_by(PROGRAMA,`SEDE PRESENCIA NACIONAL`) %>% summarise("ADMITIDOS"=n()) %>% ungroup() %>% anti_join(CUPOS_PEAMA,by=c("PROGRAMA"="PROGRAMA","SEDE PRESENCIA NACIONAL"="SPN"))
+df <- df %>% gather("TIPO","CANTIDAD",CUPOS,ADMITIDOS)
+
+color <- c("#B22222", "#79CDCD")
+ggplot(df , aes(PROGRAMA, CANTIDAD, fill = TIPO)) + 
+  geom_bar(stat = "identity", position = "dodge") + 
+  coord_flip() +
+  facet_grid(.~SPN)  + 
+  ggtitle(label = "Cupos y admitidos PEAMA por programa en la Sede Bogotá por sede de presencia nacional", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill=" ") +
+  xlab("Programa") +
+  ylab("Cantidad") + 
+  theme_classic() 
+
+## Manizales
+
+P <- PEAMA %>% group_by(PROGRAMA,`SEDE PRESENCIA NACIONAL`) %>% summarise("ADMITIDOS"=n()) %>% ungroup()
+df <- CUPOS_PEAMA %>% filter(SEDE=="Manizales") %>% left_join(P,by=c("PROGRAMA"="PROGRAMA","SPN"="SEDE PRESENCIA NACIONAL"))
+
+df2 <- PEAMA %>% group_by(PROGRAMA,`SEDE PRESENCIA NACIONAL`) %>% summarise("ADMITIDOS"=n()) %>% ungroup() %>% anti_join(CUPOS_PEAMA,by=c("PROGRAMA"="PROGRAMA","SEDE PRESENCIA NACIONAL"="SPN"))
+df <- df %>% gather("TIPO","CANTIDAD",CUPOS,ADMITIDOS)
+
+color <- c("#B22222", "#79CDCD")
+ggplot(df , aes(PROGRAMA, CANTIDAD, fill = TIPO)) + 
+  geom_bar(stat = "identity", position = "dodge") + 
+  coord_flip() +
+  facet_grid(.~SPN)  + 
+  ggtitle(label = "Cupos y admitidos PEAMA por programa en la Sede Manizales por sede de presencia nacional", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill=" ") +
+  xlab("Programa") +
+  ylab("Cantidad") + 
+  theme_classic() 
+
+## Manizales
+
+P <- PEAMA %>% group_by(PROGRAMA,`SEDE PRESENCIA NACIONAL`) %>% summarise("ADMITIDOS"=n()) %>% ungroup()
+df <- CUPOS_PEAMA %>% filter(SEDE=="Medellín") %>% left_join(P,by=c("PROGRAMA"="PROGRAMA","SPN"="SEDE PRESENCIA NACIONAL"))
+
+df2 <- PEAMA %>% group_by(PROGRAMA,`SEDE PRESENCIA NACIONAL`) %>% summarise("ADMITIDOS"=n()) %>% ungroup() %>% anti_join(CUPOS_PEAMA,by=c("PROGRAMA"="PROGRAMA","SEDE PRESENCIA NACIONAL"="SPN"))
+df <- df %>% gather("TIPO","CANTIDAD",CUPOS,ADMITIDOS)
+
+color <- c("#B22222", "#79CDCD")
+ggplot(df , aes(PROGRAMA, CANTIDAD, fill = TIPO)) + 
+  geom_bar(stat = "identity", position = "dodge") + 
+  coord_flip() +
+  facet_grid(.~SPN)  + 
+  ggtitle(label = "Cupos y admitidos PEAMA por programa en la Sede Medellín por sede de presencia nacional", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill=" ") +
+  xlab("Programa") +
+  ylab("Cantidad") + 
+  theme_classic() 
+
+## Palmira
+
+P <- PEAMA %>% group_by(PROGRAMA,`SEDE PRESENCIA NACIONAL`) %>% summarise("ADMITIDOS"=n()) %>% ungroup()
+df <- CUPOS_PEAMA %>% filter(SEDE=="Palmira") %>% left_join(P,by=c("PROGRAMA"="PROGRAMA","SPN"="SEDE PRESENCIA NACIONAL"))
+
+df2 <- PEAMA %>% group_by(PROGRAMA,`SEDE PRESENCIA NACIONAL`) %>% summarise("ADMITIDOS"=n()) %>% ungroup() %>% anti_join(CUPOS_PEAMA,by=c("PROGRAMA"="PROGRAMA","SEDE PRESENCIA NACIONAL"="SPN"))
+df <- df %>% gather("TIPO","CANTIDAD",CUPOS,ADMITIDOS)
+
+color <- c("#B22222", "#79CDCD")
+ggplot(df , aes(PROGRAMA, CANTIDAD, fill = TIPO)) + 
+  geom_bar(stat = "identity", position = "dodge") + 
+  coord_flip() +
+  facet_grid(.~SPN)  + 
+  ggtitle(label = "Cupos y admitidos PEAMA por programa en la Sede Palmira por sede de presencia nacional", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill=" ") +
+  xlab("Programa") +
+  ylab("Cantidad") + 
+  theme_classic() 
+
+```
+

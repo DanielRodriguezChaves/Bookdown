@@ -1,0 +1,604 @@
+# Admisión PEAMA
+
+En este capítulo se presenta una descripción del panorama general de admisión de los estudiantes PEAMA de la cohorte 2011-01.
+
+
+
+```{r,eval=TRUE,echo=FALSE,results='hide',warning=FALSE,error=FALSE,message=FALSE}
+library("tidyverse")
+
+#load("PAES.RData")
+#load("PEAMA.RData")
+#load("ASPIRANTES.RData")
+#load("ADMITIDOS.RData") # save(ADMITIDOS, file="ADMITIDOS.RData")
+load("ADMITIDOS_PEAMA.RData") # save(ADMITIDOS_PEAMA, file="ADMITIDOS_PEAMA.RData")
+PEAMA <- ADMITIDOS_PEAMA
+#load("ADMITIDOS_PAES.RData") # save(ADMITIDOS_PAES, file="ADMITIDOS_PAES.RData")
+load("PUNTAJE.RData") # save(PUNTAJE, file="PUNTAJE.RData")
+load("P2011_1.RData")
+PEAMA_2 <- P2011_1 %>% filter(TIPO_INS=="PEAMA",ADMITIDO=="Sí")
+#load("ADMITIDOS_2.RData") 
+#load("CUPOS_PEAMA.RData") # save(CUPOS_PEAMA, file="CUPOS_PEAMA.RData")
+#PAES <- P2011_1 %>% filter(TIPO_INS=="PAES",ADMITIDO=="Sí")
+#PAES_2 <- P2011_1 %>% filter(TIPO_INS %in% c("PAES","Regular"),ADMITIDO=="Sí")
+#PUNTAJE <- P2011_1 %>% filter(TIPO_INS=="Regular",ADMITIDO=="Sí") %>% mutate(P=min(PTOTAL,na.rm = TRUE)) %>%  distinct(P)
+#load("CUPOS.RData")
+rm(ADMITIDOS_PEAMA);gc()
+rm(P2011_1);gc()
+shape_cundi.df <- read.table("shape.txt", header = TRUE, sep="|",fileEncoding = "UTF-8")
+shape_cundi.df$NOMBRE_DPT <- as.character(shape_cundi.df$NOMBRE_DPT)
+shape_cundi.df[shape_cundi.df$NOMBRE_DPT=="SANTAFE DE BOGOTA D.C","NOMBRE_DPT"] <- "BOGOTÁ D.C."
+shape_cundi.df[shape_cundi.df$NOMBRE_DPT=="ARCHIPIELAGO DE SAN ANDRES PROVIDENCIA Y SANTA CATALINA","NOMBRE_DPT"] <- "SAN ANDRES"
+shape_cundi.df$NOMBRE_MPI <- as.character(shape_cundi.df$NOMBRE_MPI)
+shape_cundi.df[shape_cundi.df$NOMBRE_MPI=="SANTAFE DE BOGOTA D.C.","NOMBRE_MPI"] <- "BOGOTÁ D.C."
+shape_cundi.df$NOMBRE_DPT <- iconv(shape_cundi.df$NOMBRE_DPT, to="ASCII//TRANSLIT")
+shape_cundi.df$NOMBRE_MPI <- iconv(shape_cundi.df$NOMBRE_MPI, to="ASCII//TRANSLIT")
+shape_cundi.df$NOMBRE_DPT <- as.factor(shape_cundi.df$NOMBRE_DPT)
+shape_cundi.df$NOMBRE_MPI <- as.factor(shape_cundi.df$NOMBRE_MPI)
+shape_bogota.df <- read.table("shape_2.txt", header = TRUE, sep="|",fileEncoding = "UTF-8")
+```
+
+En primer lugar se observa cuales fueron los programas PEAMA por los que los aspirantes fueron admitidos y que corresponden a la sede de presencia nacional a la cual fueron admitidos:
+
+```{r,echo=FALSE}
+df <-  PEAMA %>%  group_by(`SEDE PRESENCIA NACIONAL`) %>% count()
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df, aes(`SEDE PRESENCIA NACIONAL`, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Admitidos PEAMA por sede de presencia nacional", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) +
+  xlab("Sede de presencia nacional") +
+  ylab("Número de admitidos") + 
+  theme_classic()
+```
+
+Observamos que la mayor parte entran por la _Sede Orinoquia_ con 102 admitidos, seguido por la _Sede Amazonía_ con 83 admitidos y en tercer lugar la _Sede Caribe_ con 40 admitidos.
+
+## Sexo de los admitidos
+
+```{r, echo=FALSE}
+df <- PEAMA %>% group_by(GENERO) %>% count() %>% arrange(desc(n))
+df[df$GENERO=="M",1] <- "Hombres"
+df[df$GENERO=="F",1] <- "Mujeres"
+
+color <- c("#FF8247", "#00CD66")
+
+bf<- ggplot(df, aes(x="", y=n, fill=GENERO))+
+  geom_bar(width = 1, stat = "identity") +
+  geom_text(aes(y=c(147,37) , label = paste(n," estudiantes\n(", round(n*100/sum(n),1), "%)") ), size=5)  
+
+blank_theme <- theme_minimal()+
+  theme(
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
+    panel.border = element_blank(),
+    panel.grid=element_blank(),
+    axis.ticks = element_blank(),
+    plot.title=element_text(size=14, face="bold")
+  )
+
+pie0 <- bf + coord_polar("y", start=0) +
+  scale_fill_manual(values = color) + 
+  ggtitle(label = "Admitidos PEAMA por sexo", subtitle =  "(Cohorte 2011-01)") +
+  blank_theme +
+  theme(axis.text.x=element_blank()) + 
+  labs(fill="Sexo")
+
+pie0
+
+# genero por programa:
+
+df <- PEAMA %>% group_by(GENERO, `SEDE PRESENCIA NACIONAL`) %>% count() %>% arrange(desc(n))
+#df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("Total"=sum(n)) %>%  group_by(GENERO) %>%  mutate("Porcentaje"=round(n/Total,1)) %>%  select(`SEDE PRESENCIA NACIONAL`,GENERO,"Estudiantes"=n,Porcentaje) %>% arrange(`SEDE PRESENCIA NACIONAL` )
+df[df$GENERO=="M",1] <- "Hombres"
+df[df$GENERO=="F",1] <- "Mujeres"
+
+# amazonia
+
+bf<- ggplot(df %>% filter(`SEDE PRESENCIA NACIONAL`=="AMAZONIA"), aes(x="", y=n, fill=GENERO))+
+  geom_bar(width = 1, stat = "identity") +
+  geom_text(aes(y=c(57,15) , label = paste(n," estudiantes\n(", round(n*100/sum(n),1), "%)") ), size=5)  
+
+blank_theme <- theme_minimal()+
+  theme(
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
+    panel.border = element_blank(),
+    panel.grid=element_blank(),
+    axis.ticks = element_blank(),
+    plot.title=element_text(size=14, face="bold")
+  )
+
+pie1 <- bf + coord_polar("y", start=0) +
+  scale_fill_manual(values = color) + 
+  ggtitle(label = "Admitidos PEAMA Amazonía por sexo", subtitle =  "(Cohorte 2011-01)") +
+  blank_theme +
+  theme(axis.text.x=element_blank()) + 
+  labs(fill="Sexo")
+
+pie1
+
+# caribe 
+
+bf<- ggplot(df %>% filter(`SEDE PRESENCIA NACIONAL`=="CARIBE"), aes(x="", y=n, fill=GENERO))+
+  geom_bar(width = 1, stat = "identity") +
+  geom_text(aes(y=c(26,7) , label = paste(n," estudiantes\n(", round(n*100/sum(n),1), "%)") ), size=5)  
+
+blank_theme <- theme_minimal()+
+  theme(
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
+    panel.border = element_blank(),
+    panel.grid=element_blank(),
+    axis.ticks = element_blank(),
+    plot.title=element_text(size=14, face="bold")
+  )
+
+pie2 <- bf + coord_polar("y", start=0) +
+  scale_fill_manual(values = color) + 
+  ggtitle(label = "Admitidos PEAMA Caribe por sexo", subtitle =  "(Cohorte 2011-01)") +
+  blank_theme +
+  theme(axis.text.x=element_blank()) + 
+  labs(fill="Sexo")
+
+pie2
+# orinoquía 
+
+bf<- ggplot(df %>% filter(`SEDE PRESENCIA NACIONAL`=="ORINOQUIA"), aes(x="", y=n, fill=GENERO))+
+  geom_bar(width = 1, stat = "identity") +
+  geom_text(aes(y=c(65,18) , label = paste(n," estudiantes\n(", round(n*100/sum(n),1), "%)") ), size=5)  
+
+blank_theme <- theme_minimal()+
+  theme(
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
+    panel.border = element_blank(),
+    panel.grid=element_blank(),
+    axis.ticks = element_blank(),
+    plot.title=element_text(size=14, face="bold")
+  )
+
+pie3 <- bf + coord_polar("y", start=0) +
+  scale_fill_manual(values = color) + 
+  ggtitle(label = "Admitidos PEAMA Orinoquía por sexo", subtitle =  "(Cohorte 2011-01)") +
+  blank_theme +
+  theme(axis.text.x=element_blank()) + 
+  labs(fill="Sexo") 
+
+pie3
+
+```
+
+## Edad de los admitidos 
+
+```{r, echo=FALSE}
+df <-  PEAMA %>%  group_by(EDAD,`SEDE PRESENCIA NACIONAL`) %>% count()
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(EDAD) %>% mutate("Porcentaje"=round(n/N,2)*100)
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df, aes(EDAD, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Admitidos PEAMA por edad y sede de presencia nacional", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Edad (años)") +
+  ylab("Número de estudiantes") + 
+  theme_classic() + 
+  scale_x_continuous(breaks=16:36,labels=16:36) 
+
+ggplot(df, aes(EDAD, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Admitidos PEAMA por edad y sede de presencia nacional", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Edad (años)") +
+  ylab("Número de estudiantes") + 
+  theme_classic() + 
+  scale_x_continuous(breaks=(8:18)*2,labels=(8:18)*2) +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`) 
+
+ggplot(df2, aes(EDAD, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Admitidos PEAMA por edad y sede de presencia nacional", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Edad (años)") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() + 
+  scale_x_continuous(breaks=(8:18)*2,labels=(8:18)*2) +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`) 
+```
+
+## Sede andina de admisión 
+
+```{r, echo=FALSE}
+df <-  PEAMA %>%  group_by(`SEDE`) %>% count() %>% replace_na(list(`SEDE`="Sin información"))
+df[df$SEDE=="Amazonía",1] <- "Sin información"
+df[df$SEDE=="Caribe",1] <- "Sin información"
+
+color <- c("#40E0D0","#CDAD00", "#B22222","#CD6600", "gray") #c("#E82A2A","#40E0D0","#CD6600","#CDAD00", "#B22222", "#EE7600")
+
+ggplot(df, aes(`SEDE`, n, fill=`SEDE`)) + 
+  geom_bar(stat = "identity",show.legend = FALSE)  + 
+  ggtitle(label = "Admitidos PEAMA por sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede andina") +
+  xlab("Sede andina") +
+  ylab("Número de estudiantes") + 
+  theme_classic()
+```
+
+## Sedes andinas de admisión y sede de presencia nacional 
+
+```{r, echo=FALSE}
+df <-  PEAMA %>%  group_by(`SEDE`,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(`SEDE`="Sin información"))
+df[df$SEDE=="Amazonía",1] <- "Sin información"
+df[df$SEDE=="Caribe",1] <- "Sin información"
+
+color <- c("#40E0D0","#CDAD00", "#B22222","#CD6600", "gray") #c("#E82A2A","#40E0D0","#CD6600","#CDAD00", "#B22222", "#EE7600")
+
+ggplot(df, aes(`SEDE PRESENCIA NACIONAL`, n, fill=`SEDE`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Admitidos PEAMA por sede andina y sede de presencia nacional", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede andina") +
+  xlab("Sede de presencia nacional") +
+  ylab("Número de estudiantes") + 
+  theme_classic()
+```
+
+## Programa de admisión
+
+```{r,echo=FALSE, warning=FALSE}
+
+df2 <- PEAMA %>% select("Programa"=PROGRAMA,"Sede"=`SEDE PRESENCIA NACIONAL`) %>%  group_by(Programa, Sede ) %>%  count() 
+
+compute_angle = function(perc){
+  n <- length(perc)
+  angle = rep(NA,n)
+  for(i in 1:n){
+    if(perc[i] < 0.25) # 1st q [90,0]
+      angle[i] = 90 - 90 * (perc[i]/0.25)
+    else if(between(perc[i],0.25,0.5)) # 2nd q [0, -90]
+      angle[i] = 90 - 90 * (perc[i] /0.25)
+    else if(between(perc[i] ,0.5,0.75)) # 3rd q [90, 0]
+      angle[i] = 90 - 90 * ((perc[i] -0.5)/0.25)
+    else if(between(perc[i] ,0.75,1)) # last q [0, -90]
+      angle[i] = 90 - 90 * ((perc[i] -0.5)/0.25)
+  }
+  
+  return(angle)
+}
+firstLevel <-  df2 %>% 
+  ungroup() %>% 
+  summarize(total_pop=sum(n))%>%
+  arrange(desc(total_pop))%>%
+  mutate(running=cumsum(total_pop), pos=running - total_pop/2) %>%
+  mutate("Nivel"=1, "Categoria"=paste0('TOTAL ESTUDIANTES\n PEAMA: ', total_pop), "Sede"="Total", "angle" = 0)
+secondLevel <-  df2 %>% rename("PROGRAMA"=Programa) %>%
+  unite("Programa", Sede, PROGRAMA, sep=" - ") %>% 
+  group_by(Programa) %>%
+  summarize(total_pop=sum(n)) %>%
+  arrange(desc(total_pop)) %>%
+  separate(Programa, c("Sede","Programa"), sep=" - ") %>% 
+  mutate("Nivel"=2, "Categoria"=paste0(Programa,": ", total_pop)) %>% 
+  select(-Programa) %>% 
+  arrange(desc(Sede),desc(total_pop))%>%
+  mutate(running=cumsum(total_pop), pos=running - total_pop/2) %>%  
+  mutate(poss=cumsum(total_pop)/sum(total_pop),angle=round(compute_angle(poss),0) )%>% 
+  select(-poss)
+
+df3 <- bind_rows(firstLevel,secondLevel) #%>% select(-`1:n()`)
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD", "white")
+font_color <- c('black',rep('black',123-43-25),rep('white',25+43))
+sunburst <- 
+  ggplot(df3, aes(Nivel, total_pop, fill=Sede)) + 
+  geom_bar(stat = "identity", show.legend = TRUE, color='white', position='stack', size=0.5,width = 2) + 
+  scale_fill_manual(values = color) +
+  geom_text( aes(label=Categoria, x=c(0,Nivel[-1]), y=pos, angle=angle),  color=font_color, size=c(5,rep(2.5,123))) + 
+  ggtitle(label = "Admitidos PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  labs(fill="Sede de presencia\nnacional")
+sunburst + coord_polar('y') + theme_void() 
+```
+
+## Estrato de los admitidos
+
+```{r, echo=FALSE}
+df <-  PEAMA %>%  group_by(ESTRATO,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(ESTRATO="No Informa"))
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(ESTRATO) %>% mutate("Porcentaje"=round(n/N,2)*100)
+
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df, aes(ESTRATO, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Admitidos PEAMA por estrato y sede de presencia nacional", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Estrato socioeconómico") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(ESTRATO, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Admitidos PEAMA por estrato y sede de presencia nacional", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Estrato socioeconómico") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(ESTRATO, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Admitidos PEAMA por estrato y sede de presencia nacional", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Estrato socioeconómico") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+```
+
+## Puntaje total de admisión
+
+```{r, echo=FALSE}
+df <- PEAMA %>% select(`SEDE PRESENCIA NACIONAL`,PUNTAJE_TOTAL)
+df$PUNTAJE_TOTAL <- as.numeric(df$PUNTAJE_TOTAL)
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df, aes(`SEDE PRESENCIA NACIONAL`,PUNTAJE_TOTAL, fill=`SEDE PRESENCIA NACIONAL`)) +
+  geom_boxplot(show.legend = FALSE) +
+  scale_fill_manual(values = color) +
+  xlab("Sede de presencia nacional") +
+  ylab("Puntaje estandar de admisión") + 
+  theme_classic() + 
+  ggtitle(label = "Puntaje total de admisión de los admitidos PEAMA", subtitle =  "(Cohorte 2011-01)")
+```
+
+## Admitidos PEAMA por municipio
+
+### Todos los admitidos PEAMA
+
+```{r, echo=FALSE}
+PEAMA_3 <- PEAMA
+PEAMA <- PEAMA_2
+
+estudiantes_residencia <- PEAMA %>% group_by(COD_CIU_RES) %>% summarise("PEAMA"=n())
+shape_cundi.df2 <- shape_cundi.df %>% left_join(estudiantes_residencia, by=c("MPIOS"="COD_CIU_RES"))
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PEAMA) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="white") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "black",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void()  + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos PEAMA por residencia", subtitle =  "(Cohorte 2011-01)") 
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PEAMA) + 
+  geom_polygon( show.legend=F) +
+  geom_path(color="white") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "black",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") + 
+  xlim(125000,250000) + ylim(1850000,2000000) +
+  theme_void() 
+
+```
+
+
+### Admitidos PEAMA Amazonia
+
+```{r, echo=FALSE}
+estudiantes_residencia <- PEAMA %>% filter(PEAMA=="PEAMA - Amazonía") %>% group_by(COD_CIU_RES) %>% summarise("PEAMA"=n())
+shape_cundi.df2 <- shape_cundi.df %>% left_join(estudiantes_residencia, by=c("MPIOS"="COD_CIU_RES"))
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PEAMA) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="white") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "black",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void() + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos PEAMA - Amazonía por residencia", subtitle =  "(Cohorte 2011-01)") 
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PEAMA) + 
+  geom_polygon( show.legend=F) +
+  geom_path(color="white") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "black",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") + 
+  xlim(125000,250000) + ylim(1850000,2000000) +
+  theme_void() 
+```
+
+
+### Admitidos PEAMA Caribe
+
+```{r, echo=FALSE}
+estudiantes_residencia <- PEAMA %>% filter(PEAMA=="PEAMA - Caribe") %>% group_by(COD_CIU_RES) %>% summarise("PEAMA"=n())
+shape_cundi.df2 <- shape_cundi.df %>% left_join(estudiantes_residencia, by=c("MPIOS"="COD_CIU_RES"))
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PEAMA) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="white") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "black",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void() + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos PEAMA - Caribe por residencia", subtitle =  "(Cohorte 2011-01)") 
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PEAMA) + 
+  geom_polygon( show.legend=F) +
+  geom_path(color="white") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "black",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") + 
+  xlim(125000,250000) + ylim(1850000,2000000) +
+  theme_void()
+```
+
+### Admitidos PEAMA Orinoquía
+
+```{r, echo=FALSE}
+estudiantes_residencia <- PEAMA %>% filter(PEAMA=="PEAMA - Orinoquía") %>% group_by(COD_CIU_RES) %>% summarise("PEAMA"=n())
+shape_cundi.df2 <- shape_cundi.df %>% left_join(estudiantes_residencia, by=c("MPIOS"="COD_CIU_RES"))
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PEAMA) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="white") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "black",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void() + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos PEAMA - Orinoquía por residencia", subtitle =  "(Cohorte 2011-01)") 
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PEAMA) + 
+  geom_polygon( show.legend=F) +
+  geom_path(color="white") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "black",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") + 
+  xlim(125000,250000) + ylim(1850000,2000000) +
+  theme_void() 
+```
+
+
+## Admitidos PEAMA por departamento
+
+### Todos los admitidos PEAMA
+
+```{r, echo=FALSE}
+estudiantes_residencia <- PEAMA %>% group_by(COD_DEP_RES) %>% summarise("PEAMA_D"=n())
+shape_cundi.df2 <- shape_cundi.df %>% left_join(estudiantes_residencia, by=c("DPTO"="COD_DEP_RES"))
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PEAMA_D) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="transparent") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "white",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void() + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos PEAMA por residencia", subtitle =  "(Cohorte 2011-01)")
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PEAMA_D) + 
+  geom_polygon( show.legend=F) +
+  geom_path(color="transparent") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "white",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD")+ 
+  xlim(125000,250000) + ylim(1850000,2000000) +
+  theme_void() 
+```
+
+
+### Admitidos PEAMA Amazonia
+
+```{r, echo=FALSE}
+estudiantes_residencia <- PEAMA %>% filter(PEAMA=="PEAMA - Amazonía") %>% group_by(COD_DEP_RES) %>% summarise("PEAMA_D"=n())
+shape_cundi.df2 <- shape_cundi.df %>% left_join(estudiantes_residencia, by=c("DPTO"="COD_DEP_RES"))
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PEAMA_D) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="transparent") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "white",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void() + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos PEAMA - Amazonía por residencia", subtitle =  "(Cohorte 2011-01)") 
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PEAMA_D) + 
+  geom_polygon( show.legend=F) +
+  geom_path(color="transparent") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "white",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD")+ 
+  xlim(125000,250000) + ylim(1850000,2000000) +
+  theme_void() 
+```
+
+
+### Admitidos PEAMA Caribe
+
+```{r, echo=FALSE}
+estudiantes_residencia <- PEAMA %>% filter(PEAMA=="PEAMA - Caribe") %>% group_by(COD_DEP_RES) %>% summarise("PEAMA_D"=n())
+shape_cundi.df2 <- shape_cundi.df %>% left_join(estudiantes_residencia, by=c("DPTO"="COD_DEP_RES"))
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PEAMA_D) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="transparent") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "white",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void() + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos PEAMA - Caribe por residencia", subtitle =  "(Cohorte 2011-01)") 
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PEAMA_D) + 
+  geom_polygon( show.legend=F) +
+  geom_path(color="transparent") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "white",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD")+ 
+  xlim(125000,250000) + ylim(1850000,2000000) +
+  theme_void() 
+```
+
+### Admitidos PEAMA Orinoquía
+
+```{r, echo=FALSE}
+estudiantes_residencia <- PEAMA %>% filter(PEAMA=="PEAMA - Orinoquía") %>% group_by(COD_DEP_RES) %>% summarise("PEAMA_D"=n())
+shape_cundi.df2 <- shape_cundi.df %>% left_join(estudiantes_residencia, by=c("DPTO"="COD_DEP_RES"))
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PEAMA_D) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="transparent") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "white",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void() + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos PEAMA - Orinoquía por residencia", subtitle =  "(Cohorte 2011-01)") 
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PEAMA_D) + 
+  geom_polygon( show.legend=F) +
+  geom_path(color="transparent") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "white",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD")+ 
+  xlim(125000,250000) + ylim(1850000,2000000) +
+  theme_void() 
+PEAMA_2 <- PEAMA
+PEAMA <- PEAMA_3
+```
+

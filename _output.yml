@@ -1,0 +1,21 @@
+bookdown::gitbook:
+  highlight: tango
+  dev: svglite
+  css: style.css
+  split_by: section
+  config:
+    toc:
+      collapse: subsection
+      before: |
+        <li><a href="./">Impacto de los programas PAES y PEAMA</a></li>
+      after: |
+        <li><a href="http://www.bienestar.unal.edu.co/" target="blank">Dirección Nacional de Bienestar Universitario</a></li>
+    download: ["pdf", "epub","mobi","docx"]
+bookdown::pdf_book:
+  includes:
+    in_header: preamble.tex
+  latex_engine: xelatex
+  citation_package: natbib
+  keep_tex: yes
+bookdown::epub_book: default
+bookdown::word_document2: default

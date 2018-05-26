@@ -1,0 +1,986 @@
+# Admisión PAES
+
+En este capítulo se presenta una descripción del panorama general de admisión de los estudiantes PAES de la cohorte 2011-01.
+
+```{r,eval=TRUE,echo=FALSE,results='hide',warning=FALSE,error=FALSE,message=FALSE}
+library("tidyverse")
+#load("PAES.RData")
+load("ASPIRANTES.RData")
+#load("ADMITIDOS.RData") # save(ADMITIDOS, file="ADMITIDOS.RData")
+#load("ADMITIDOS_PEAMA.RData") # save(ADMITIDOS_PEAMA, file="ADMITIDOS_PEAMA.RData")
+#load("ADMITIDOS_PAES.RData") # save(ADMITIDOS_PAES, file="ADMITIDOS_PAES.RData")
+# load("PUNTAJE.RData") # save(PUNTAJE, file="PUNTAJE.RData")
+load("P2011_1.RData")
+#load("ADMITIDOS_2.RData") 
+#load("CUPOS_PEAMA.RData") # save(CUPOS_PEAMA, file="CUPOS_PEAMA.RData")
+PAES <- P2011_1 %>% filter(TIPO_INS=="PAES",ADMITIDO=="Sí")
+PAES_2 <- P2011_1 %>% filter(TIPO_INS %in% c("PAES","Regular"),ADMITIDO=="Sí")
+PUNTAJE <- P2011_1 %>% filter(TIPO_INS=="Regular",ADMITIDO=="Sí") %>% mutate(P=min(PTOTAL,na.rm = TRUE)) %>%  distinct(P)
+#load("CUPOS.RData")
+rm(P2011_1);gc()
+shape_cundi.df <- read.table("shape.txt", header = TRUE, sep="|",fileEncoding = "UTF-8")
+shape_cundi.df$NOMBRE_DPT <- as.character(shape_cundi.df$NOMBRE_DPT)
+shape_cundi.df[shape_cundi.df$NOMBRE_DPT=="SANTAFE DE BOGOTA D.C","NOMBRE_DPT"] <- "BOGOTÁ D.C."
+shape_cundi.df[shape_cundi.df$NOMBRE_DPT=="ARCHIPIELAGO DE SAN ANDRES PROVIDENCIA Y SANTA CATALINA","NOMBRE_DPT"] <- "SAN ANDRES"
+shape_cundi.df$NOMBRE_MPI <- as.character(shape_cundi.df$NOMBRE_MPI)
+shape_cundi.df[shape_cundi.df$NOMBRE_MPI=="SANTAFE DE BOGOTA D.C.","NOMBRE_MPI"] <- "BOGOTÁ D.C."
+shape_cundi.df$NOMBRE_DPT <- iconv(shape_cundi.df$NOMBRE_DPT, to="ASCII//TRANSLIT")
+shape_cundi.df$NOMBRE_MPI <- iconv(shape_cundi.df$NOMBRE_MPI, to="ASCII//TRANSLIT")
+shape_cundi.df$NOMBRE_DPT <- as.factor(shape_cundi.df$NOMBRE_DPT)
+shape_cundi.df$NOMBRE_MPI <- as.factor(shape_cundi.df$NOMBRE_MPI)
+shape_bogota.df <- read.table("shape_2.txt", header = TRUE, sep="|",fileEncoding = "UTF-8")
+```
+
+En primer lugar se observa cuales fueron los programas PAES por los que los aspirantes fueron admitidos:
+
+```{r,echo=FALSE}
+df <- PAES %>%  group_by(PAES) %>% count()
+
+df2 <- df %>%  ungroup() %>% mutate("N"=sum(n)) %>% mutate("Porcentaje"=round(n/N,2)*100)
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(PAES, n, fill=PAES)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Admitidos PAES por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PAES") +
+  xlab("Programas PAES") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+```
+
+Observamos que la mayor parte entran por el programa _mejores bachilleres de municipios pobres_ con 224 admitidos, seguido por las _poblaciones negras, afrocolombianas, palenqueras y raizales_ con 163 admitidos, en tercer lugar las _comunidades indígenas_ con 141 admitidos y finalmente los _mejores bachilleres_ en último lugar con 78 admitidos.
+
+
+## Sexo de los admitidos
+
+Donde se encuentra que aproximadamente la tercera parte de la población admitida como estudiantes PAES es mujer y que los restantes son hombres. Se observa que esto ocurre además para todos los PAES de manera global y desagregado por los programas de admisión.
+
+```{r,echo=FALSE}
+df <- PAES %>% group_by(SEXO) %>% count() %>% arrange(desc(n))
+
+color <- c("#FF8247", "#00CD66")
+
+bf<- ggplot(df, aes(x="", y=n, fill=SEXO))+
+  geom_bar(width = 1, stat = "identity") +
+  geom_text(aes(y=c(358,94) , label = paste(n," estudiantes\n(", round(n*100/sum(n),1), "%)") ), size=5)  
+
+blank_theme <- theme_minimal()+
+  theme(
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
+    panel.border = element_blank(),
+    panel.grid=element_blank(),
+    axis.ticks = element_blank(),
+    plot.title=element_text(size=14, face="bold")
+  )
+
+pie0 <- bf + coord_polar("y", start=0) +
+  scale_fill_manual(values = color) + 
+  ggtitle(label = "Admitidos PAES por sexo", subtitle =  "(Cohorte 2011-01)") +
+  blank_theme +
+  theme(axis.text.x=element_blank()) + 
+  labs(fill="Sexo")
+
+pie0
+
+# Sexo por programa:
+
+df <- PAES %>% group_by(SEXO, PAES) %>% count() %>% arrange(desc(n))
+
+# municipios pobres
+
+bf<- ggplot(df %>% filter(PAES %in% c("Mejores bachilleres de municipios pobres")), aes(x="", y=n, fill=SEXO))+
+  geom_bar(width = 1, stat = "identity") +
+  geom_text(aes(y=c(153,41) , label = paste(n," estudiantes\n(", round(n*100/sum(n),1), "%)") ), size=5)  
+
+blank_theme <- theme_minimal()+
+  theme(
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
+    panel.border = element_blank(),
+    panel.grid=element_blank(),
+    axis.ticks = element_blank(),
+    plot.title=element_text(size=14, face="bold")
+  )
+
+pie1 <- bf + coord_polar("y", start=0) +
+  scale_fill_manual(values = color) + 
+  ggtitle(label = "Admitidos PAES de municípios pobres por sexo", subtitle =  "(Cohorte 2011-01)") +
+  blank_theme +
+  theme(axis.text.x=element_blank()) + 
+  labs(fill="Sexo")
+
+pie1
+
+# INDÍGENA: 
+
+bf<- ggplot(df %>% filter(PAES %in% c("Comunidades indígenas")), aes(x="", y=n, fill=SEXO))+
+  geom_bar(width = 1, stat = "identity") +
+  geom_text(aes(y=c(94,24) , label = paste(n," estudiantes\n(", round(n*100/sum(n),1), "%)") ), size=5)  
+
+blank_theme <- theme_minimal()+
+  theme(
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
+    panel.border = element_blank(),
+    panel.grid=element_blank(),
+    axis.ticks = element_blank(),
+    plot.title=element_text(size=14, face="bold")
+  )
+
+pie2 <- bf + coord_polar("y", start=0) +
+  scale_fill_manual(values = color) + 
+  ggtitle(label = "Admitidos PAES indígenas por sexo", subtitle =  "(Cohorte 2011-01)") +
+  blank_theme +
+  theme(axis.text.x=element_blank()) + 
+  labs(fill="Sexo")
+
+pie2
+
+# "POBLACION NEGRA, AFROCOLOMBIANA, PALENQUERA Y RAIZAL": 
+
+bf<- ggplot(df %>% filter(PAES %in% c("Población afrocolombiana")), aes(x="", y=n, fill=SEXO))+
+  geom_bar(width = 1, stat = "identity") +
+  geom_text(aes(y=c(112,30) , label = paste(n," estudiantes\n(", round(n*100/sum(n),1), "%)") ), size=5)  
+
+blank_theme <- theme_minimal()+
+  theme(
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
+    panel.border = element_blank(),
+    panel.grid=element_blank(),
+    axis.ticks = element_blank(),
+    plot.title=element_text(size=14, face="bold")
+  )
+
+pie3 <- bf + coord_polar("y", start=0) +
+  scale_fill_manual(values = color) + 
+  ggtitle(label = "Admitidos PAES de la población negra,\n afrocolombiana, palenquera y raizal por sexo", subtitle =  "(Cohorte 2011-01)") +
+  blank_theme +
+  theme(axis.text.x=element_blank()) + 
+  labs(fill="Sexo") 
+
+pie3
+
+# "MEJOR BACHILLER": 
+
+bf<- ggplot(df %>% filter(PAES %in% c("Mejores bachilleres")), aes(x="", y=n, fill=SEXO))+
+  geom_bar(width = 1, stat = "identity") +
+  geom_text(aes(y=c(52,13) , label = paste(n," estudiantes\n(", round(n*100/sum(n),1), "%)") ), size=5)  
+
+blank_theme <- theme_minimal()+
+  theme(
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
+    panel.border = element_blank(),
+    panel.grid=element_blank(),
+    axis.ticks = element_blank(),
+    plot.title=element_text(size=14, face="bold")
+  )
+
+pie4 <- bf + coord_polar("y", start=0) +
+  scale_fill_manual(values = color) + 
+  ggtitle(label = "Admitidos PAES mejores bachilleres por sexo", subtitle =  "(Cohorte 2011-01)") +
+  blank_theme +
+  theme(axis.text.x=element_blank()) + 
+  labs(fill="Sexo") 
+
+pie4
+```
+
+
+## Edad de los admitidos
+
+Se haya que los estudiantes PAES admitidos tienen edades que se acumulan principalmente entre los 16 y los 21 años siendo similar en todos los grupos, se observa además que los grupos indígenas son los que tienen más estudiantes en grupos de más edad (superiores a los 25 años). 
+
+```{r,echo=FALSE}
+PAES <- PAES %>% mutate(EDAD=round(EDAD_MOD,0))
+
+df <-  PAES %>%  group_by(EDAD,PAES) %>% count()
+
+df2 <- df %>% ungroup() %>% group_by(PAES) %>% mutate("N"=sum(n)) %>% group_by(EDAD) %>% mutate("Porcentaje"=round(n/N,2)*100)
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(EDAD, n, fill=PAES)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Admitidos PAES por edad y programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PAES") +
+  xlab("Edad (años)") +
+  ylab("Número de estudiantes") + 
+  theme_classic() + 
+  scale_x_continuous(breaks=16:40,labels=16:40) + 
+  coord_flip()
+
+ggplot(df, aes(EDAD, n, fill=PAES)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Admitidos PAES por edad y programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PAES") +
+  xlab("Edad (años)") +
+  ylab("Número de estudiantes") + 
+  theme_classic() + 
+  scale_x_continuous(breaks=16:40,labels=16:40) +
+  facet_grid(PAES~ .) 
+
+ggplot(df2, aes(EDAD, Porcentaje, fill=PAES)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Admitidos PAES por edad y programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PAES") +
+  xlab("Edad (años)") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() + 
+  scale_x_continuous(breaks=16:40,labels=16:40) +
+  facet_grid(PAES~ .)
+```
+
+
+## Sede andina de los admitidos
+
+Se observa que aproximadamente la mitad de los estudiantes PAES son admitidos a la sede Bogotá, aproximadamente una cuarta parte son admitidos a la sede Medellín y luego son admitidos a la sede Palmira y finalmente a la sede Manizales, en cada caso con aproximadamente el 12% en cada caso.
+
+
+```{r,echo=FALSE}
+df2 <- PAES %>% select("Programa"=PROGRAMA,"Sede"=ADM_SEDE_NOMBRE) %>%  group_by(Programa, Sede ) %>%  count() 
+
+firstLevel = df2 %>% ungroup() %>% summarize(total_pop=sum(n))
+
+sunburst_0 <-  ggplot(firstLevel) # Just a foundation
+sunburst_1 <-  
+  sunburst_0 + 
+  geom_bar(data=firstLevel, aes(x=1, y=total_pop), fill='darkgrey', stat='identity') +
+  geom_text(aes(x=0.6, y=firstLevel$total_pop/3, label=paste0('Estudiantes\n PAES: ', firstLevel$total_pop)), color='white')
+# sunburst_1
+# sunburst_1 + coord_polar("y")
+gov_pop <-  df2 %>% group_by(Sede) %>%
+  summarize(total_pop=sum(n)) %>%
+  arrange(desc(total_pop))%>%
+  mutate(running=cumsum(total_pop), pos=running - total_pop/2)
+
+
+sunburst_2 <- sunburst_1 +
+  geom_bar(data=gov_pop,
+           aes(x=2, y=total_pop, fill=total_pop),
+           color='white', position='stack', stat='identity', size=0.5) + 
+  geom_text(data=gov_pop, aes(label=paste(Sede, total_pop), x=2, y=pos),size=3, color="white")
+sunburst_2 + coord_polar('y') + 
+  labs(fill="Total de estudiantes") +
+  ggtitle(label = "Admitidos PAES por sede de admisión", subtitle =  "(Cohorte 2011-01)") +
+  theme_void() +
+  scale_fill_gradient(low = "#FF6347", high = "#8B3626")
+```
+
+
+## Sede andina y programa de los admitidos
+
+Se presenta a continuación los admitidos PAES por sede y por programa. Se encuentra que el máximo número de admitidos en algún programa es de 15 estudiantes y ocurre para el programa curricular de Administración de Empresas de la sede de Palmira. Observamos que las cinco carreras con más admitidos son: Palmira Administración de Empresas (15 estudiantes), Bogotá Ingeniería Eléctrica (14 estudiantes), Bogotá Química (13 estudiantes), Palmira Ingeniería Agroindustrial y Palmira Ingeniería Ambiental (ambas con 12 estudiantes).
+
+```{r,echo=FALSE,warning=FALSE}
+df2 <- PAES %>% select("Programa"=PROGRAMA,"Sede"=ADM_SEDE_NOMBRE) %>%  group_by(Programa, Sede ) %>%  count() 
+
+compute_angle = function(perc){
+  n <- length(perc)
+  angle = rep(NA,n)
+  for(i in 1:n){
+    if(perc[i] < 0.25) # 1st q [90,0]
+      angle[i] = 90 - 90 * (perc[i]/0.25)
+    else if(between(perc[i],0.25,0.5)) # 2nd q [0, -90]
+      angle[i] = 90 - 90 * (perc[i] /0.25)
+    else if(between(perc[i] ,0.5,0.75)) # 3rd q [90, 0]
+      angle[i] = 90 - 90 * ((perc[i] -0.5)/0.25)
+    else if(between(perc[i] ,0.75,1)) # last q [0, -90]
+      angle[i] = 90 - 90 * ((perc[i] -0.5)/0.25)
+  }
+  
+  return(angle)
+}
+firstLevel <-  df2 %>% 
+  ungroup() %>% 
+  summarize(total_pop=sum(n))%>%
+  arrange(desc(total_pop))%>%
+  mutate(running=cumsum(total_pop), pos=running - total_pop/2) %>%
+  mutate("Nivel"=1, "Categoria"=paste0('TOTAL ESTUDIANTES\n PAES: ', total_pop), "Sede"="Total", "angle" = 0)
+secondLevel <-  df2 %>% rename("PROGRAMA"=Programa) %>%
+  unite("Programa", Sede, PROGRAMA, sep=" - ") %>% 
+  group_by(Programa) %>%
+  summarize(total_pop=sum(n)) %>%
+  arrange(desc(total_pop)) %>%
+  separate(Programa, c("Sede","Programa"), sep=" - ") %>% 
+  mutate("Nivel"=2, "Categoria"=paste0(Programa,": ", total_pop)) %>% 
+  select(-Programa) %>% 
+  arrange(desc(Sede),desc(total_pop))%>%
+  mutate(running=cumsum(total_pop), pos=running - total_pop/2) %>%  
+  mutate(poss=cumsum(total_pop)/sum(total_pop),angle=round(compute_angle(poss),0) )%>% 
+  select(-poss)
+
+df3 <- bind_rows(firstLevel,secondLevel) #%>% select(-`1:n()`)
+
+df3[1,4] <- 1
+df3[1,3] <- 132
+color <- c("#40E0D0", "#CDAD00", "#B22222", "#EE7600", "white")
+font_color <- c('black',rep('black',7),rep('white',25),rep('black',90-32))
+sunburst <- 
+  ggplot(df3, aes(Nivel, total_pop, fill=Sede)) + 
+  geom_bar(stat = "identity", show.legend = TRUE, color='white', position='stack', size=0.5,width = 2) + 
+  scale_fill_manual(values = color) +
+  geom_text( aes(label=Categoria, x=c(-0.5,Nivel[-1]), y=pos, angle=angle),  color=font_color, size=c(5,rep(2.5,90)))+
+  ggtitle(label = "Admitidos PAES por programa", subtitle =  "(Cohorte 2011-01)") +
+  labs(fill="Sede andina")
+sunburst + coord_polar('y') + theme_void() 
+```
+
+
+## Sede andina y facultad de los admitidos
+
+Se hace la misma descripción anterior a los estudiantes PAES pero por sede y facultad encontrándose que la mayor facultad con estudiantes admitidos es la de Minas en Medellín (74 estudiantes), seguida por Ingeniería Bogotá (65 estudiantes), Ciencias Bogotá (52 estudiantes), Ingeniería y Administración Palmira (45 estudiantes), Ciencias Humanas Bogotá (44 estudiantes) e Ingeniería y Administración Manizales (37 estudiantes), donde se observa un gran interés principalmente por la ingeniería en los admitidos PAES.
+
+```{r,echo=FALSE,warning=FALSE}
+df2 <- PAES %>% select("Programa"=FACULTAD,"Sede"=ADM_SEDE_NOMBRE) %>%  group_by(Programa, Sede ) %>%  count() %>% replace_na(list(Programa="Sin información"))
+
+compute_angle = function(perc){
+  n <- length(perc)
+  angle = rep(NA,n)
+  for(i in 1:n){
+    if(perc[i] < 0.25) # 1st q [90,0]
+      angle[i] = 90 - 90 * (perc[i]/0.25)
+    else if(between(perc[i],0.25,0.5)) # 2nd q [0, -90]
+      angle[i] = 90 - 90 * (perc[i] /0.25)
+    else if(between(perc[i] ,0.5,0.75)) # 3rd q [90, 0]
+      angle[i] = 90 - 90 * ((perc[i] -0.5)/0.25)
+    else if(between(perc[i] ,0.75,1)) # last q [0, -90]
+      angle[i] = 90 - 90 * ((perc[i] -0.5)/0.25)
+  }
+  
+  return(angle)
+}
+firstLevel <-  df2 %>% 
+  ungroup() %>% 
+  summarize(total_pop=sum(n))%>%
+  arrange(desc(total_pop))%>%
+  mutate(running=cumsum(total_pop), pos=running - total_pop/2) %>%
+  mutate("Nivel"=1, "Categoria"=paste0('TOTAL ESTUDIANTES\n PAES: ', total_pop), "Sede"="Total", "angle" = 0)
+secondLevel <-  df2 %>% rename("PROGRAMA"=Programa) %>%
+  unite("Programa", Sede, PROGRAMA, sep=" - ") %>% 
+  group_by(Programa) %>%
+  summarize(total_pop=sum(n)) %>%
+  arrange(desc(total_pop)) %>%
+  separate(Programa, c("Sede","Programa"), sep=" - ") %>% 
+  mutate("Nivel"=2, "Categoria"=paste0(Programa,": ", total_pop)) %>% 
+  select(-Programa) %>% 
+  arrange(desc(Sede),desc(total_pop))%>%
+  mutate(running=cumsum(total_pop), pos=running - total_pop/2) %>%  
+  mutate(poss=cumsum(total_pop)/sum(total_pop),angle=round(compute_angle(poss),0) )%>% 
+  select(-poss)
+
+df3 <- bind_rows(firstLevel,secondLevel) #%>% select(-`1:n()`)
+
+color <- c("#40E0D0", "#CDAD00", "#B22222", "#EE7600", "white")
+font_color <- c('black',rep('black',2),rep('white',5),rep('black',21-7))
+sunburst <- 
+  ggplot(df3, aes(Nivel, total_pop, fill=Sede)) + 
+  geom_bar(stat = "identity", show.legend = TRUE, color='white', position='stack', size=0.5, width = 2) + 
+  scale_fill_manual(values = color) +
+  geom_text( aes(label=Categoria, x=c(-0.5,Nivel[-1]), y=pos, angle=angle),  color=font_color, size=c(5,rep(3,2),rep(2.5,19)))+
+  ggtitle(label = "Admitidos PAES por facultad", subtitle =  "(Cohorte 2011-01)") +
+  labs(fill="Sede andina")
+sunburst + coord_polar('y') + theme_void() 
+```
+
+
+## Estrato socioeconómico de los admitidos
+
+Se hace la misma descripción anterior a los estudiantes PAES pero por sede y facultad encontrándose que la mayor facultad con estudiantes admitidos es la de Minas en Medellín (74 estudiantes), seguida por Ingeniería Bogotá (65 estudiantes), Ciencias Bogotá (52 estudiantes), Ingeniería y Administración Palmira (45 estudiantes), Ciencias Humanas Bogotá (44 estudiantes) e Ingeniería y Administración Manizales (37 estudiantes), donde se observa un gran interés principalmente por la ingeniería en los admitidos PAES.
+
+### Estrato agrupado:
+
+```{r,echo=FALSE}
+df <-  PAES %>%  group_by(ESTRATO,PAES) %>% count() %>% replace_na(list(ESTRATO="Sin información"))
+
+df2 <- df %>% ungroup() %>% group_by(PAES) %>% mutate("N"=sum(n)) %>% group_by(ESTRATO) %>% mutate("Porcentaje"=round(n/N,2)*100)
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(ESTRATO, n, fill=PAES)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Admitidos PAES por estrato y programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Estrato socioeconómico") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(ESTRATO, n, fill=PAES)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Admitidos PAES por estrato y programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Estrato socioeconómico") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(PAES~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(ESTRATO, Porcentaje, fill=PAES)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Admitidos PAES por estrato y programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Estrato socioeconómico") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(PAES~ .) +
+  coord_flip() 
+```
+
+### Estrato original:
+
+```{r,echo=FALSE}
+df <-  PAES %>%  group_by(ESTRATO_ORIG,PAES) %>% count() %>% replace_na(list(ESTRATO_ORIG="Sin información"))
+
+df2 <- df %>% ungroup() %>% group_by(PAES) %>% mutate("N"=sum(n)) %>% group_by(ESTRATO_ORIG) %>% mutate("Porcentaje"=round(n/N,2)*100)
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(ESTRATO_ORIG, n, fill=PAES)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Admitidos PAES por estrato y programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Estrato socioeconómico") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(ESTRATO_ORIG, n, fill=PAES)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Admitidos PAES por estrato y programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Estrato socioeconómico") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(PAES~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(ESTRATO_ORIG, Porcentaje, fill=PAES)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Admitidos PAES por estrato y programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Estrato socioeconómico") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(PAES~ .) +
+  coord_flip() 
+```
+
+## Puntaje en examen de admisión
+
+Se observa que los mayores puntajes de admisión los presentan los estudiantes PAES correspondientes a los mejores bachilleres de municipios pobres (con una mediana de 575,1268), seguido por los PAES indigenas (mediana de 533.4272) y finalmente los PAES afrocolombianos, palenqueros y raizales (mediana de 520.6273). Se observa además (en rojo) el puntaje de admisión del último admitido de manera regular y se encuentra que los estudiantes PAES tienen puntajes de admisión que son iguales o superiores a ese puntaje (451,2525).
+
+```{r,echo=FALSE}
+
+PAES_2 <- PAES_2 %>% replace_na(list(PAES="Regular"))
+
+df <- PAES_2 %>% select(PAES,PTOTAL) %>% filter(is.na(PTOTAL)==FALSE)
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE","gray")
+
+ggplot(df, aes(PAES,PTOTAL, fill=PAES)) +
+  geom_boxplot(show.legend = FALSE) +
+  scale_fill_manual(values = color) +
+  xlab("Programa PAES") +
+  ylab("Puntaje en el examen de admisión") + 
+  theme_classic() + 
+  ggtitle(label = "Puntaje total de admisión de los admitidos PAES", subtitle =  "(Cohorte 2011-01)") + 
+  coord_flip()
+```
+
+
+## Porcentaje de admitidos v.s. total de aspirantes
+
+Si comparamos a los admitidos con los aspirantes para cada programa curricular y programa PAES obtenemos el porcentaje de admisión, que también se puede ver como un índice de absorción específico. En el caso de la sede Bogotá y de la sede Manizales se tiene que los porcentajes de admisión dentro de los programas especiales de admisión son mayores comparados con los porcentajes de admisión para los admitidos regulares, excepto por unos pocos casos.
+
+No ocurre lo mismo para las sedes Medellín y Palmira, en el primero se tienen muchos casos donde la porcentaje de admitidos es mayor en los programas PAES comparados con los regulares, así mismo se tienen muchos casos donde el porcentaje de admitidos regulares es mayor comparado con el de admitidos PAES por programa. En el caso de la sede Palmira se observa que en la mayoría de casos los admitidos por programa tienen una mayor proporción comparados con la proporción que existe dentro de cada uno de los programas PAES.
+
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+adm <- function(x){
+  a <- 1
+  if(is.na(x)){
+    a <- 0
+  }
+  return(a)
+}
+
+ASPIRANTES <- ASPIRANTES %>% mutate( ADMISION = apply(ASPIRANTES %>%  select(ADM_CARRERA_NOMBRE),1,adm), CARRERA=INS_CARRERA1_NOMBRE ) %>% separate(CARRERA,c("SEDE","ETC"),sep = " ")
+
+CARRERAS <- ASPIRANTES %>%  group_by(INS_CARRERA1_NOMBRE, SEDE, ASP_RAYA_TIPO) %>% mutate("ASP"=n()) %>%  ungroup() %>%  filter(ADMISION==1) %>% group_by(INS_CARRERA1_NOMBRE, SEDE, ASP_RAYA_TIPO) %>% mutate("ADM"=n()) %>%  select(INS_CARRERA1_NOMBRE, SEDE, ASP_RAYA_TIPO, ASP, ADM) %>% distinct() %>% mutate(POR=round(ADM/ASP,4)*100)  %>% select(-ASP,-ADM)
+
+
+df <- CARRERAS %>% filter(SEDE=="Bogotá") %>% filter(ASP_RAYA_TIPO %in% c("IND","MBMP","Afrocolombianos","Regular")) %>% separate(INS_CARRERA1_NOMBRE,c("c1","INS_CARRERA1_NOMBRE"),sep = "Bogotá ") %>%  select(-c1)
+df[df$ASP_RAYA_TIPO=="Afrocolombianos",3] <- "Población afrocolombiana" # "POBLACION NEGRA, AFROCOLOMBIANA, PALENQUERA Y RAIZAL"
+df[df$ASP_RAYA_TIPO=="MBMP",3] <- "Mejores bachilleres de municipios pobres"
+df[df$ASP_RAYA_TIPO=="IND",3] <- "Comunidades indígenas"
+
+color <- c("#1E90FF", "#6E8B3D", "#B23AEE","gray")
+ggplot(df, aes(color=ASP_RAYA_TIPO))+ 
+  geom_line(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO ), show.legend = FALSE) +
+  geom_area(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO ), show.legend = FALSE, alpha=0.2) +
+  geom_point(aes(INS_CARRERA1_NOMBRE, POR), show.legend = FALSE) + 
+  coord_flip() + 
+  labs(fill="Programa PAES") +
+  ylab("Porcentaje de admitidos") +
+  xlab("Carreras") +
+  ggtitle(label = "Admitidos a la sede Bogotá por carrera y programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) +
+  theme_classic() +
+  facet_grid(~ASP_RAYA_TIPO) 
+
+color <- c("#1E90FF", "gray")
+
+ggplot(df %>% filter(ASP_RAYA_TIPO %in% c("Comunidades indígenas","Regular")), aes(color=ASP_RAYA_TIPO))+ 
+  geom_line(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO )) +
+  #geom_area(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO ), show.legend = FALSE, alpha=0.2) +
+  geom_point(aes(INS_CARRERA1_NOMBRE, POR)) + 
+  coord_flip() + 
+  labs(color="Tipo aspirante") +
+  ylab("Porcentaje de admitidos") +
+  xlab("Carreras") +
+  ggtitle(label = "Admitidos PAES a la sede Bogotá por carrera", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) +
+  theme_classic() 
+
+color <- c( "#6E8B3D","gray")
+
+ggplot(df %>% filter(ASP_RAYA_TIPO %in% c("Mejores bachilleres de municipios pobres","Regular")), aes(color=ASP_RAYA_TIPO))+ 
+  geom_line(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO )) +
+  #geom_area(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO ), show.legend = FALSE, alpha=0.2) +
+  geom_point(aes(INS_CARRERA1_NOMBRE, POR)) + 
+  coord_flip()  + 
+  labs(color="Tipo aspirante") +
+  ylab("Porcentaje de admitidos") +
+  xlab("Carreras") +
+  ggtitle(label = "Admitidos PAES a la sede Bogotá por carrera", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) +
+  theme_classic() 
+
+color <- c("#B23AEE","gray")
+
+ggplot(df %>% filter(ASP_RAYA_TIPO %in% c("Población afrocolombiana","Regular")), aes(color=ASP_RAYA_TIPO))+ 
+  geom_line(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO )) +
+  #geom_area(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO ), show.legend = FALSE, alpha=0.2) +
+  geom_point(aes(INS_CARRERA1_NOMBRE, POR)) + 
+  coord_flip()  + 
+  labs(color="Tipo aspirante") +
+  ylab("Porcentaje de admitidos") +
+  xlab("Carreras") +
+  ggtitle(label = "Admitidos PAES a la sede Bogotá por carrera", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) +
+  theme_classic() 
+
+
+```
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+df <- CARRERAS %>% filter(SEDE=="Manizales") %>% filter(ASP_RAYA_TIPO %in% c("IND","MBMP","Afrocolombianos","Regular")) %>% separate(INS_CARRERA1_NOMBRE,c("c1","INS_CARRERA1_NOMBRE"),sep = "Manizales ") %>%  select(-c1)
+df[df$ASP_RAYA_TIPO=="Afrocolombianos",3] <- "Población afrocolombiana" # "POBLACION NEGRA, AFROCOLOMBIANA, PALENQUERA Y RAIZAL"
+df[df$ASP_RAYA_TIPO=="MBMP",3] <- "Mejores bachilleres de municipios pobres"
+df[df$ASP_RAYA_TIPO=="IND",3] <- "Comunidades indígenas"
+
+color <- c("#1E90FF", "#6E8B3D", "#B23AEE","gray")
+ggplot(df, aes(color=ASP_RAYA_TIPO))+ 
+  geom_line(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO ), show.legend = FALSE) +
+  geom_area(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO ), show.legend = FALSE, alpha=0.2) +
+  geom_point(aes(INS_CARRERA1_NOMBRE, POR), show.legend = FALSE) + 
+  coord_flip() + 
+  labs(fill="Programa PAES") +
+  ylab("Porcentaje de admitidos") +
+  xlab("Carreras") +
+  ggtitle(label = "Admitidos a la sede Manizales por carrera y programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) +
+  theme_classic()  +
+  facet_grid(~ASP_RAYA_TIPO) 
+
+color <- c("#1E90FF", "gray")
+
+ggplot(df %>% filter(ASP_RAYA_TIPO %in% c("Comunidades indígenas","Regular")), aes(color=ASP_RAYA_TIPO))+ 
+  geom_line(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO )) +
+  #geom_area(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO ), show.legend = FALSE, alpha=0.2) +
+  geom_point(aes(INS_CARRERA1_NOMBRE, POR)) + 
+  coord_flip() + 
+  labs(color="Tipo aspirante") +
+  ylab("Porcentaje de admitidos") +
+  xlab("Carreras") +
+  ggtitle(label = "Admitidos PAES a la sede Manizales por carrera", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) +
+  theme_classic() 
+
+color <- c( "#6E8B3D","gray")
+
+ggplot(df %>% filter(ASP_RAYA_TIPO %in% c("Mejores bachilleres de municipios pobres","Regular")), aes(color=ASP_RAYA_TIPO))+ 
+  geom_line(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO )) +
+  #geom_area(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO ), show.legend = FALSE, alpha=0.2) +
+  geom_point(aes(INS_CARRERA1_NOMBRE, POR)) + 
+  coord_flip()  + 
+  labs(color="Tipo aspirante") +
+  ylab("Porcentaje de admitidos") +
+  xlab("Carreras") +
+  ggtitle(label = "Admitidos PAES a la sede Manizales por carrera", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) +
+  theme_classic() 
+
+color <- c("#B23AEE","gray")
+
+ggplot(df %>% filter(ASP_RAYA_TIPO %in% c("Población afrocolombiana","Regular")), aes(color=ASP_RAYA_TIPO))+ 
+  geom_line(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO )) +
+  #geom_area(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO ), show.legend = FALSE, alpha=0.2) +
+  geom_point(aes(INS_CARRERA1_NOMBRE, POR)) + 
+  coord_flip()  + 
+  labs(color="Tipo aspirante") +
+  ylab("Porcentaje de admitidos") +
+  xlab("Carreras") +
+  ggtitle(label = "Admitidos PAES a la sede Manizales por carrera", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) +
+  theme_classic() 
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+df <- CARRERAS %>% filter(SEDE=="Medellín") %>% filter(ASP_RAYA_TIPO %in% c("IND","MBMP","Afrocolombianos","Regular")) %>% separate(INS_CARRERA1_NOMBRE,c("c1","INS_CARRERA1_NOMBRE"),sep = "Medellín ") %>%  select(-c1)
+df[df$ASP_RAYA_TIPO=="Afrocolombianos",3] <- "Población afrocolombiana" # "POBLACION NEGRA, AFROCOLOMBIANA, PALENQUERA Y RAIZAL"
+df[df$ASP_RAYA_TIPO=="MBMP",3] <- "Mejores bachilleres de municipios pobres"
+df[df$ASP_RAYA_TIPO=="IND",3] <- "Comunidades indígenas"
+
+color <- c("#1E90FF", "#6E8B3D", "#B23AEE","gray")
+ggplot(df, aes(color=ASP_RAYA_TIPO))+ 
+  geom_line(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO ), show.legend = FALSE) +
+  geom_area(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO ), show.legend = FALSE, alpha=0.2) +
+  geom_point(aes(INS_CARRERA1_NOMBRE, POR), show.legend = FALSE) + 
+  coord_flip() + 
+  labs(fill="Programa PAES") +
+  ylab("Porcentaje de admitidos") +
+  xlab("Carreras") +
+  ggtitle(label = "Admitidos a la sede Medellín por carrera y programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) +
+  theme_classic()  +
+  facet_grid(~ASP_RAYA_TIPO)
+
+color <- c("#1E90FF", "gray")
+
+ggplot(df %>% filter(ASP_RAYA_TIPO %in% c("Comunidades indígenas","Regular")), aes(color=ASP_RAYA_TIPO))+ 
+  geom_line(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO )) +
+  #geom_area(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO ), show.legend = FALSE, alpha=0.2) +
+  geom_point(aes(INS_CARRERA1_NOMBRE, POR)) + 
+  coord_flip() + 
+  labs(color="Tipo aspirante") +
+  ylab("Porcentaje de admitidos") +
+  xlab("Carreras") +
+  ggtitle(label = "Admitidos PAES a la sede Medellín por carrera", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) +
+  theme_classic() 
+
+color <- c( "#6E8B3D","gray")
+
+ggplot(df %>% filter(ASP_RAYA_TIPO %in% c("Mejores bachilleres de municipios pobres","Regular")), aes(color=ASP_RAYA_TIPO))+ 
+  geom_line(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO )) +
+  #geom_area(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO ), show.legend = FALSE, alpha=0.2) +
+  geom_point(aes(INS_CARRERA1_NOMBRE, POR)) + 
+  coord_flip()  + 
+  labs(color="Tipo aspirante") +
+  ylab("Porcentaje de admitidos") +
+  xlab("Carreras") +
+  ggtitle(label = "Admitidos PAES a la sede Medellín por carrera", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) +
+  theme_classic() 
+
+color <- c("#B23AEE","gray")
+
+ggplot(df %>% filter(ASP_RAYA_TIPO %in% c("Población afrocolombiana","Regular")), aes(color=ASP_RAYA_TIPO))+ 
+  geom_line(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO )) +
+  #geom_area(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO ), show.legend = FALSE, alpha=0.2) +
+  geom_point(aes(INS_CARRERA1_NOMBRE, POR)) + 
+  coord_flip()  + 
+  labs(color="Tipo aspirante") +
+  ylab("Porcentaje de admitidos") +
+  xlab("Carreras") +
+  ggtitle(label = "Admitidos PAES a la sede Medellín por carrera", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) +
+  theme_classic() 
+
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+df <- CARRERAS %>% filter(SEDE=="Palmira") %>% filter(ASP_RAYA_TIPO %in% c("IND","MBMP","Afrocolombianos","Regular")) %>% separate(INS_CARRERA1_NOMBRE,c("c1","INS_CARRERA1_NOMBRE"),sep = "Palmira ") %>%  select(-c1)
+df[df$ASP_RAYA_TIPO=="Afrocolombianos",3] <- "Población afrocolombiana" # "POBLACION NEGRA, AFROCOLOMBIANA, PALENQUERA Y RAIZAL"
+df[df$ASP_RAYA_TIPO=="MBMP",3] <- "Mejores bachilleres de municipios pobres"
+df[df$ASP_RAYA_TIPO=="IND",3] <- "Comunidades indígenas"
+
+color <- c("#1E90FF", "#6E8B3D", "#B23AEE","gray")
+ggplot(df, aes(color=ASP_RAYA_TIPO))+ 
+  geom_line(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO ), show.legend = FALSE) +
+  geom_area(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO ), show.legend = FALSE, alpha=0.2) +
+  geom_point(aes(INS_CARRERA1_NOMBRE, POR), show.legend = FALSE) + 
+  coord_flip() + 
+  labs(fill="Programa PAES") +
+  ylab("Porcentaje de admitidos") +
+  xlab("Carreras") +
+  ggtitle(label = "Admitidos a la sede Palmira por carrera y programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) +
+  theme_classic()  +
+  facet_grid(~ASP_RAYA_TIPO)
+
+color <- c("#1E90FF", "gray")
+
+ggplot(df %>% filter(ASP_RAYA_TIPO %in% c("Comunidades indígenas","Regular")), aes(color=ASP_RAYA_TIPO))+ 
+  geom_line(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO )) +
+  #geom_area(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO ), show.legend = FALSE, alpha=0.2) +
+  geom_point(aes(INS_CARRERA1_NOMBRE, POR)) + 
+  coord_flip() + 
+  labs(color="Tipo aspirante") +
+  ylab("Porcentaje de admitidos") +
+  xlab("Carreras") +
+  ggtitle(label = "Admitidos PAES a la sede Palmira por carrera", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) +
+  theme_classic() 
+
+color <- c( "#6E8B3D","gray")
+
+ggplot(df %>% filter(ASP_RAYA_TIPO %in% c("Mejores bachilleres de municipios pobres","Regular")), aes(color=ASP_RAYA_TIPO))+ 
+  geom_line(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO )) +
+  #geom_area(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO ), show.legend = FALSE, alpha=0.2) +
+  geom_point(aes(INS_CARRERA1_NOMBRE, POR)) + 
+  coord_flip()  + 
+  labs(color="Tipo aspirante") +
+  ylab("Porcentaje de admitidos") +
+  xlab("Carreras") +
+  ggtitle(label = "Admitidos PAES a la sede Palmira por carrera", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) +
+  theme_classic() 
+
+color <- c("#B23AEE","gray")
+
+ggplot(df %>% filter(ASP_RAYA_TIPO %in% c("Población afrocolombiana","Regular")), aes(color=ASP_RAYA_TIPO))+ 
+  geom_line(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO )) +
+  #geom_area(aes(INS_CARRERA1_NOMBRE, POR, group = ASP_RAYA_TIPO ), show.legend = FALSE, alpha=0.2) +
+  geom_point(aes(INS_CARRERA1_NOMBRE, POR)) + 
+  coord_flip()  + 
+  labs(color="Tipo aspirante") +
+  ylab("Porcentaje de admitidos") +
+  xlab("Carreras") +
+  ggtitle(label = "Admitidos PAES a la sede Palmira por carrera", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) +
+  theme_classic() 
+```
+
+## Admitidos PAES por município de residencia
+
+### Todos los admitidos PAES
+
+```{r, echo=FALSE}
+estudiantes_residencia <- PAES %>% group_by(COD_CIU_RES) %>% summarise("PAES"=n())
+shape_cundi.df2 <- shape_cundi.df %>% left_join(estudiantes_residencia, by=c("MPIOS"="COD_CIU_RES"))
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PAES) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="white") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "black",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void()  + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos PAES por residencia", subtitle =  "(Cohorte 2011-01)") 
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PAES) + 
+  geom_polygon( show.legend=F) +
+  geom_path(color="white") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "black",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") + 
+  xlim(125000,250000) + ylim(1850000,2000000) +
+  theme_void() 
+```
+
+
+### Admitidos PAES de las comunidades indígenas
+
+```{r, echo=FALSE}
+estudiantes_residencia <- PAES %>% filter(PAES=="Comunidades indígenas") %>% group_by(COD_CIU_RES) %>% summarise("PAES"=n())
+shape_cundi.df2 <- shape_cundi.df %>% left_join(estudiantes_residencia, by=c("MPIOS"="COD_CIU_RES"))
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PAES) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="white") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "black",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void() + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos PAES - Comunidades indígenas por residencia", subtitle =  "(Cohorte 2011-01)")
+```
+
+### Admitidos PAES de los mejores bachilleres
+
+```{r, echo=FALSE}
+estudiantes_residencia <- PAES %>% filter(PAES=="Mejores bachilleres") %>% group_by(COD_CIU_RES) %>% summarise("PAES"=n())
+shape_cundi.df2 <- shape_cundi.df %>% left_join(estudiantes_residencia, by=c("MPIOS"="COD_CIU_RES"))
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PAES) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="white") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "black",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void() + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos PAES - Mejores bachilleres por residencia", subtitle =  "(Cohorte 2011-01)")
+```
+
+### Admitidos PAES de los mejores bachilleres de municipios pobres
+
+```{r, echo=FALSE}
+estudiantes_residencia <- PAES %>% filter(PAES=="Mejores bachilleres de municipios pobres") %>% group_by(COD_CIU_RES) %>% summarise("PAES"=n())
+shape_cundi.df2 <- shape_cundi.df %>% left_join(estudiantes_residencia, by=c("MPIOS"="COD_CIU_RES"))
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PAES) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="white") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "black",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void() + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos PAES - Mejores bachilleres de municipios pobres por residencia", subtitle =  "(Cohorte 2011-01)")
+```
+
+### Admitidos PAES de las poblaciones afrocolombianas
+
+```{r, echo=FALSE}
+estudiantes_residencia <- PAES %>% filter(PAES=="Población afrocolombiana") %>% group_by(COD_CIU_RES) %>% summarise("PAES"=n())
+shape_cundi.df2 <- shape_cundi.df %>% left_join(estudiantes_residencia, by=c("MPIOS"="COD_CIU_RES"))
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PAES) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="white") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "black",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void() + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos PAES - Población afrocolombiana por residencia", subtitle =  "(Cohorte 2011-01)") 
+```
+
+
+## Admitidos PAES por departamento de residencia
+
+### Todos los admitidos PAES
+
+```{r, echo=FALSE}
+estudiantes_residencia <- PAES %>% group_by(COD_DEP_RES) %>% summarise("PAES_D"=n())
+shape_cundi.df2 <- shape_cundi.df %>% left_join(estudiantes_residencia, by=c("DPTO"="COD_DEP_RES"))
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PAES_D) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="transparent") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "white",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void() + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos PAES por residencia", subtitle =  "(Cohorte 2011-01)") 
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PAES_D) + 
+  geom_polygon( show.legend=F) +
+  geom_path(color="transparent") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "white",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD")+ 
+  xlim(125000,250000) + ylim(1850000,2000000) +
+  theme_void() 
+```
+
+
+### Admitidos PAES de las comunidades indígenas
+
+```{r, echo=FALSE}
+estudiantes_residencia <- PAES %>% filter(PAES=="Comunidades indígenas") %>% group_by(COD_DEP_RES) %>% summarise("PAES_D"=n())
+shape_cundi.df2 <- shape_cundi.df %>% left_join(estudiantes_residencia, by=c("DPTO"="COD_DEP_RES"))
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PAES_D) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="transparent") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "white",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void() + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos PAES - Comunidades indígenas por residencia", subtitle =  "(Cohorte 2011-01)")
+```
+
+### Admitidos PAES de los mejores bachilleres
+
+```{r, echo=FALSE}
+estudiantes_residencia <- PAES %>% filter(PAES=="Mejores bachilleres") %>% group_by(COD_DEP_RES) %>% summarise("PAES_D"=n())
+shape_cundi.df2 <- shape_cundi.df %>% left_join(estudiantes_residencia, by=c("DPTO"="COD_DEP_RES"))
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PAES_D) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="transparent") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "white",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void() + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos PAES - Mejores bachilleres por residencia", subtitle =  "(Cohorte 2011-01)") 
+```
+
+### Admitidos PAES de los mejores bachilleres de municipios pobres
+
+```{r, echo=FALSE}
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PAES_D) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="transparent") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "white",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void() + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos PAES - Mejores bachilleres de municipios pobres por residencia", subtitle =  "(Cohorte 2011-01)") 
+```
+
+### Admitidos PAES de las poblaciones afrocolombianas
+
+```{r, echo=FALSE}
+estudiantes_residencia <- PAES %>% filter(PAES=="Población afrocolombiana") %>% group_by(COD_DEP_RES) %>% summarise("PAES_D"=n())
+shape_cundi.df2 <- shape_cundi.df %>% left_join(estudiantes_residencia, by=c("DPTO"="COD_DEP_RES"))
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PAES_D) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="transparent") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "white",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void() + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos PAES - Población afrocolombiana por residencia", subtitle =  "(Cohorte 2011-01)") 
+```

@@ -1,0 +1,34 @@
+# Objetivos {#obj}
+
+## Objetivo general
+
+Llevar a cabo a través de técnicas estadísticas un estudio del impacto de los programas de admisión especial (PAES y PEAMA) en términos de admisión, permanencia y graduación, en el marco de las políticas de inclusión educativa en la Universidad Nacional de Colombia
+
+## Objetivos específicos
+
+- Presentar una descripción del panorama general de los estudiantes de nuestra población de estudio con respecto a la admisión, permanecía y graduación.
+- Validar las normas aplicadas al momento de admisión para los programas PAES y PEAMA.
+- Llevar a cabo la medición del impacto de los programas PAES y PEAMA a los estudiantes en el momento de la admisión.
+- Llevar a cabo la medición del impacto de los programas que Bienestar ofrece a los estudiantes PAES y PEAMA durante su permanencia en las áreas de acompañamiento integral, gestión y fomento socioeconómico, salud, cultura y deportes.
+
+## Ignorar por ahora
+
+You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(obj). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods).
+
+Figures and tables with captions will be placed in `figure` and `table` environments, respectively.
+
+```{r nice-fig, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
+par(mar = c(4, 4, .1, .1))
+plot(pressure, type = 'b', pch = 19)
+```
+
+Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab).
+
+```{r nice-tab, tidy=FALSE}
+knitr::kable(
+  head(iris, 3), caption = 'Here is a nice table!',
+  booktabs = TRUE
+)
+```
+
+You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015].

@@ -1,0 +1,257 @@
+# Impácto de los programas especiales de admisión PAES y PEAMA
+
+```{r,eval=TRUE,echo=FALSE,results='hide',warning=FALSE,error=FALSE,message=FALSE}
+library("tidyverse")
+m <- 4809 ## Estudiantes matriculados regulares
+
+IMPACTO <- data.frame(GRUPO=c("Regular","PAES","PEAMA"),
+                      ASPIRANTES=c(70631,4432,1540),
+                      ADMITIDOS=c(5872,606,225),
+                      DES_TEMPRANA=c(5872-m,606-408,225-166),
+                      DES_ACADEMICA=c(1445+95,124,15),
+                      DES_NO_ACADEM=c(587+39,48,9),
+                      GRADUADO=c(129+4+2158,133,30),
+                      ESTUDIANTES=c(m-(1445+95)-(587+39)-(129+4+2158),103,112)
+                      )
+
+ADMITIDO <- IMPACTO %>% mutate(PROBABILIDAD=ADMITIDOS*100/ASPIRANTES) %>% 
+  select(-ASPIRANTES,-ADMITIDOS, -DES_TEMPRANA,  -DES_ACADEMICA, -DES_NO_ACADEM,-GRADUADO, -ESTUDIANTES)
+
+IMPACTO_PORCENTUAL <- IMPACTO %>% 
+  mutate(
+    "Admitido no matriculado"=DES_TEMPRANA*100/ADMITIDOS,
+    "Desertor académico"=DES_ACADEMICA*100/ADMITIDOS,
+    "Desertor no académico"=DES_NO_ACADEM*100/ADMITIDOS,
+    "Graduados"=GRADUADO*100/ADMITIDOS,
+    "Estudiantes"=ESTUDIANTES*100/ADMITIDOS
+  ) %>% select(-ASPIRANTES,-ADMITIDOS, -DES_TEMPRANA,  -DES_ACADEMICA, -DES_NO_ACADEM,
+               -GRADUADO, -ESTUDIANTES) %>% gather("Desenlace","Cantidad",2:6)
+
+load("P2011_1.RData")
+PAES <- P2011_1 %>% filter(TIPO_INS=="PAES",ADMITIDO=="Sí")
+REGULAR <- P2011_1 %>% filter(TIPO_INS=="Regular",ADMITIDO=="Sí")
+PEAMA <- P2011_1 %>% filter(TIPO_INS=="PEAMA",ADMITIDO=="Sí")
+rm(P2011_1);gc()
+shape_cundi.df <- read.table("shape.txt", header = TRUE, sep="|",fileEncoding = "UTF-8")
+shape_cundi.df$NOMBRE_DPT <- as.character(shape_cundi.df$NOMBRE_DPT)
+shape_cundi.df[shape_cundi.df$NOMBRE_DPT=="SANTAFE DE BOGOTA D.C","NOMBRE_DPT"] <- "BOGOTÁ D.C."
+shape_cundi.df[shape_cundi.df$NOMBRE_DPT=="ARCHIPIELAGO DE SAN ANDRES PROVIDENCIA Y SANTA CATALINA","NOMBRE_DPT"] <- "SAN ANDRES"
+shape_cundi.df$NOMBRE_MPI <- as.character(shape_cundi.df$NOMBRE_MPI)
+shape_cundi.df[shape_cundi.df$NOMBRE_MPI=="SANTAFE DE BOGOTA D.C.","NOMBRE_MPI"] <- "BOGOTÁ D.C."
+shape_cundi.df$NOMBRE_DPT <- iconv(shape_cundi.df$NOMBRE_DPT, to="ASCII//TRANSLIT")
+shape_cundi.df$NOMBRE_MPI <- iconv(shape_cundi.df$NOMBRE_MPI, to="ASCII//TRANSLIT")
+shape_cundi.df$NOMBRE_DPT <- as.factor(shape_cundi.df$NOMBRE_DPT)
+shape_cundi.df$NOMBRE_MPI <- as.factor(shape_cundi.df$NOMBRE_MPI)
+shape_bogota.df <- read.table("shape_2.txt", header = TRUE, sep="|",fileEncoding = "UTF-8")
+```
+
+## Porcentajes de admisión
+
+```{r,echo=FALSE}
+color <- c("#FFD700", "#0000FF", "#FF0000")
+ggplot(ADMITIDO, aes(GRUPO, PROBABILIDAD, fill=GRUPO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Porcentaje de admitidos de acuerdo al tipo de estudiante", subtitle =  "(Cohorte 2011-01)") +
+  xlab("Tipo de estudiante") +
+  ylab("Porcentaje de admitidos dentro del grupo") + 
+  theme_classic() +
+  scale_fill_manual(values = color) 
+```
+
+## Ubicación de los admitidos
+
+### Departamentos
+
+Todos los admitidos PAES
+
+```{r, echo=FALSE}
+estudiantes_residencia <- PAES %>% group_by(COD_DEP_RES) %>% summarise("PAES_D"=n())
+shape_cundi.df2 <- shape_cundi.df %>% left_join(estudiantes_residencia, by=c("DPTO"="COD_DEP_RES"))
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PAES_D) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="transparent") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "white",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void() + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos PAES por residencia", subtitle =  "(Cohorte 2011-01)") 
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PAES_D) + 
+  geom_polygon( show.legend=F) +
+  geom_path(color="transparent") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "white",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD")+ 
+  xlim(125000,250000) + ylim(1850000,2000000) +
+  theme_void() 
+```
+
+Todos los admitidos PEAMA
+
+```{r, echo=FALSE}
+estudiantes_residencia <- PEAMA %>% group_by(COD_DEP_RES) %>% summarise("PEAMA_D"=n())
+shape_cundi.df2 <- shape_cundi.df %>% left_join(estudiantes_residencia, by=c("DPTO"="COD_DEP_RES"))
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PEAMA_D) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="transparent") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "white",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void() + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos PEAMA por residencia", subtitle =  "(Cohorte 2011-01)")
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PEAMA_D) + 
+  geom_polygon( show.legend=F) +
+  geom_path(color="transparent") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "white",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD")+ 
+  xlim(125000,250000) + ylim(1850000,2000000) +
+  theme_void() 
+```
+
+Todos los admitidos REGULARES
+
+```{r, echo=FALSE}
+estudiantes_residencia <- REGULAR %>% group_by(COD_DEP_RES) %>% summarise("REGULARES_D"=n())
+shape_cundi.df2 <- shape_cundi.df %>% left_join(estudiantes_residencia, by=c("DPTO"="COD_DEP_RES"))
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=REGULARES_D) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="transparent") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "white",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void() + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos REGULARES por residencia", subtitle =  "(Cohorte 2011-01)")
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=REGULARES_D) + 
+  geom_polygon( show.legend=F) +
+  geom_path(color="transparent") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "white",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD")+ 
+  xlim(125000,250000) + ylim(1850000,2000000) +
+  theme_void() 
+```
+
+
+### Municipios
+
+Todos los admitidos PAES
+
+```{r, echo=FALSE}
+estudiantes_residencia <- PAES %>% group_by(COD_CIU_RES) %>% summarise("PAES"=n())
+shape_cundi.df2 <- shape_cundi.df %>% left_join(estudiantes_residencia, by=c("MPIOS"="COD_CIU_RES"))
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PAES) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="white") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "black",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void()  + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos PAES por residencia", subtitle =  "(Cohorte 2011-01)") 
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PAES) + 
+  geom_polygon( show.legend=F) +
+  geom_path(color="white") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "black",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") + 
+  xlim(125000,250000) + ylim(1850000,2000000) +
+  theme_void() 
+```
+
+Todos los admitidos PEAMA
+
+```{r, echo=FALSE}
+estudiantes_residencia <- PEAMA %>% group_by(COD_CIU_RES) %>% summarise("PEAMA"=n())
+shape_cundi.df2 <- shape_cundi.df %>% left_join(estudiantes_residencia, by=c("MPIOS"="COD_CIU_RES"))
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PEAMA) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="white") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "black",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void()  + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos PEAMA por residencia", subtitle =  "(Cohorte 2011-01)") 
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=PEAMA) + 
+  geom_polygon( show.legend=F) +
+  geom_path(color="white") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "black",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") + 
+  xlim(125000,250000) + ylim(1850000,2000000) +
+  theme_void() 
+
+```
+
+Todos los admitidos Regulares
+
+```{r, echo=FALSE}
+estudiantes_residencia <- REGULAR %>% group_by(COD_CIU_RES) %>% summarise("REGULARES"=n())
+shape_cundi.df2 <- shape_cundi.df %>% left_join(estudiantes_residencia, by=c("MPIOS"="COD_CIU_RES"))
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=REGULARES) + 
+  geom_polygon( show.legend=T) +
+  geom_path(color="white") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "black",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") +
+  theme_void()  + 
+  labs(fill="Número de\nestudiantes") + 
+  ggtitle(label = "Admitidos REGULARES por residencia", subtitle =  "(Cohorte 2011-01)") 
+
+ggplot(shape_cundi.df2) + 
+  aes(long,lat,group=group,fill=REGULARES) + 
+  geom_polygon( show.legend=F) +
+  geom_path(color="white") +
+  coord_equal() +
+  geom_polygon(data = shape_bogota.df, aes(x=long, y = lat,group=group), fill = "transparent", color = "black",show.legend=F) +
+  scale_fill_gradient(low = "#FFEC8B", high = "black", na.value = "#C1CDCD") + 
+  xlim(125000,250000) + ylim(1850000,2000000) +
+  theme_void() 
+
+```
+
+
+
+## Desenlaces
+
+```{r,echo=FALSE}
+color <- c(c("#BEBEBE", "#66CD00", "#458B00", "#0000EE", "#EE4000"))
+ggplot(IMPACTO_PORCENTUAL, aes(GRUPO, Cantidad, fill=Desenlace)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Porcentaje de estudiantes en cada desenlace\nde acuerdo al tipo de estudiante", subtitle =  "(Cohorte 2011-01)") +
+  labs(fill="Desenlace") +
+  xlab("Tipo de estudiante") +
+  ylab("Porcentaje de estudiantes dentro del grupo") + 
+  theme_classic() +
+  coord_flip() +
+  scale_fill_manual(values = color) 
+```
+
+
+
+

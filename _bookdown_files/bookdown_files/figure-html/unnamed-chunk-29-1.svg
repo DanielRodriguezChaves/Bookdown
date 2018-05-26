@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 504.00 360.00'>
+<defs>
+  <style type='text/css'><![CDATA[
+    line, polyline, path, rect, circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
+<rect x='0.00' y='0.00' width='504.00' height='360.00' style='stroke-width: 1.07; stroke: #FFFFFF; fill: #FFFFFF;' />
+<defs>
+  <clipPath id='cpMzMuOTU2Mnw0OTguNTIxfDMyOS41Njl8MzguNDIzMQ=='>
+    <rect x='33.96' y='38.42' width='464.56' height='291.15' />
+  </clipPath>
+</defs>
+<rect x='33.96' y='38.42' width='464.56' height='291.15' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' clip-path='url(#cpMzMuOTU2Mnw0OTguNTIxfDMyOS41Njl8MzguNDIzMQ==)' />
+<rect x='47.36' y='51.66' width='80.41' height='264.68' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; fill: #40E0D0;' clip-path='url(#cpMzMuOTU2Mnw0OTguNTIxfDMyOS41Njl8MzguNDIzMQ==)' />
+<rect x='136.70' y='239.65' width='80.41' height='76.68' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; fill: #CDAD00;' clip-path='url(#cpMzMuOTU2Mnw0OTguNTIxfDMyOS41Njl8MzguNDIzMQ==)' />
+<rect x='226.04' y='162.97' width='80.41' height='153.36' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; fill: #B22222;' clip-path='url(#cpMzMuOTU2Mnw0OTguNTIxfDMyOS41Njl8MzguNDIzMQ==)' />
+<rect x='315.37' y='274.28' width='80.41' height='42.05' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; fill: #CD6600;' clip-path='url(#cpMzMuOTU2Mnw0OTguNTIxfDMyOS41Njl8MzguNDIzMQ==)' />
+<rect x='404.71' y='303.97' width='80.41' height='12.37' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; fill: #BEBEBE;' clip-path='url(#cpMzMuOTU2Mnw0OTguNTIxfDMyOS41Njl8MzguNDIzMQ==)' />
+<rect x='404.71' y='296.55' width='80.41' height='7.42' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; fill: #BEBEBE;' clip-path='url(#cpMzMuOTU2Mnw0OTguNTIxfDMyOS41Njl8MzguNDIzMQ==)' />
+<defs>
+  <clipPath id='cpMHw1MDR8MzYwfDA='>
+    <rect x='0.00' y='0.00' width='504.00' height='360.00' />
+  </clipPath>
+</defs>
+<polyline points='33.96,329.57 33.96,38.42 ' style='stroke-width: 1.07; stroke-linecap: butt;' clip-path='url(#cpMHw1MDR8MzYwfDA=)' />
+<g clip-path='url(#cpMHw1MDR8MzYwfDA=)'><text x='24.02' y='319.55' style='font-size: 8.80px; fill: #4D4D4D; font-family: Arial;' textLength='5.01px' lengthAdjust='spacingAndGlyphs'>0</text></g>
+<g clip-path='url(#cpMHw1MDR8MzYwfDA=)'><text x='19.01' y='245.35' style='font-size: 8.80px; fill: #4D4D4D; font-family: Arial;' textLength='10.01px' lengthAdjust='spacingAndGlyphs'>30</text></g>
+<g clip-path='url(#cpMHw1MDR8MzYwfDA=)'><text x='19.01' y='171.14' style='font-size: 8.80px; fill: #4D4D4D; font-family: Arial;' textLength='10.01px' lengthAdjust='spacingAndGlyphs'>60</text></g>
+<g clip-path='url(#cpMHw1MDR8MzYwfDA=)'><text x='19.01' y='96.93' style='font-size: 8.80px; fill: #4D4D4D; font-family: Arial;' textLength='10.01px' lengthAdjust='spacingAndGlyphs'>90</text></g>
+<polyline points='31.22,316.34 33.96,316.34 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMHw1MDR8MzYwfDA=)' />
+<polyline points='31.22,242.13 33.96,242.13 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMHw1MDR8MzYwfDA=)' />
+<polyline points='31.22,167.92 33.96,167.92 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMHw1MDR8MzYwfDA=)' />
+<polyline points='31.22,93.71 33.96,93.71 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMHw1MDR8MzYwfDA=)' />
+<polyline points='33.96,329.57 498.52,329.57 ' style='stroke-width: 1.07; stroke-linecap: butt;' clip-path='url(#cpMHw1MDR8MzYwfDA=)' />
+<polyline points='87.56,332.31 87.56,329.57 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMHw1MDR8MzYwfDA=)' />
+<polyline points='176.90,332.31 176.90,329.57 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMHw1MDR8MzYwfDA=)' />
+<polyline points='266.24,332.31 266.24,329.57 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMHw1MDR8MzYwfDA=)' />
+<polyline points='355.58,332.31 355.58,329.57 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMHw1MDR8MzYwfDA=)' />
+<polyline points='444.92,332.31 444.92,329.57 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' clip-path='url(#cpMHw1MDR8MzYwfDA=)' />
+<g clip-path='url(#cpMHw1MDR8MzYwfDA=)'><text x='73.30' y='340.94' style='font-size: 8.80px; fill: #4D4D4D; font-family: Arial;' textLength='28.52px' lengthAdjust='spacingAndGlyphs'>Bogotá</text></g>
+<g clip-path='url(#cpMHw1MDR8MzYwfDA=)'><text x='156.64' y='340.94' style='font-size: 8.80px; fill: #4D4D4D; font-family: Arial;' textLength='40.52px' lengthAdjust='spacingAndGlyphs'>Manizales</text></g>
+<g clip-path='url(#cpMHw1MDR8MzYwfDA=)'><text x='249.23' y='340.94' style='font-size: 8.80px; fill: #4D4D4D; font-family: Arial;' textLength='34.02px' lengthAdjust='spacingAndGlyphs'>Medellín</text></g>
+<g clip-path='url(#cpMHw1MDR8MzYwfDA=)'><text x='340.32' y='340.94' style='font-size: 8.80px; fill: #4D4D4D; font-family: Arial;' textLength='30.51px' lengthAdjust='spacingAndGlyphs'>Palmira</text></g>
+<g clip-path='url(#cpMHw1MDR8MzYwfDA=)'><text x='413.90' y='340.94' style='font-size: 8.80px; fill: #4D4D4D; font-family: Arial;' textLength='62.03px' lengthAdjust='spacingAndGlyphs'>Sin información</text></g>
+<g clip-path='url(#cpMHw1MDR8MzYwfDA=)'><text x='235.35' y='354.29' style='font-size: 11.00px; font-family: Arial;' textLength='61.78px' lengthAdjust='spacingAndGlyphs'>Sede andina</text></g>
+<g clip-path='url(#cpMHw1MDR8MzYwfDA=)'><text transform='translate(13.35,240.86) rotate(-90)' style='font-size: 11.00px; font-family: Arial;' textLength='113.73px' lengthAdjust='spacingAndGlyphs'>Número de estudiantes</text></g>
+<g clip-path='url(#cpMHw1MDR8MzYwfDA=)'><text x='33.96' y='31.01' style='font-size: 9.90px; font-family: Arial;' textLength='81.71px' lengthAdjust='spacingAndGlyphs'>(Cohorte 2011-01)</text></g>
+<g clip-path='url(#cpMHw1MDR8MzYwfDA=)'><text x='33.96' y='14.79' style='font-size: 13.20px; font-family: Arial;' textLength='203.06px' lengthAdjust='spacingAndGlyphs'>Admitidos PEAMA por sede andina</text></g>
+</svg>

@@ -1,0 +1,1098 @@
+# Permanencia PEAMA
+
+```{r,eval=TRUE,echo=FALSE,results='hide',warning=FALSE,error=FALSE,message=FALSE}
+library("tidyverse")
+load("PEAMA.RData")
+```
+
+## Máximo periodo de avance 2
+
+### SPN:
+
+```{r,echo=FALSE}
+df <- PEAMA %>%  group_by(`PERIODO SPN (AVANCE)`,`SEDE PRESENCIA NACIONAL`) %>% count()
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(`PERIODO SPN (AVANCE)`) %>% mutate("Porcentaje"=round(n/N,2)*100)
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df, aes(`PERIODO SPN (AVANCE)`, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA según máximo periodo de avance en la sede de presencia nacional", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Máximo periodo de avance") +
+  ylab("Número de estudiantes") + 
+  theme_classic()
+
+ggplot(df) + 
+  geom_line(aes(`PERIODO SPN (AVANCE)`, n, color=`SEDE PRESENCIA NACIONAL`,group = `SEDE PRESENCIA NACIONAL`), show.legend = FALSE)  + 
+  geom_point(aes(`PERIODO SPN (AVANCE)`, n, color=`SEDE PRESENCIA NACIONAL`), show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA según máximo periodo de avance en la sede de presencia nacional", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) + 
+  labs(color="Sede de presencia nacional") +
+  xlab("Máximo periodo de avance") +
+  ylab("Número de estudiantes") + 
+  theme_classic()  +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`)
+
+ggplot(df2) + 
+  geom_line(aes(`PERIODO SPN (AVANCE)`, Porcentaje, color=`SEDE PRESENCIA NACIONAL`,group = `SEDE PRESENCIA NACIONAL`))  + 
+  geom_point(aes(`PERIODO SPN (AVANCE)`, Porcentaje, color=`SEDE PRESENCIA NACIONAL`))  + 
+  ggtitle(label = "Matriculados PEAMA según máximo periodo de avance en la sede de presencia nacional", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) + 
+  labs(color="Sede de presencia nacional") +
+  xlab("Máximo periodo de avance") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() 
+```
+
+### SA:
+
+```{r,echo=FALSE}
+df <- PEAMA %>%  group_by(`Periodo movilidad`,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(`Periodo movilidad`="Sin información"))
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(`Periodo movilidad`) %>% mutate("Porcentaje"=round(n/N,2)*100)
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df, aes(`Periodo movilidad`, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA según periodo de movilidad a la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programa") +
+  xlab("Máximo periodo de avance") +
+  ylab("Número de estudiantes") + 
+  theme_classic()
+
+ggplot(df, aes(`Periodo movilidad`, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA según periodo de movilidad a la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programa") +
+  xlab("Máximo periodo de avance") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+
+ggplot(df2, aes(`Periodo movilidad`, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA según periodo de movilidad a la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programa") +
+  xlab("Máximo periodo de avance") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(df2) + 
+  geom_line(aes(`Periodo movilidad`, Porcentaje, color=`SEDE PRESENCIA NACIONAL`,group = `SEDE PRESENCIA NACIONAL`))  + 
+  geom_point(aes(`Periodo movilidad`, Porcentaje, color=`SEDE PRESENCIA NACIONAL`))  + 
+  ggtitle(label = "Matriculados PEAMA según periodo de movilidad a la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) + 
+  labs(color="Sede andina") +
+  xlab("Máximo periodo de avance") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() 
+```
+
+## Matriculados por semestre
+
+### SPN:
+
+```{r,echo=FALSE}
+df <- PEAMA %>% select(`SEDE PRESENCIA NACIONAL`,`2011-01_Matric.`,`2011-03_Matric.`,`2012-01_Matric.`,`2012-03_Matric.`,`2013-01_Matric.`,`2013-03_Matric.`,`2014-01_Matric.`,`2014-03_Matric.`,`2015-01_Matric.`) %>% gather(key = "YEAR", value = "SI",`2011-01_Matric.`:`2015-01_Matric.`,na.rm = TRUE) %>%  group_by(YEAR, `SEDE PRESENCIA NACIONAL`) %>%  count() %>% arrange(YEAR) %>% separate(YEAR,c("YEAR","M"), sep = "_") %>%  select(-M)
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(YEAR) %>% mutate("Porcentaje"=round(n/N,2)*100)
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df, aes(YEAR, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA en la sede de presencia nacional por periodo", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic()
+
+ggplot(df) + 
+  geom_line(aes(YEAR, n, color=`SEDE PRESENCIA NACIONAL`,group = `SEDE PRESENCIA NACIONAL`))  + 
+  geom_point(aes(YEAR, n, color=`SEDE PRESENCIA NACIONAL`))  + 
+  ggtitle(label = "Matriculados PEAMA en la sede de presencia nacional por periodo", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) + 
+  labs(color="Sede de presencia nacional") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic() 
+
+ggplot(df2) + 
+  geom_line(aes(YEAR, Porcentaje, color=`SEDE PRESENCIA NACIONAL`,group = `SEDE PRESENCIA NACIONAL`))  + 
+  geom_point(aes(YEAR, Porcentaje, color=`SEDE PRESENCIA NACIONAL`))  + 
+  ggtitle(label = "Matriculados PEAMA en la sede de presencia nacional por periodo", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) + 
+  labs(color="Sede de presencia nacional") +
+  xlab("Periodo") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() 
+
+ggplot(df2) + 
+  geom_line(aes(YEAR, Porcentaje, color=`SEDE PRESENCIA NACIONAL`,group = `SEDE PRESENCIA NACIONAL`), show.legend = FALSE)  + 
+  geom_point(aes(YEAR, Porcentaje, color=`SEDE PRESENCIA NACIONAL`), show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA por periodo y programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) + 
+  labs(color="Sede de presencia nacional") +
+  xlab("Periodo") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`)
+```
+
+### SA:
+
+```{r,echo=FALSE}
+df <- PEAMA %>% select(`SEDE PRESENCIA NACIONAL`,`SA2011-03`,`SA2012-01`,`SA2012-03`,`SA2013-01`,`SA2013-03`,`SA2014-01`,`SA2014-03`,`SA2015-01`,`SA2015-03`,`SA2016-01`,`SA2016-03`) %>% gather(key = "YEAR", value = "SI",`SA2011-03`:`SA2016-03`,na.rm = TRUE) %>%  group_by(YEAR, `SEDE PRESENCIA NACIONAL`) %>%  count()  %>% separate(YEAR,c("T1","YEAR"), sep = "SA") %>%   select(-T1) %>% arrange(YEAR)
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(YEAR) %>% mutate("Porcentaje"=round(n/N,2)*100)
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df, aes(YEAR, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA en la sede andina por periodo", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programa") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic()+ 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(df) + 
+  geom_line(aes(YEAR, n, color=`SEDE PRESENCIA NACIONAL`,group = `SEDE PRESENCIA NACIONAL`))  + 
+  geom_point(aes(YEAR, n, color=`SEDE PRESENCIA NACIONAL`))  + 
+  ggtitle(label = "Matriculados PEAMA en la sede andina por periodo", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) + 
+  labs(color="Sede andina") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic() + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(df2) + 
+  geom_line(aes(YEAR, Porcentaje, color=`SEDE PRESENCIA NACIONAL`,group = `SEDE PRESENCIA NACIONAL`))  + 
+  geom_point(aes(YEAR, Porcentaje, color=`SEDE PRESENCIA NACIONAL`))  + 
+  ggtitle(label = "Matriculados PEAMA en la sede andina por periodo", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) + 
+  labs(color="Sede andina") +
+  xlab("Periodo") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(df2) + 
+  geom_line(aes(YEAR, Porcentaje, color=`SEDE PRESENCIA NACIONAL`,group = `SEDE PRESENCIA NACIONAL`), show.legend = FALSE)  + 
+  geom_point(aes(YEAR, Porcentaje, color=`SEDE PRESENCIA NACIONAL`), show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA en la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) + 
+  labs(color="Sede andina") +
+  xlab("Periodo") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`)+ 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(df2, aes(YEAR, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA en la sede andina por periodo", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programa") +
+  xlab("Periodo") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic()+ 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`)
+```
+
+## Cancelaciones por semestre
+
+### SPN:
+
+```{r,echo=FALSE}
+df <- PEAMA %>% select(`SEDE PRESENCIA NACIONAL`, `2011-1 Cancelación`,`2011-3 Cancelación`,`2012-1 Cancelación`,`2012-3 Cancelación`,`2013-1 Cancelación`,`2013-3 Cancelación`,`2014-1 Cancelación`) %>% gather(key = "YEAR", value = "SI",`2011-1 Cancelación`:`2014-1 Cancelación`,na.rm = TRUE) %>%  group_by(YEAR, `SEDE PRESENCIA NACIONAL`) %>%  summarise(n=sum(SI)) %>% arrange(YEAR) %>% separate(YEAR,c("YEAR","T1"), sep = " ") %>%  select(-T1) %>% filter(n>0)
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(YEAR) %>% mutate("Porcentaje"=round(n/N,2)*100)
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df, aes(YEAR, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Estudiantes PEAMA que cancelaron por periodo y programa en la sede de presencia nacional", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic()
+
+ggplot(df, aes(YEAR, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Estudiantes PEAMA que cancelaron por periodo y programa en la sede de presencia nacional", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`) + 
+  theme_classic()
+
+ggplot(df2, aes(YEAR, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Estudiantes PEAMA que cancelaron por periodo y programa en la sede de presencia nacional", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`) + 
+  theme_classic()
+
+```
+
+### SA:
+
+```{r,echo=FALSE}
+df <- PEAMA %>% select(`SEDE PRESENCIA NACIONAL`,`2011-3 Cancelación SA`,`2012-1 Cancelación SA`,`2012-3 Cancelación SA`,`2013-1 Cancelación SA`,`2013-3 Cancelación SA`,`2014-1 Cancelación SA`,`2014-3 Cancelación SA`,`2015-1 Cancelación SA`,`2015-3 Cancelación SA`,`2016-1 Cancelación SA`,`2016-3 Cancelación SA`) %>% gather(key = "YEAR", value = "SI",`2011-3 Cancelación SA`:`2016-3 Cancelación SA`,na.rm = TRUE) %>%  group_by(YEAR, `SEDE PRESENCIA NACIONAL`) %>%  summarise(n=sum(SI)) %>% arrange(YEAR) %>% separate(YEAR,c("YEAR","T1","T2"), sep = " ") %>%  select(-T1,-T2)
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(YEAR) %>% mutate("Porcentaje"=round(n/N,2)*100)
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df, aes(YEAR, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Estudiantes PEAMA que cancelaron por periodo en la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programa") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic() + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(df, aes(YEAR, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Estudiantes PEAMA que cancelaron por periodo en la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programa") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+ 
+  scale_y_continuous(breaks=0:2,labels=0:2)
+
+ggplot(df) + 
+  geom_line(aes(YEAR, n, color=`SEDE PRESENCIA NACIONAL`,group = `SEDE PRESENCIA NACIONAL`), show.legend = FALSE)  + 
+  geom_point(aes(YEAR, n, color=`SEDE PRESENCIA NACIONAL`), show.legend = FALSE)  + 
+  ggtitle(label = "Estudiantes PEAMA que cancelaron por periodo en la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) + 
+  labs(color="Sede andina") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic()  + 
+  theme_classic() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`) + 
+  scale_y_continuous(breaks=0:2,labels=0:2) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(df2) + 
+  geom_line(aes(YEAR, Porcentaje, color=`SEDE PRESENCIA NACIONAL`,group = `SEDE PRESENCIA NACIONAL`), show.legend = FALSE)  + 
+  geom_point(aes(YEAR, Porcentaje, color=`SEDE PRESENCIA NACIONAL`), show.legend = FALSE)  + 
+  ggtitle(label = "Estudiantes PEAMA que cancelaron por periodo en la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) + 
+  labs(color="Sede andina") +
+  xlab("Periodo") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(df2, aes(YEAR, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Estudiantes PEAMA que cancelaron por periodo en la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programa") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+ 
+  scale_y_continuous(breaks=0:2,labels=0:2)
+```
+
+## Promedio por semestre
+
+### SPN:
+
+```{r,echo=FALSE,warning=FALSE}
+df <- PEAMA %>% select(`SEDE PRESENCIA NACIONAL`, `Promedio 2011-1`,`Promedio 2011-3`,`Promedio 2012-1`,`Promedio 2012-3`,`Promedio 2013-1`,`Promedio 2013-3`,`Promedio 2014-1`) %>% gather(key = "YEAR", value = "Promedio",`Promedio 2011-1`:`Promedio 2014-1`,na.rm = TRUE)   %>% separate(YEAR,c("T1","YEAR"), sep = " ") %>%   select(-T1) %>% arrange(YEAR)
+df$Promedio <- as.numeric(df$Promedio)
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df, aes(YEAR,Promedio, fill=`SEDE PRESENCIA NACIONAL`)) +
+  geom_boxplot() +
+  scale_fill_manual(values = color) +
+  xlab("Periodo") +
+  ylab("Promedio") + 
+  theme_classic() + 
+  ggtitle(label = "Promedio en el semestre de los matriculados PEAMA", subtitle =  "(Cohorte 2011-01)")+
+  coord_flip()
+
+ggplot(df, aes(YEAR,Promedio, fill=`SEDE PRESENCIA NACIONAL`)) +
+  geom_boxplot(outlier.shape = NA) +
+  scale_y_continuous(limits = c(1, 5)) +
+  scale_fill_manual(values = color) +
+  xlab("Periodo") +
+  ylab("Promedio") + 
+  theme_classic() + 
+  ggtitle(label = "Promedio en el semestre de los matriculados PEAMA", subtitle =  "(Cohorte 2011-01)")+ coord_flip()
+
+ggplot(df, aes(YEAR,Promedio, fill=`SEDE PRESENCIA NACIONAL`)) +
+  geom_boxplot( show.legend = FALSE) +
+  scale_fill_manual(values = color) +
+  xlab("Periodo") +
+  ylab("Promedio") + 
+  theme_classic() + 
+  ggtitle(label = "Promedio en el semestre de los matriculados PEAMA", subtitle =  "(Cohorte 2011-01)")+ 
+  coord_flip()+
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`)
+
+ggplot(df, aes(YEAR,Promedio, fill=`SEDE PRESENCIA NACIONAL`)) +
+  geom_boxplot(outlier.shape = NA, show.legend = FALSE) +
+  scale_y_continuous(limits = c(1, 5)) +
+  scale_fill_manual(values = color) +
+  xlab("Periodo") +
+  ylab("Promedio") + 
+  theme_classic() + 
+  ggtitle(label = "Promedio en el semestre de los matriculados PEAMA", subtitle =  "(Cohorte 2011-01)")+ 
+  coord_flip() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`)
+```
+
+### SA:
+
+```{r,echo=FALSE,warning=FALSE}
+df <- PEAMA %>% select(`SEDE PRESENCIA NACIONAL`, `Promedio 2011-3SA`,`Promedio 2012-1SA`,`Promedio 2012-3SA`,`Promedio 2013-1SA`,`Promedio 2013-3SA`,`Promedio 2014-1SA`,`Promedio 2014-3SA`,`Promedio 2015-1SA`,`Promedio 2015-3SA`,`Promedio 2016-1SA`,`Promedio 2016-3SA`) %>% gather(key = "YEAR", value = "Promedio",`Promedio 2011-3SA`:`Promedio 2016-3SA`,na.rm = TRUE)   %>% separate(YEAR,c("T1","YEAR"), sep = " ") %>%   select(-T1) %>% separate(YEAR,c("YEAR","T1"), sep = "SA") %>% select(-T1) %>% arrange(YEAR)
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df, aes(YEAR,Promedio, fill=`SEDE PRESENCIA NACIONAL`)) +
+  geom_boxplot() +
+  scale_fill_manual(values = color) +
+  xlab("Periodo") +
+  ylab("Promedio") + 
+  theme_classic() + 
+  ggtitle(label = "Promedio en el semestre de los matriculados PEAMA en la sede andina", subtitle =  "(Cohorte 2011-01)")+
+  coord_flip()
+
+ggplot(df, aes(YEAR,Promedio, fill=`SEDE PRESENCIA NACIONAL`)) +
+  geom_boxplot(outlier.shape = NA) +
+  scale_y_continuous(limits = c(2.5, 4.5)) +
+  scale_fill_manual(values = color) +
+  xlab("Periodo") +
+  ylab("Promedio") + 
+  theme_classic() + 
+  ggtitle(label = "Promedio en el semestre de los matriculados PEAMA en la sede andina", subtitle =  "(Cohorte 2011-01)") + 
+  coord_flip()
+
+ggplot(df, aes(YEAR,Promedio, fill=`SEDE PRESENCIA NACIONAL`)) +
+  geom_boxplot( show.legend = FALSE) +
+  scale_fill_manual(values = color) +
+  xlab("Periodo") +
+  ylab("Promedio") + 
+  theme_classic() + 
+  ggtitle(label = "Promedio en el semestre de los matriculados PEAMA en la sede andina", subtitle =  "(Cohorte 2011-01)")+ 
+  coord_flip()+
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`)
+
+ggplot(df, aes(YEAR,Promedio, fill=`SEDE PRESENCIA NACIONAL`)) +
+  geom_boxplot(outlier.shape = NA, show.legend = FALSE) +
+  scale_y_continuous(limits = c(2.5, 4.5)) +
+  scale_fill_manual(values = color) +
+  xlab("Periodo") +
+  ylab("Promedio") + 
+  theme_classic() + 
+  ggtitle(label = "Promedio en el semestre de los matriculados PEAMA en la sede andina", subtitle =  "(Cohorte 2011-01)")+ 
+  coord_flip() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`)
+
+```
+
+## PAPA por semestre
+
+### SPN:
+
+```{r,echo=FALSE,warning=FALSE}
+df <- PEAMA %>% select(`SEDE PRESENCIA NACIONAL`, `PAPA  2011-1`,`PAPA  2011-3`,`PAPA  2012-1`,`PAPA  2012-3`,`PAPA  2013-1`,`PAPA  2013-3`,`PAPA  2014-1`) %>% gather(key = "YEAR", value = "PAPA",`PAPA  2011-1`:`PAPA  2014-1`,na.rm = TRUE)   %>% separate(YEAR,c("T1","YEAR"), sep = "  ") %>%   select(-T1) %>% arrange(YEAR)
+df$PAPA <- as.numeric(df$PAPA)
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df, aes(YEAR,PAPA, fill=`SEDE PRESENCIA NACIONAL`)) +
+  geom_boxplot() +
+  scale_fill_manual(values = color) +
+  xlab("Periodo") +
+  ylab("PAPA") + 
+  theme_classic() + 
+  ggtitle(label = "PAPA por semestre de los matriculados PEAMA", subtitle =  "(Cohorte 2011-01)")+
+  coord_flip()
+
+ggplot(df, aes(YEAR,PAPA, fill=`SEDE PRESENCIA NACIONAL`)) +
+  geom_boxplot(outlier.shape = NA) +
+  scale_y_continuous(limits = c(1, 5)) +
+  scale_fill_manual(values = color) +
+  xlab("Periodo") +
+  ylab("PAPA") + 
+  theme_classic() + 
+  ggtitle(label = "PAPA por semestre de los matriculados PEAMA", subtitle =  "(Cohorte 2011-01)")+ coord_flip()
+
+ggplot(df, aes(YEAR,PAPA, fill=`SEDE PRESENCIA NACIONAL`)) +
+  geom_boxplot( show.legend = FALSE) +
+  scale_fill_manual(values = color) +
+  xlab("Periodo") +
+  ylab("PAPA") + 
+  theme_classic() + 
+  ggtitle(label = "PAPA por semestre de los matriculados PEAMA", subtitle =  "(Cohorte 2011-01)")+ 
+  coord_flip()+
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`)
+
+ggplot(df, aes(YEAR,PAPA, fill=`SEDE PRESENCIA NACIONAL`)) +
+  geom_boxplot(outlier.shape = NA, show.legend = FALSE) +
+  scale_y_continuous(limits = c(1, 5)) +
+  scale_fill_manual(values = color) +
+  xlab("Periodo") +
+  ylab("PAPA") + 
+  theme_classic() + 
+  ggtitle(label = "PAPA por semestre de los matriculados PEAMA", subtitle =  "(Cohorte 2011-01)")+ 
+  coord_flip() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`)
+
+```
+
+### SA:
+
+```{r,echo=FALSE,warning=FALSE}
+df <- PEAMA %>% select(`SEDE PRESENCIA NACIONAL`,`PAPA  2011-3SA`,`PAPA  2012-1SA`,`PAPA  2012-3SA`,`PAPA  2013-1SA`,`PAPA  2013-3SA`,`PAPA  2014-1SA`,`PAPA  2014-3SA`,`PAPA  2015-1SA`,`PAPA  2015-3SA`,`PAPA  2016-1SA`,`PAPA  2016-3SA`) %>% gather(key = "YEAR", value = "PAPA",`PAPA  2011-3SA`:`PAPA  2016-3SA`,na.rm = TRUE)   %>% separate(YEAR,c("T1","YEAR"), sep = "  ") %>%   select(-T1) %>% separate(YEAR,c("YEAR","T1"), sep = "SA") %>% select(-T1) %>% arrange(YEAR)
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df, aes(YEAR,PAPA, fill=`SEDE PRESENCIA NACIONAL`)) +
+  geom_boxplot() +
+  scale_fill_manual(values = color) +
+  xlab("Periodo") +
+  ylab("PAPA") + 
+  theme_classic() + 
+  ggtitle(label = "PAPA por semestre de los matriculados PEAMA en la sede andina", subtitle =  "(Cohorte 2011-01)")+
+  coord_flip()
+
+ggplot(df, aes(YEAR,PAPA, fill=`SEDE PRESENCIA NACIONAL`)) +
+  geom_boxplot(outlier.shape = NA) +
+  scale_y_continuous(limits = c(2.5, 4.5)) +
+  scale_fill_manual(values = color) +
+  xlab("Periodo") +
+  ylab("PAPA") + 
+  theme_classic() + 
+  ggtitle(label = "PAPA por semestre de los matriculados PEAMA en la sede andina", subtitle =  "(Cohorte 2011-01)")+ coord_flip()
+
+ggplot(df, aes(YEAR,PAPA, fill=`SEDE PRESENCIA NACIONAL`)) +
+  geom_boxplot( show.legend = FALSE) +
+  scale_fill_manual(values = color) +
+  xlab("Periodo") +
+  ylab("PAPA") + 
+  theme_classic() + 
+  ggtitle(label = "PAPA por semestre de los matriculados PEAMA en la sede andina", subtitle =  "(Cohorte 2011-01)")+ 
+  coord_flip()+
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`)
+
+ggplot(df, aes(YEAR,PAPA, fill=`SEDE PRESENCIA NACIONAL`)) +
+  geom_boxplot(outlier.shape = NA, show.legend = FALSE) +
+  scale_y_continuous(limits = c(2.5, 4.5)) +
+  scale_fill_manual(values = color) +
+  xlab("Periodo") +
+  ylab("PAPA") + 
+  theme_classic() + 
+  ggtitle(label = "PAPA por semestre de los matriculados PEAMA en la sede andina", subtitle =  "(Cohorte 2011-01)")+ 
+  coord_flip() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`)
+```
+
+## Deserciones por semestre
+
+```{r,echo=FALSE}
+df <- PEAMA %>% filter(DESENLACE=="dac"|DESENLACE=="dnac") %>% group_by(`SEDE PRESENCIA NACIONAL`,PERIODO_DESENLACE) %>% count() 
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(PERIODO_DESENLACE) %>% mutate("Porcentaje"=round(n/N,2)*100)
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df, aes(PERIODO_DESENLACE, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Estudiantes PEAMA que desertaron por periodo en la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programa") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic() + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(df, aes(PERIODO_DESENLACE, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Estudiantes PEAMA que desertaron por periodo en la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programa") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+ 
+  scale_y_continuous(breaks=0:2,labels=0:2)
+
+ggplot(df) + 
+  geom_line(aes(PERIODO_DESENLACE, n, color=`SEDE PRESENCIA NACIONAL`,group = `SEDE PRESENCIA NACIONAL`), show.legend = FALSE)  + 
+  geom_point(aes(PERIODO_DESENLACE, n, color=`SEDE PRESENCIA NACIONAL`), show.legend = FALSE)  + 
+  ggtitle(label = "Estudiantes PEAMA que desertaron por periodo en la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) + 
+  labs(color="Sede andina") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic()  + 
+  theme_classic() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`) + 
+  scale_y_continuous(breaks=0:2,labels=0:2) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(df2) + 
+  geom_line(aes(PERIODO_DESENLACE, Porcentaje, color=`SEDE PRESENCIA NACIONAL`,group = `SEDE PRESENCIA NACIONAL`), show.legend = FALSE)  + 
+  geom_point(aes(PERIODO_DESENLACE, Porcentaje, color=`SEDE PRESENCIA NACIONAL`), show.legend = FALSE)  + 
+  ggtitle(label = "Estudiantes PEAMA que desertaron por periodo en la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) + 
+  labs(color="Sede andina") +
+  xlab("Periodo") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(df2, aes(PERIODO_DESENLACE, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Estudiantes PEAMA que desertaron por periodo en la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programa") +
+  xlab("Periodo") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+## Deserciones académicas por semestre
+
+```{r,echo=FALSE}
+df <- PEAMA %>% filter(DESENLACE=="dac") %>% group_by(`SEDE PRESENCIA NACIONAL`,PERIODO_DESENLACE) %>% count() 
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(PERIODO_DESENLACE) %>% mutate("Porcentaje"=round(n/N,2)*100)
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df, aes(PERIODO_DESENLACE, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Estudiantes PEAMA que desertaron debido a razones académicas por periodo en la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programa") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic() + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(df, aes(PERIODO_DESENLACE, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Estudiantes PEAMA que desertaron debido a razones académicas por periodo en la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programa") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+ 
+  scale_y_continuous(breaks=0:2,labels=0:2)
+
+ggplot(df) + 
+  geom_line(aes(PERIODO_DESENLACE, n, color=`SEDE PRESENCIA NACIONAL`,group = `SEDE PRESENCIA NACIONAL`), show.legend = FALSE)  + 
+  geom_point(aes(PERIODO_DESENLACE, n, color=`SEDE PRESENCIA NACIONAL`), show.legend = FALSE)  + 
+  ggtitle(label = "Estudiantes PEAMA que desertaron debido a razones académicas por periodo en la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) + 
+  labs(color="Sede andina") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic()  + 
+  theme_classic() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`) + 
+  scale_y_continuous(breaks=0:2,labels=0:2) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(df2) + 
+  geom_line(aes(PERIODO_DESENLACE, Porcentaje, color=`SEDE PRESENCIA NACIONAL`,group = `SEDE PRESENCIA NACIONAL`), show.legend = FALSE)  + 
+  geom_point(aes(PERIODO_DESENLACE, Porcentaje, color=`SEDE PRESENCIA NACIONAL`), show.legend = FALSE)  + 
+  ggtitle(label = "Estudiantes PEAMA que desertaron debido a razones académicas por periodo en la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) + 
+  labs(color="Sede andina") +
+  xlab("Periodo") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(df2, aes(PERIODO_DESENLACE, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Estudiantes PEAMA que desertaron debido a razones académicas por periodo en la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programa") +
+  xlab("Periodo") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+## Deserciones no académicas por semestre
+
+```{r,echo=FALSE}
+df <- PEAMA %>% filter(DESENLACE=="dnac") %>% group_by(`SEDE PRESENCIA NACIONAL`,PERIODO_DESENLACE) %>% count() 
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(PERIODO_DESENLACE) %>% mutate("Porcentaje"=round(n/N,2)*100)
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df, aes(PERIODO_DESENLACE, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Estudiantes PEAMA que desertaron debido a razones no académicas por periodo en la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programa") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic() + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(df, aes(PERIODO_DESENLACE, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Estudiantes PEAMA que desertaron debido a razones no académicas por periodo en la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programa") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+ 
+  scale_y_continuous(breaks=0:2,labels=0:2)
+
+ggplot(df) + 
+  geom_line(aes(PERIODO_DESENLACE, n, color=`SEDE PRESENCIA NACIONAL`,group = `SEDE PRESENCIA NACIONAL`), show.legend = FALSE)  + 
+  geom_point(aes(PERIODO_DESENLACE, n, color=`SEDE PRESENCIA NACIONAL`), show.legend = FALSE)  + 
+  ggtitle(label = "Estudiantes PEAMA que desertaron debido a razones no académicas por periodo en la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) + 
+  labs(color="Sede andina") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic()  + 
+  theme_classic() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`) + 
+  scale_y_continuous(breaks=0:2,labels=0:2) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(df2) + 
+  geom_line(aes(PERIODO_DESENLACE, Porcentaje, color=`SEDE PRESENCIA NACIONAL`,group = `SEDE PRESENCIA NACIONAL`), show.legend = FALSE)  + 
+  geom_point(aes(PERIODO_DESENLACE, Porcentaje, color=`SEDE PRESENCIA NACIONAL`), show.legend = FALSE)  + 
+  ggtitle(label = "Estudiantes PEAMA que desertaron debido a razones no académicas por periodo en la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_color_manual(values = color) + 
+  labs(color="Sede andina") +
+  xlab("Periodo") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(df2, aes(PERIODO_DESENLACE, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Estudiantes PEAMA que desertaron debido a razones no académicas por periodo en la sede andina", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programa") +
+  xlab("Periodo") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+## Traslados de carrera
+
+```{r,echo=FALSE}
+df <- PEAMA %>%  filter(`Traslado de carrera`==1) %>% group_by(`SEDE PRESENCIA NACIONAL`, `periodo traslado`) %>% count()
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df, aes(`periodo traslado`, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Cambios de carrera en los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic() 
+
+ggplot(df, aes(`periodo traslado`, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Cambios de carrera en los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic()  +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`)  + 
+  scale_y_continuous(breaks=1:2,labels=1:2) 
+```
+
+Periodo desde que inicio el traslado de carrera
+
+```{r,echo=FALSE}
+df <- PEAMA %>%  filter(`Traslado de carrera`==1) %>% group_by(`SEDE PRESENCIA NACIONAL`, `PERIODO desde el que inició el cambio`) %>% count()
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df, aes(`PERIODO desde el que inició el cambio`, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Cambios de carrera en los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic() 
+
+ggplot(df, aes(`PERIODO desde el que inició el cambio`, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Cambios de carrera en los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic()  +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`)  + 
+  scale_y_continuous(breaks=1:2,labels=1:2) 
+```
+
+## Traslados de sede
+
+```{r,echo=FALSE}
+df <- PEAMA %>%  filter(`Traslado entre sedes SA`==1) %>% group_by(`SEDE PRESENCIA NACIONAL`, `periodo traslado`) %>% count()
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df, aes(`periodo traslado`, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Cambios de sede en los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic() 
+
+ggplot(df, aes(`periodo traslado`, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Cambios de sede en los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic()  +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`)  + 
+  scale_y_continuous(breaks=1:2,labels=1:2) 
+```
+
+Periodo desde que inicio el traslado de sede
+
+```{r,echo=FALSE}
+df <- PEAMA %>%  filter(`Traslado entre sedes SA`==1) %>% group_by(`SEDE PRESENCIA NACIONAL`, `PERIODO desde el que inició el cambio`) %>% count()
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df, aes(`PERIODO desde el que inició el cambio`, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Cambios de sede en los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic() + 
+  scale_y_continuous(breaks=1:2,labels=1:2) 
+
+ggplot(df, aes(`PERIODO desde el que inició el cambio`, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Cambios de sede en los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("Periodo") +
+  ylab("Número de estudiantes") + 
+  theme_classic()  +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`)  + 
+  scale_y_continuous(breaks=1:2,labels=1:2) 
+```
+
+## Graduados por periodo
+
+```{r,echo=FALSE, message=FALSE}
+df <- PEAMA %>%  filter(DESENLACE=="grad") %>% group_by(`SEDE PRESENCIA NACIONAL`, PERIODO_DESENLACE) %>% count()
+
+df2 <- df %>% ungroup() %>%  left_join(PEAMA %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=n()) %>%  select(`SEDE PRESENCIA NACIONAL`,N) %>%  distinct()) %>% mutate("Porcentaje"=round(n/N,2)*100)
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df, aes(PERIODO_DESENLACE, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Graduados de los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("Periodo") +
+  ylab("Graduados") + 
+  theme_classic() + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(df, aes(PERIODO_DESENLACE, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Graduados de los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("Periodo") +
+  ylab("Graduados") + 
+  theme_classic()  +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`)+ 
+  scale_y_continuous(breaks=1:9,labels=1:9) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplot(df2, aes(PERIODO_DESENLACE, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Graduados de los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("Periodo") +
+  ylab("Porcentaje de graduados") + 
+  theme_classic()  +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`)+ 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+## Graduados total
+
+```{r,echo=FALSE, message=FALSE}
+df <- PEAMA %>%  filter(DESENLACE=="grad") %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% count()
+
+
+df2 <- df %>% ungroup() %>%  left_join(PEAMA %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=n()) %>%  select(`SEDE PRESENCIA NACIONAL`,N) %>%  distinct()) %>% mutate("Porcentaje"=round(n/N,2)*100)
+
+
+df3 <- df2 %>% rename("Graduados"=n,"Matriculados"=N) %>% gather("CATEGORIA","TOTAL",Graduados,Matriculados,Porcentaje)
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df3 %>%  filter(CATEGORIA!="Porcentaje"), aes(CATEGORIA, TOTAL, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Bloqueo por completar ciclo de estudios de los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("Periodo") +
+  ylab("") + 
+  theme_classic() 
+
+ggplot(df3%>%  filter(CATEGORIA!="Porcentaje"), aes(CATEGORIA, TOTAL, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Bloqueo por completar ciclo de estudios de los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("Periodo") +
+  ylab("") + 
+  theme_classic()  +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`)
+
+ggplot(df2, aes(`SEDE PRESENCIA NACIONAL`, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", position="dodge", show.legend = FALSE)  + 
+  ggtitle(label = "Bloqueo por completar ciclo de estudios de los\nmatriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("") +
+  ylab("Porcentaje de estudiantes graduados") + 
+  theme_classic() +
+  coord_flip()
+```
+
+## Desertores total
+
+```{r,echo=FALSE, message=FALSE}
+df <- PEAMA %>%  filter(DESENLACE=="dac"|DESENLACE=="dnac") %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% count()
+
+df2 <- df %>% ungroup() %>%  left_join(PEAMA %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=n()) %>%  select(`SEDE PRESENCIA NACIONAL`,N) %>%  distinct()) %>% mutate("Porcentaje"=round(n/N,2)*100)
+
+df3 <- df2 %>% rename("Desertores"=n,"Matriculados"=N) %>% gather("CATEGORIA","TOTAL",Desertores,Matriculados,Porcentaje)
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df3 %>%  filter(CATEGORIA!="Porcentaje"), aes(CATEGORIA, TOTAL, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Desertores en los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("") +
+  ylab("Número de estudiantes") + 
+  theme_classic() 
+
+ggplot(df3 %>%  filter(CATEGORIA!="Porcentaje"), aes(CATEGORIA, TOTAL, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Desertores en los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("Periodo") +
+  ylab("") + 
+  theme_classic()  +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`)
+
+ggplot(df2, aes(`SEDE PRESENCIA NACIONAL`, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", position="dodge", show.legend = FALSE)  + 
+  ggtitle(label = "Desertores en los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("") +
+  ylab("Porcentaje de estudiantes bloqueados") + 
+  theme_classic() +
+  coord_flip()
+```
+
+
+### Desertores académicos
+
+```{r,echo=FALSE, message=FALSE}
+df <- PEAMA %>%  filter(DESENLACE=="dac") %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% count()
+
+df2 <- df %>% ungroup() %>%  left_join(PEAMA %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=n()) %>%  select(`SEDE PRESENCIA NACIONAL`,N) %>%  distinct()) %>% mutate("Porcentaje"=round(n/N,2)*100)
+
+df3 <- df2 %>% rename("Desertores"=n,"Matriculados"=N) %>% gather("CATEGORIA","TOTAL",Desertores,Matriculados,Porcentaje)
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df3 %>%  filter(CATEGORIA!="Porcentaje"), aes(CATEGORIA, TOTAL, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Desertores académicos en los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("") +
+  ylab("Número de estudiantes") + 
+  theme_classic() 
+
+ggplot(df3 %>%  filter(CATEGORIA!="Porcentaje"), aes(CATEGORIA, TOTAL, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Desertores académicos en los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("Periodo") +
+  ylab("") + 
+  theme_classic()  +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`)
+
+ggplot(df2, aes(`SEDE PRESENCIA NACIONAL`, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", position="dodge", show.legend = FALSE)  + 
+  ggtitle(label = "Desertores académicos en los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("") +
+  ylab("Porcentaje de estudiantes bloqueados") + 
+  theme_classic() +
+  coord_flip()
+
+```
+
+### Desertores no académicos
+
+```{r,echo=FALSE, message=FALSE}
+df <- PEAMA %>%  filter(DESENLACE=="dnac") %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% count()
+
+df2 <- df %>% ungroup() %>%  left_join(PEAMA %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=n()) %>%  select(`SEDE PRESENCIA NACIONAL`,N) %>%  distinct()) %>% mutate("Porcentaje"=round(n/N,2)*100)
+
+df3 <- df2 %>% rename("Desertores"=n,"Matriculados"=N) %>% gather("CATEGORIA","TOTAL",Desertores,Matriculados,Porcentaje)
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df3 %>%  filter(CATEGORIA!="Porcentaje"), aes(CATEGORIA, TOTAL, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Desertores no académicos en los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("") +
+  ylab("") + 
+  theme_classic() 
+
+ggplot(df3%>%  filter(CATEGORIA!="Porcentaje"), aes(CATEGORIA, TOTAL, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Desertores no académicos en los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("Periodo") +
+  ylab("") + 
+  theme_classic()  +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`)
+
+ggplot(df2, aes(`SEDE PRESENCIA NACIONAL`, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", position="dodge", show.legend = FALSE)  + 
+  ggtitle(label = "Desertores no académicos en los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("") +
+  ylab("Porcentaje de estudiantes bloqueados") + 
+  theme_classic() +
+  coord_flip()
+```
+
+## Doble titulación
+
+```{r,echo=FALSE, message=FALSE}
+df <- PEAMA %>%  filter(`Bloqueo doble titulación SA`==1) %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% count()
+
+df2 <- df %>% ungroup() %>%  left_join(PEAMA %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=n()) %>%  select(`SEDE PRESENCIA NACIONAL`,N) %>%  distinct()) %>% mutate("Porcentaje"=round(n/N,2)*100)
+
+df3 <- df2 %>% rename("Bloqueados"=n,"Matriculados"=N) %>% gather("CATEGORIA","TOTAL",Bloqueados,Matriculados,Porcentaje)
+
+color <- c("#A52A2A", "#CD6600", "#96CDCD")
+
+ggplot(df3 %>%  filter(CATEGORIA!="Porcentaje"), aes(CATEGORIA, TOTAL, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Bloqueo por doble titulación en los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("Periodo") +
+  ylab("") + 
+  theme_classic() 
+
+ggplot(df3%>%  filter(CATEGORIA!="Porcentaje"), aes(CATEGORIA, TOTAL, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Bloqueo por doble titulación en los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("Periodo") +
+  ylab("") + 
+  theme_classic()  +
+  facet_wrap(~`SEDE PRESENCIA NACIONAL`)
+
+ggplot(df2, aes(`SEDE PRESENCIA NACIONAL`, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", position="dodge", show.legend = FALSE)  + 
+  ggtitle(label = "Bloqueo por doble titulación en los\nmatriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Programas PEAMA") +
+  xlab("") +
+  ylab("Porcentaje de estudiantes bloqueados") + 
+  theme_classic() 
+```
+
