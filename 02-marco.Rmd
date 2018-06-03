@@ -1,5 +1,3 @@
-\mainmatter
-
 # Marco conceptual {#marco}
 
 ## Análisis de correspondencias múltiples

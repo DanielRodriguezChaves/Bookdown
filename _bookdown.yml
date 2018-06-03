@@ -19,3 +19,5 @@ language:
   ui:
     edit: Edit
     chapter_name: "Capítulo "
+rmd_files:
+  latex: ["01-intro.Rmd","02-marco.Rmd","03-metodologia.Rmd","04-admisionPAES.Rmd","05-admisionPEAMA.Rmd","06-normatividad.Rmd","07-impacto.Rmd","08-permanenciaPAES.Rmd","09-permanenciaPEAMA.Rmd","10-bienestarPAES.Rmd","11-bienestarPEAMA.Rmd","12-references.Rmd"]
