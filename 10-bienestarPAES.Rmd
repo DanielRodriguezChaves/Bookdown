@@ -1562,7 +1562,7 @@ ggplot(df2, aes(YEAR, Porcentaje, fill=SUBACCESO)) +
 
 ## Desenlace de la vida académica según participación en áreas de bienestar
 
-### Graduados según participación en áreas de bienestar
+### Completó ciclo de estudios previsto según participación en áreas de bienestar
 
 ```{r,echo=FALSE,message=FALSE}
 df <- bind_rows(
@@ -1581,11 +1581,11 @@ df <- bind_rows(
 color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
 ggplot(df , aes(Categoria, n, fill=SUBACCESO)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Programas PAES") +
   xlab("Paticipación en programas de bienestar") +
-  ylab("Número de graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() + coord_flip()
 ```
 
@@ -1606,11 +1606,11 @@ df <- bind_rows(
 color <- c("#666666","#0000FF")
 ggplot(df , aes(SUBACCESO, n, fill=Apoyo)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Presento apoyos") +
   xlab("") +
-  ylab("Número de graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() +
   facet_wrap(~Categoria) + 
   coord_flip()
@@ -1956,7 +1956,7 @@ ggplot(df , aes(SUBACCESO, n, fill=Apoyo)) +
   coord_flip()
 ```
 
-### Graduados con programas de bienestar acompañamiento en cualquier sede
+### Completó ciclo de estudios previsto con programas de bienestar acompañamiento en cualquier sede
 
 ```{r,echo=FALSE,message=FALSE}
 df <- bind_rows(
@@ -2111,21 +2111,21 @@ df2 <- df %>% mutate(Categoria=paste(Categoria,Apoyo, sep = ": ")) %>% select(-A
 color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
 ggplot(df2 , aes(Categoria, n, fill=SUBACCESO)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Programas PAES") +
   xlab("Participación en los programas de bienestar") +
-  ylab("Graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() + coord_flip()
 
 color <- c("#666666","#0000FF")
 ggplot(df , aes(SUBACCESO, n, fill=Apoyo)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Presento apoyos") +
   xlab("") +
-  ylab("Graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() +
   facet_wrap(~Categoria) + 
   coord_flip()
@@ -2647,7 +2647,7 @@ ggplot(df , aes(SUBACCESO, n, fill=Apoyo)) +
   coord_flip()
 ```
 
-### Graduados con programas de bienestar gestión y fomento socio-económico en cualquier sede
+### Completó ciclo de estudios previsto con programas de bienestar gestión y fomento socio-económico en cualquier sede
 
 ```{r,echo=FALSE,message=FALSE}
 df <- bind_rows(
@@ -2788,21 +2788,21 @@ df2 <- df %>% mutate(Categoria=paste(Categoria,Apoyo, sep = ": ")) %>% select(-A
 color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
 ggplot(df2 , aes(Categoria, n, fill=SUBACCESO)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Programas PAES") +
   xlab("Participación en bienestar") +
-  ylab("Graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() + coord_flip()
 
 color <- c("#666666","#0000FF")
 ggplot(df , aes(SUBACCESO, n, fill=Apoyo)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Presento apoyos") +
   xlab("") +
-  ylab("Graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() +
   facet_wrap(~Categoria) + 
   coord_flip()
@@ -3262,7 +3262,7 @@ ggplot(df , aes(SUBACCESO, n, fill=Apoyo)) +
   coord_flip()
 ```
 
-### Graduados con programas de bienestar salud en cualquier sede
+### Completó ciclo de estudios previsto con programas de bienestar salud en cualquier sede
 
 ```{r,echo=FALSE,message=FALSE}
 df <- bind_rows(
@@ -3367,21 +3367,21 @@ df2 <- df %>% mutate(Categoria=paste(Categoria,Apoyo, sep = ": ")) %>% select(-A
 color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
 ggplot(df2 , aes(Categoria, n, fill=SUBACCESO)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Programas PAES") +
   xlab("Participación en los programas de bienestar") +
-  ylab("Graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() + coord_flip()
 
 color <- c("#666666","#0000FF")
 ggplot(df , aes(SUBACCESO, n, fill=Apoyo)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Presento apoyos") +
   xlab("") +
-  ylab("Graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() +
   facet_wrap(~Categoria) + 
   coord_flip()
@@ -3781,7 +3781,7 @@ ggplot(df , aes(SUBACCESO, n, fill=Apoyo)) +
 
 ```
 
-### Graduados con programas de bienestar deporte en cualquier sede
+### Completó ciclo de estudios previsto con programas de bienestar deporte en cualquier sede
 
 ```{r,echo=FALSE,message=FALSE}
 df <- bind_rows(
@@ -3894,21 +3894,21 @@ df2 <- df %>% mutate(Categoria=paste(Categoria,Apoyo, sep = ": ")) %>% select(-A
 color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
 ggplot(df2 , aes(Categoria, n, fill=SUBACCESO)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Programas PAES") +
   xlab("Participación en los programas de bienestar") +
-  ylab("Graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() + coord_flip()
 
 color <- c("#666666","#0000FF")
 ggplot(df , aes(SUBACCESO, n, fill=Apoyo)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Presento apoyos") +
   xlab("") +
-  ylab("Graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() +
   facet_wrap(~Categoria) + 
   coord_flip()
@@ -4318,7 +4318,7 @@ ggplot(df , aes(SUBACCESO, n, fill=Apoyo)) +
   coord_flip()
 ```
 
-### Graduados con programas de bienestar cultura en cualquier sede
+### Completó ciclo de estudios previsto con programas de bienestar cultura en cualquier sede
 
 ```{r,echo=FALSE,message=FALSE}
 df <- bind_rows(
@@ -4424,21 +4424,21 @@ df2 <- df %>% mutate(Categoria=paste(Categoria,Apoyo, sep = ": ")) %>% select(-A
 color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
 ggplot(df2 , aes(Categoria, n, fill=SUBACCESO)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Programas PAES") +
   xlab("Participación en programas de bienestar") +
-  ylab("Graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() + coord_flip()
 
 color <- c("#666666","#0000FF")
 ggplot(df , aes(SUBACCESO, n, fill=Apoyo)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PAES por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Presento apoyos") +
   xlab("") +
-  ylab("Graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() +
   facet_wrap(~Categoria) + 
   coord_flip()
@@ -4706,7 +4706,1321 @@ ggplot(df , aes(SUBACCESO, n, fill=Apoyo)) +
 
 ```
 
+## Cantidad de participaciones
 
+```{r,echo=FALSE,message=FALSE}
+############## Bienestar ############
+
+### B_Acomp_int
+
+df <-  PAES %>%  group_by(B_Acomp_int) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_Acomp_int,SUBACCESO) %>% count() %>% replace_na(list(B_Acomp_int="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_Acomp_int) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_Acomp_int, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar acompañamiento integral", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_Acomp_int, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar acompañamiento integral", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_Acomp_int, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar acompañamiento integral", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+### B_Acomp_int_gest_proy
+
+df <-  PAES %>%  group_by(B_Acomp_int_gest_proy) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_Acomp_int_gest_proy,SUBACCESO) %>% count() %>% replace_na(list(B_Acomp_int_gest_proy="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_Acomp_int_gest_proy) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_Acomp_int_gest_proy, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar acompañamiento integral\nGestion de proyectos", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_Acomp_int_gest_proy, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar acompañamiento integral\nGestion de proyectos", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_Acomp_int_gest_proy, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar acompañamiento integral\nGestion de proyectos", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+### B_Acomp_int_inducc_prepar_camb
+                                                      
+df <-  PAES %>%  group_by(B_Acomp_int_inducc_prepar_camb) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_Acomp_int_inducc_prepar_camb,SUBACCESO) %>% count() %>% replace_na(list(B_Acomp_int_inducc_prepar_camb="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_Acomp_int_inducc_prepar_camb) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_Acomp_int_inducc_prepar_camb, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar acompañamiento integral\nPreparacion para el cambio", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_Acomp_int_inducc_prepar_camb, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar acompañamiento integral\nPreparacion para el cambio", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_Acomp_int_inducc_prepar_camb, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar acompañamiento integral\nPreparacion para el cambio", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+                                                      
+### B_Acomp_int_vid_universit 
+
+df <-  PAES %>%  group_by(B_Acomp_int_vid_universit) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_Acomp_int_vid_universit,SUBACCESO) %>% count() %>% replace_na(list(B_Acomp_int_vid_universit="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_Acomp_int_vid_universit) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_Acomp_int_vid_universit, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar acompañamiento integral\nIntroducción vida universitaria", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_Acomp_int_vid_universit, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar acompañamiento integral\nIntroducción vida universitaria", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_Acomp_int_vid_universit, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar acompañamiento integral\nIntroducción vida universitaria", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+                                                      
+### "B_Acomp_conviv"           
+
+df <-  PAES %>%  group_by(B_Acomp_conviv) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_Acomp_conviv,SUBACCESO) %>% count() %>% replace_na(list(B_Acomp_conviv="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_Acomp_conviv) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_Acomp_conviv, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar acompañamiento integral\nConvivencia y cotidianidad", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_Acomp_conviv, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar acompañamiento integral\nConvivencia y cotidianidad", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_Acomp_conviv, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar acompañamiento integral\nConvivencia y cotidianidad", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+### "B_Acomp_int_inc_disca" 
+
+df <-  PAES %>%  group_by(B_Acomp_int_inc_disca) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_Acomp_int_inc_disca,SUBACCESO) %>% count() %>% replace_na(list(B_Acomp_int_inc_disca="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_Acomp_int_inc_disca) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_Acomp_int_inc_disca, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar acompañamiento integral\nInducción y discapacidad", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_Acomp_int_inc_disca, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar acompañamiento integral\nInducción y discapacidad", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_Acomp_int_inc_disca, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar acompañamiento integral\nInducción y discapacidad", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+### "B_GYFSE"  
+
+df <-  PAES %>%  group_by(B_GYFSE) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_GYFSE,SUBACCESO) %>% count() %>% replace_na(list(B_GYFSE="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_GYFSE) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_GYFSE, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar GYFSE", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_GYFSE, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar GYFSE", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_GYFSE, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar GYFSE", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+### "B_GYFSE_ALOJAM"
+
+df <-  PAES %>%  group_by(B_GYFSE_ALOJAM) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_GYFSE_ALOJAM,SUBACCESO) %>% count() %>% replace_na(list(B_GYFSE_ALOJAM="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_GYFSE_ALOJAM) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_GYFSE_ALOJAM, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar GYFSE\nAlojamiento", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_GYFSE_ALOJAM, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar GYFSE\nAlojamiento", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_GYFSE_ALOJAM, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar GYFSE\nAlojamiento", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+### "B_GYFSE_ALIM"  
+
+df <-  PAES %>%  group_by(B_GYFSE_ALIM) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_GYFSE_ALIM,SUBACCESO) %>% count() %>% replace_na(list(B_GYFSE_ALIM="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_GYFSE_ALIM) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_GYFSE_ALIM, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar GYFSE\nAlimentación", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_GYFSE_ALIM, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar GYFSE\nAlimentación", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_GYFSE_ALIM, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar GYFSE\nAlimentación", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+### "B_GYFSE_TRANSP"
+
+df <-  PAES %>%  group_by(B_GYFSE_TRANSP) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_GYFSE_TRANSP,SUBACCESO) %>% count() %>% replace_na(list(B_GYFSE_TRANSP="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_GYFSE_TRANSP) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_GYFSE_TRANSP, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar GYFSE\nTransporte", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_GYFSE_TRANSP, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar GYFSE\nTransporte", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_GYFSE_TRANSP, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar GYFSE\nTransporte", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+### "B_GYFSE_PREST"   
+
+df <-  PAES %>%  group_by(B_GYFSE_PREST) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_GYFSE_PREST,SUBACCESO) %>% count() %>% replace_na(list(B_GYFSE_PREST="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_GYFSE_PREST) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_GYFSE_PREST, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar GYFSE\nPrestamo económico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_GYFSE_PREST, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar GYFSE\nPrestamo económico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_GYFSE_PREST, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar GYFSE\nPrestamo económico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+### "B_GYFSE_OTRO"  
+
+df <-  PAES %>%  group_by(B_GYFSE_OTRO) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_GYFSE_OTRO,SUBACCESO) %>% count() %>% replace_na(list(B_GYFSE_OTRO="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_GYFSE_OTRO) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_GYFSE_OTRO, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar GYFSE\nOtro apoyo", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_GYFSE_OTRO, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar GYFSE\nOtro apoyo", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_GYFSE_OTRO, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar GYFSE\nOtro apoyo", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+### "B_GYFSE_APOY_ECON"
+
+df <-  PAES %>%  group_by(B_GYFSE_APOY_ECON) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_GYFSE_APOY_ECON,SUBACCESO) %>% count() %>% replace_na(list(B_GYFSE_APOY_ECON="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_GYFSE_APOY_ECON) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_GYFSE_APOY_ECON, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar GYFSE\nApoyo económico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_GYFSE_APOY_ECON, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar GYFSE\nApoyo económico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_GYFSE_APOY_ECON, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar GYFSE\nApoyo económico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+### "B_SALUD"       
+
+df <-  PAES %>%  group_by(B_SALUD) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_SALUD,SUBACCESO) %>% count() %>% replace_na(list(B_SALUD="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_SALUD) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_SALUD, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Salud", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_SALUD, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Salud", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_SALUD, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Salud", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+### "B_SALUD_dism_fact_r" 
+
+df <-  PAES %>%  group_by(B_SALUD_dism_fact_r) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_SALUD_dism_fact_r,SUBACCESO) %>% count() %>% replace_na(list(B_SALUD_dism_fact_r="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_SALUD_dism_fact_r) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_SALUD_dism_fact_r, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Salud\nDisminución de factores de riesgo", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_SALUD_dism_fact_r, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Salud\nDisminución de factores de riesgo", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_SALUD_dism_fact_r, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Salud\nDisminución de factores de riesgo", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+### "B_SALUD_aten_prima_urgen"
+
+df <-  PAES %>%  group_by(B_SALUD_aten_prima_urgen) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_SALUD_aten_prima_urgen,SUBACCESO) %>% count() %>% replace_na(list(B_SALUD_aten_prima_urgen="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_SALUD_aten_prima_urgen) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_SALUD_aten_prima_urgen, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Salud\nAtención primaria y de emergencias", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_SALUD_aten_prima_urgen, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Salud\nAtención primaria y de emergencias", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_SALUD_aten_prima_urgen, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Salud\nAtención primaria y de emergencias", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+### "B_SALUD_p_y_p"   
+
+df <-  PAES %>%  group_by(B_SALUD_p_y_p) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_SALUD_p_y_p,SUBACCESO) %>% count() %>% replace_na(list(B_SALUD_p_y_p="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_SALUD_p_y_p) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_SALUD_p_y_p, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Salud\nPrevención y promoción", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_SALUD_p_y_p, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Salud\nPrevención y promoción", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_SALUD_p_y_p, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Salud\nPrevención y promoción", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+### "B_SALUD_gest_y_salud"  
+
+df <-  PAES %>%  group_by(B_SALUD_gest_y_salud) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_SALUD_gest_y_salud,SUBACCESO) %>% count() %>% replace_na(list(B_SALUD_gest_y_salud="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_SALUD_gest_y_salud) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_SALUD_gest_y_salud, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Salud\nGestión en salud", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_SALUD_gest_y_salud, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Salud\nGestión en salud", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_SALUD_gest_y_salud, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Salud\nGestión en salud", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+### "B_deport" 
+
+df <-  PAES %>%  group_by(B_deport) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_deport,SUBACCESO) %>% count() %>% replace_na(list(B_deport="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_deport) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_deport, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Deporte", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_deport, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Deporte", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_deport, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Deporte", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+
+### "B_deport_compet" 
+
+df <-  PAES %>%  group_by(B_deport_compet) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_deport_compet,SUBACCESO) %>% count() %>% replace_na(list(B_deport_compet="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_deport_compet) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_deport_compet, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Deporte\nCompetencia", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_deport_compet, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Deporte\nCompetencia", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_deport_compet, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Deporte\nCompetencia", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+### "B_deport_alt_rend"
+
+df <-  PAES %>%  group_by(B_deport_alt_rend) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_deport_alt_rend,SUBACCESO) %>% count() %>% replace_na(list(B_deport_alt_rend="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_deport_alt_rend) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_deport_alt_rend, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Deporte\nAlto rendimiento", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_deport_alt_rend, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Deporte\nAlto rendimiento", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_deport_alt_rend, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Deporte\nAlto rendimiento", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+### "B_deport_act_ludi_dep"   
+
+df <-  PAES %>%  group_by(B_deport_act_ludi_dep) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_deport_act_ludi_dep,SUBACCESO) %>% count() %>% replace_na(list(B_deport_act_ludi_dep="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_deport_act_ludi_dep) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_deport_act_ludi_dep, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Deporte\nActividad lúdico-deportiva", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_deport_act_ludi_dep, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Deporte\nActividad lúdico-deportiva", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_deport_act_ludi_dep, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Deporte\nActividad lúdico-deportiva", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+### "B_deport_acon_fis"
+
+
+df <-  PAES %>%  group_by(B_deport_acon_fis) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_deport_acon_fis,SUBACCESO) %>% count() %>% replace_na(list(B_deport_acon_fis="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_deport_acon_fis) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_deport_acon_fis, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Deporte\nAcondicionamiento físico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_deport_acon_fis, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Deporte\nAcondicionamiento físico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_deport_acon_fis, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Deporte\nAcondicionamiento físico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+### "B_deport_proy_estrat"  
+
+df <-  PAES %>%  group_by(B_deport_proy_estrat) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_deport_proy_estrat,SUBACCESO) %>% count() %>% replace_na(list(B_deport_proy_estrat="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_deport_proy_estrat) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_deport_proy_estrat, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Deporte\nProyecto estratégico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_deport_proy_estrat, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Deporte\nProyecto estratégico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_deport_proy_estrat, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Deporte\nProyecto estratégico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+
+### "B_cultur"  
+
+df <-  PAES %>%  group_by(B_cultur) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_cultur,SUBACCESO) %>% count() %>% replace_na(list(B_cultur="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_cultur) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_cultur, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Cultura", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_cultur, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Cultura", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_cultur, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Cultura", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+### "B_cultu_act_ludic"  
+
+df <-  PAES %>%  group_by(B_cultu_act_ludic) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_cultu_act_ludic,SUBACCESO) %>% count() %>% replace_na(list(B_cultu_act_ludic="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_cultu_act_ludic) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_cultu_act_ludic, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Cultura\nActividad lúdico-cultural", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_cultu_act_ludic, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Cultura\nActividad lúdico-cultural", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_cultu_act_ludic, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Cultura\nActividad lúdico-cultural", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+
+### "B_cultu_intercult"
+
+df <-  PAES %>%  group_by(B_cultu_intercult) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_cultu_intercult,SUBACCESO) %>% count() %>% replace_na(list(B_cultu_intercult="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_cultu_intercult) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_cultu_intercult, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Cultura\nInterculturalidad", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_cultu_intercult, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Cultura\nInterculturalidad", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_cultu_intercult, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Cultura\nInterculturalidad", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+
+### "B_cultu_expr_talent"   
+
+df <-  PAES %>%  group_by(B_cultu_expr_talent) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_cultu_expr_talent,SUBACCESO) %>% count() %>% replace_na(list(B_cultu_expr_talent="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_cultu_expr_talent) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_cultu_expr_talent, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Cultura\nExpresión de talentos", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_cultu_expr_talent, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Cultura\nExpresión de talentos", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_cultu_expr_talent, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Cultura\nExpresión de talentos", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+### "B_cultu_instrucc" 
+
+df <-  PAES %>%  group_by(B_cultu_instrucc) %>% count()
+df
+
+df <-  PAES %>%  group_by(B_cultu_instrucc,SUBACCESO) %>% count() %>% replace_na(list(B_cultu_instrucc="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(SUBACCESO) %>% mutate("N"=sum(n)) %>% group_by(B_cultu_instrucc) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_cultu_instrucc, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Cultura\nInstrucción y promoción", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_cultu_instrucc, n, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Cultura\nInstrucción y promoción", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_cultu_instrucc, Porcentaje, fill=SUBACCESO)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PAES - Participación en bienestar Cultura\nInstrucción y promoción", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(SUBACCESO~ .) +
+  coord_flip() 
+```
 
 
 

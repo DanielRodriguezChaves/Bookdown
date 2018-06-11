@@ -2,9 +2,10 @@
 
 La metodología llevada a cabo se divide en hacer análisis para los estudiantes PAES y para los estudiantes PEAMA, que ingresaron en la cohorte 2011-01, por separado. La metodología en ambos casos es la misma y consta de los siguientes pasos:
 
-1.	Construcción descriptiva del panorama de admisión de cada una de las dos poblaciones (PEAMA y PAES).
+1.	Construcción descriptiva univariada del panorama de admisión de cada una de las dos poblaciones (PEAMA y PAES).
 2.	Revisión de la normatividad existente al ingreso de los dos grupos y su posterior validación.
-3.	Construcción de un único modelo binomial logit multinivel global de admisión.
-4.	Construcción de análisis de correspondencias múltiples para las variables incluidas en la permanencia y graduación que permita comprender cuales van a ser incluidas en el modelo para cada uno de los dos grupos de estudiantes (PAES y PEAMA).
-5.	Construcción de dos modelos multinomiales logit multinivel para cada uno de los grupos estudiantiles (PAES y PEAMA) que permita analizar permanencia y egreso de los estudiantes.
+3.	Construcción de análisis de correspondencias múltiples para las variables incluidas en la permanencia y graduación que permita comprender como se relacionan los diferentes desenlaces con las varibales que pertenecen a los estudiantes al momento de admisión, las variables en su proceso académico y su participación en programas de bienestar, para cada uno de los dos grupos de estudiantes (PAES y PEAMA).
+
+También se va a llevar a cabo un análisis de proceso para el programa PEAMA Tumaco y para el programa PAES Victimas del conflicto armado el cual consta de:
+
 

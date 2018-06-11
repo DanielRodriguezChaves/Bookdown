@@ -2909,7 +2909,7 @@ ggplot(df3, aes(YEAR, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) +
 
 ## Desenlace de la vida académica según participación en las áreas de bienestar: 
 
-### Estudiantes con programas de bienestar salud en cualquier sede
+### Estudiantes según participación en las áreas de bienestar en cualquier sede
 
 ```{r,echo=FALSE,message=FALSE}
 f <- function(x){ 
@@ -3146,7 +3146,7 @@ ggplot(df , aes(`SEDE PRESENCIA NACIONAL`, n, fill=Apoyo)) +
 
 ```
 
-### Graduados con programas de bienestar salud en cualquier sede
+### Completó ciclo de estudios previsto según participación en las áreas de bienestar en cualquier sede
 
 ```{r,echo=FALSE,message=FALSE}
 f <- function(x){ 
@@ -3361,28 +3361,28 @@ color <- c("#A52A2A", "#CD6600", "#96CDCD")
 
 ggplot(df2 , aes(Categoria, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Programas PEAMA") +
   xlab("Participación en programas de bienestar") +
-  ylab("Graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() + coord_flip()
 
 color <- c("#666666","#0000FF")
 
 ggplot(df , aes(`SEDE PRESENCIA NACIONAL`, n, fill=Apoyo)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Presento apoyos") +
   xlab("Participación en programas de bienestar") +
-  ylab("Graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() +
   facet_wrap(~Categoria) + 
   coord_flip()
 ```
 
-### Desertores académicos con programas de bienestar salud en cualquier sede
+### Desertores académicos según participación en las áreas de bienestar en cualquier sede
 
 ```{r,echo=FALSE,message=FALSE}
 df <- bind_rows(
@@ -3607,7 +3607,7 @@ ggplot(df , aes(`SEDE PRESENCIA NACIONAL`, n, fill=Apoyo)) +
 
 ```
 
-### Desertores no académicos con programas de bienestar salud en cualquier sede
+### Desertores no académicos según participación en las áreas de bienestar en cualquier sede
 
 ```{r,echo=FALSE,message=FALSE}
 df <- bind_rows(
@@ -3830,7 +3830,6 @@ ggplot(df , aes(`SEDE PRESENCIA NACIONAL`, n, fill=Apoyo)) +
   facet_wrap(~Categoria) + 
   coord_flip()
 ```
-
 
 ## Desenlace según participación en el área de acompañamiento: 
 
@@ -4129,7 +4128,7 @@ ggplot(df , aes(`SEDE PRESENCIA NACIONAL`, n, fill=Apoyo)) +
 
 ```
 
-### Graduados con programas de bienestar acompañamiento en cualquier sede
+### Completó ciclo de estudios previsto con programas de bienestar acompañamiento en cualquier sede
 
 ```{r,echo=FALSE,message=FALSE}
 f <- function(x){ 
@@ -4402,22 +4401,22 @@ color <- c("#A52A2A", "#CD6600", "#96CDCD")
 
 ggplot(df2 , aes(Categoria, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Programas PEAMA") +
   xlab("Participación en programas de bienestar") +
-  ylab("Graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() + coord_flip()
 
 color <- c("#666666","#0000FF")
 
 ggplot(df , aes(`SEDE PRESENCIA NACIONAL`, n, fill=Apoyo)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Presento apoyos") +
   xlab("Participación en programas de bienestar") +
-  ylab("Graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() +
   facet_wrap(~Categoria) + 
   coord_flip()
@@ -5310,7 +5309,7 @@ ggplot(df , aes(`SEDE PRESENCIA NACIONAL`, n, fill=Apoyo)) +
   coord_flip()
 ```
 
-### Graduados con programas de bienestar gestión y fomento socio-económico en cualquier sede
+### Completó ciclo de estudios previsto con programas de bienestar gestión y fomento socio-económico en cualquier sede
 
 ```{r,echo=FALSE,message=FALSE}
 f <- function(x){ 
@@ -5603,7 +5602,7 @@ color <- c("#A52A2A", "#CD6600", "#96CDCD")
 
 ggplot(df2 , aes(Categoria, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Programas PEAMA") +
   xlab("Participación en programas de bienestar") +
@@ -5614,11 +5613,11 @@ color <- c("#666666","#0000FF")
 
 ggplot(df , aes(`SEDE PRESENCIA NACIONAL`, n, fill=Apoyo)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Presento apoyos") +
   xlab("Participación en programas de bienestar") +
-  ylab("Graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() +
   facet_wrap(~Categoria) + 
   coord_flip()
@@ -6474,7 +6473,7 @@ ggplot(df , aes(`SEDE PRESENCIA NACIONAL`, n, fill=Apoyo)) +
   coord_flip()
 ```
 
-### Graduados con programas de bienestar salud en cualquier sede
+### Completó ciclo de estudios previsto con programas de bienestar salud en cualquier sede
 
 ```{r,echo=FALSE,message=FALSE}
 f <- function(x){ 
@@ -6689,22 +6688,22 @@ color <- c("#A52A2A", "#CD6600", "#96CDCD")
 
 ggplot(df2 , aes(Categoria, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Programas PEAMA") +
   xlab("Participación en programas de bienestar") +
-  ylab("Graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() + coord_flip()
 
 color <- c("#666666","#0000FF")
 
 ggplot(df , aes(`SEDE PRESENCIA NACIONAL`, n, fill=Apoyo)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Presento apoyos") +
   xlab("Participación en programas de bienestar") +
-  ylab("Graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() +
   facet_wrap(~Categoria) + 
   coord_flip()
@@ -7411,7 +7410,7 @@ ggplot(df , aes(`SEDE PRESENCIA NACIONAL`, n, fill=Apoyo)) +
   coord_flip()
 ```
 
-### Graduados con programas de bienestar deporte en cualquier sede
+### Completó ciclo de estudios previsto con programas de bienestar deporte en cualquier sede
 
 ```{r,echo=FALSE,message=FALSE}
 f <- function(x){ 
@@ -7632,22 +7631,22 @@ color <- c("#A52A2A", "#CD6600", "#96CDCD")
 
 ggplot(df2 , aes(Categoria, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Programas PEAMA") +
   xlab("Participación en programas de bienestar") +
-  ylab("Graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() + coord_flip()
 
 color <- c("#666666","#0000FF")
 
 ggplot(df , aes(`SEDE PRESENCIA NACIONAL`, n, fill=Apoyo)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Presento apoyos") +
   xlab("Participación en programas de bienestar") +
-  ylab("Graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() +
   facet_wrap(~Categoria) + 
   coord_flip()
@@ -8123,7 +8122,7 @@ ggplot(df , aes(`SEDE PRESENCIA NACIONAL`, n, fill=Apoyo)) +
 
 ## Desenlace según participación en el área de salud: 
 
-### Estudiantes con programas de bienestar salud en cualquier sede
+### Estudiantes con programas de bienestar cultura en cualquier sede
 
 ```{r,echo=FALSE,message=FALSE}
 f <- function(x){ 
@@ -8351,7 +8350,7 @@ ggplot(df , aes(`SEDE PRESENCIA NACIONAL`, n, fill=Apoyo)) +
   coord_flip()
 ```
 
-### Graduados con programas de bienestar salud en cualquier sede
+### Completó ciclo de estudios previsto con programas de bienestar cultura en cualquier sede
 
 ```{r,echo=FALSE,message=FALSE}
 f <- function(x){ 
@@ -8558,11 +8557,11 @@ color <- c("#A52A2A", "#CD6600", "#96CDCD")
 
 ggplot(df2 , aes(Categoria, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Programas PEAMA") +
   xlab("Participación en programas de bienestar") +
-  ylab("Graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() +
   coord_flip()
 
@@ -8570,17 +8569,17 @@ color <- c("#666666","#0000FF")
 
 ggplot(df , aes(`SEDE PRESENCIA NACIONAL`, n, fill=Apoyo)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto en los matriculados PEAMA por programa\nsegún si tuvieron apoyos de bienestar ", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Presento apoyos") +
   xlab("Participación en programas de bienestar") +
-  ylab("Graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() +
   facet_wrap(~Categoria) + 
   coord_flip()
 ```
 
-### Desertores académicos con programas de bienestar salud en cualquier sede
+### Desertores académicos con programas de bienestar cultura en cualquier sede
 
 ```{r,echo=FALSE,message=FALSE}
 df <- bind_rows(
@@ -8800,7 +8799,7 @@ ggplot(df , aes(`SEDE PRESENCIA NACIONAL`, n, fill=Apoyo)) +
   coord_flip()
 ```
 
-### Desertores no académicos con programas de bienestar salud en cualquier sede
+### Desertores no académicos con programas de bienestar cultura en cualquier sede
 
 ```{r,echo=FALSE,message=FALSE}
 df <- bind_rows(
@@ -9015,4 +9014,1319 @@ ggplot(df , aes(`SEDE PRESENCIA NACIONAL`, n, fill=Apoyo)) +
   theme_classic() +
   facet_wrap(~Categoria) + 
   coord_flip()
+```
+
+
+## Cantidad de participaciones
+
+```{r,echo=FALSE,message=FALSE}
+### B_Acomp_int
+
+df <-  PEAMA %>%  group_by(B_Acomp_int) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_Acomp_int,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_Acomp_int="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_Acomp_int) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_Acomp_int, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar acompañamiento integral", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_Acomp_int, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar acompañamiento integral", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_Acomp_int, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar acompañamiento integral", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### B_Acomp_int_gest_proy
+
+df <-  PEAMA %>%  group_by(B_Acomp_int_gest_proy) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_Acomp_int_gest_proy,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_Acomp_int_gest_proy="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_Acomp_int_gest_proy) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_Acomp_int_gest_proy, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar acompañamiento integral\nGestion de proyectos", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_Acomp_int_gest_proy, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar acompañamiento integral\nGestion de proyectos", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_Acomp_int_gest_proy, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar acompañamiento integral\nGestion de proyectos", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### B_Acomp_int_inducc_prepar_camb
+
+df <-  PEAMA %>%  group_by(B_Acomp_int_inducc_prepar_camb) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_Acomp_int_inducc_prepar_camb,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_Acomp_int_inducc_prepar_camb="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_Acomp_int_inducc_prepar_camb) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_Acomp_int_inducc_prepar_camb, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar acompañamiento integral\nPreparacion para el cambio", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_Acomp_int_inducc_prepar_camb, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar acompañamiento integral\nPreparacion para el cambio", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_Acomp_int_inducc_prepar_camb, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar acompañamiento integral\nPreparacion para el cambio", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### B_Acomp_int_vid_universit 
+
+df <-  PEAMA %>%  group_by(B_Acomp_int_vid_universit) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_Acomp_int_vid_universit,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_Acomp_int_vid_universit="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_Acomp_int_vid_universit) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_Acomp_int_vid_universit, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar acompañamiento integral\nIntroducción vida universitaria", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_Acomp_int_vid_universit, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar acompañamiento integral\nIntroducción vida universitaria", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_Acomp_int_vid_universit, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar acompañamiento integral\nIntroducción vida universitaria", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### "B_Acomp_conviv"           
+
+df <-  PEAMA %>%  group_by(B_Acomp_conviv) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_Acomp_conviv,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_Acomp_conviv="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_Acomp_conviv) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_Acomp_conviv, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar acompañamiento integral\nConvivencia y cotidianidad", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_Acomp_conviv, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar acompañamiento integral\nConvivencia y cotidianidad", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_Acomp_conviv, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar acompañamiento integral\nConvivencia y cotidianidad", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### "B_Acomp_int_inc_disca" 
+
+df <-  PEAMA %>%  group_by(B_Acomp_int_inc_disca) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_Acomp_int_inc_disca,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_Acomp_int_inc_disca="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_Acomp_int_inc_disca) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_Acomp_int_inc_disca, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar acompañamiento integral\nInducción y discapacidad", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_Acomp_int_inc_disca, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar acompañamiento integral\nInducción y discapacidad", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_Acomp_int_inc_disca, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar acompañamiento integral\nInducción y discapacidad", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### "B_GYFSE"  
+
+df <-  PEAMA %>%  group_by(B_GYFSE) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_GYFSE,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_GYFSE="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_GYFSE) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_GYFSE, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar GYFSE", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_GYFSE, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar GYFSE", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_GYFSE, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar GYFSE", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### "B_GYFSE_ALOJAM"
+
+df <-  PEAMA %>%  group_by(B_GYFSE_ALOJAM) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_GYFSE_ALOJAM,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_GYFSE_ALOJAM="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_GYFSE_ALOJAM) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_GYFSE_ALOJAM, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar GYFSE\nAlojamiento", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_GYFSE_ALOJAM, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar GYFSE\nAlojamiento", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_GYFSE_ALOJAM, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar GYFSE\nAlojamiento", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### "B_GYFSE_ALIM"  
+
+df <-  PEAMA %>%  group_by(B_GYFSE_ALIM) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_GYFSE_ALIM,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_GYFSE_ALIM="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_GYFSE_ALIM) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_GYFSE_ALIM, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar GYFSE\nAlimentación", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_GYFSE_ALIM, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar GYFSE\nAlimentación", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_GYFSE_ALIM, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar GYFSE\nAlimentación", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### "B_GYFSE_TRANSP"
+
+df <-  PEAMA %>%  group_by(B_GYFSE_TRANSP) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_GYFSE_TRANSP,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_GYFSE_TRANSP="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_GYFSE_TRANSP) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_GYFSE_TRANSP, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar GYFSE\nTransporte", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_GYFSE_TRANSP, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar GYFSE\nTransporte", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_GYFSE_TRANSP, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar GYFSE\nTransporte", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### "B_GYFSE_PREST"   
+
+df <-  PEAMA %>%  group_by(B_GYFSE_PREST) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_GYFSE_PREST,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_GYFSE_PREST="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_GYFSE_PREST) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_GYFSE_PREST, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar GYFSE\nPrestamo económico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_GYFSE_PREST, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar GYFSE\nPrestamo económico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_GYFSE_PREST, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar GYFSE\nPrestamo económico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### "B_GYFSE_OTRO"  
+
+df <-  PEAMA %>%  group_by(B_GYFSE_OTRO) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_GYFSE_OTRO,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_GYFSE_OTRO="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_GYFSE_OTRO) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_GYFSE_OTRO, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar GYFSE\nOtro apoyo", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_GYFSE_OTRO, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar GYFSE\nOtro apoyo", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_GYFSE_OTRO, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar GYFSE\nOtro apoyo", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### "B_GYFSE_APOY_ECON"
+
+df <-  PEAMA %>%  group_by(B_GYFSE_APOY_ECON) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_GYFSE_APOY_ECON,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_GYFSE_APOY_ECON="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_GYFSE_APOY_ECON) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_GYFSE_APOY_ECON, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar GYFSE\nApoyo económico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_GYFSE_APOY_ECON, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar GYFSE\nApoyo económico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_GYFSE_APOY_ECON, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar GYFSE\nApoyo económico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### "B_SALUD"       
+
+df <-  PEAMA %>%  group_by(B_SALUD) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_SALUD,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_SALUD="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_SALUD) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_SALUD, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Salud", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_SALUD, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Salud", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_SALUD, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Salud", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### "B_SALUD_dism_fact_r" 
+
+df <-  PEAMA %>%  group_by(B_SALUD_dism_fact_r) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_SALUD_dism_fact_r,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_SALUD_dism_fact_r="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_SALUD_dism_fact_r) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_SALUD_dism_fact_r, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Salud\nDisminución de factores de riesgo", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_SALUD_dism_fact_r, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Salud\nDisminución de factores de riesgo", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_SALUD_dism_fact_r, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Salud\nDisminución de factores de riesgo", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### "B_SALUD_aten_prima_urgen"
+
+df <-  PEAMA %>%  group_by(B_SALUD_aten_prima_emergen) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_SALUD_aten_prima_emergen,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_SALUD_aten_prima_emergen="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_SALUD_aten_prima_emergen) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_SALUD_aten_prima_emergen, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Salud\nAtención primaria y de emergencias", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_SALUD_aten_prima_emergen, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Salud\nAtención primaria y de emergencias", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_SALUD_aten_prima_emergen, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Salud\nAtención primaria y de emergencias", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### "B_SALUD_p_y_p"   
+
+df <-  PEAMA %>%  group_by(B_SALUD_p_y_p) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_SALUD_p_y_p,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_SALUD_p_y_p="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_SALUD_p_y_p) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_SALUD_p_y_p, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Salud\nPrevención y promoción", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_SALUD_p_y_p, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Salud\nPrevención y promoción", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_SALUD_p_y_p, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Salud\nPrevención y promoción", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### "B_SALUD_gest_salud"  
+
+df <-  PEAMA %>%  group_by(B_SALUD_gest_salud) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_SALUD_gest_salud,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_SALUD_gest_salud="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_SALUD_gest_salud) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_SALUD_gest_salud, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Salud\nGestión en salud", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_SALUD_gest_salud, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Salud\nGestión en salud", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_SALUD_gest_salud, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Salud\nGestión en salud", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### "B_deport" 
+
+df <-  PEAMA %>%  group_by(B_deport) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_deport,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_deport="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_deport) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_deport, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Deporte", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_deport, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Deporte", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_deport, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Deporte", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+
+### "B_deport_compet" 
+
+df <-  PEAMA %>%  group_by(B_deport_compet) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_deport_compet,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_deport_compet="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_deport_compet) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_deport_compet, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Deporte\nCompetencia", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_deport_compet, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Deporte\nCompetencia", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_deport_compet, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Deporte\nCompetencia", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### "B_deport_alt_rend"
+
+df <-  PEAMA %>%  group_by(B_deport_alt_rend) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_deport_alt_rend,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_deport_alt_rend="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_deport_alt_rend) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_deport_alt_rend, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Deporte\nAlto rendimiento", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_deport_alt_rend, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Deporte\nAlto rendimiento", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_deport_alt_rend, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Deporte\nAlto rendimiento", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### "B_deport_act_ludi_dep"   
+
+df <-  PEAMA %>%  group_by(B_deport_act_ludi_dep) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_deport_act_ludi_dep,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_deport_act_ludi_dep="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_deport_act_ludi_dep) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_deport_act_ludi_dep, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Deporte\nActividad lúdico-deportiva", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_deport_act_ludi_dep, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Deporte\nActividad lúdico-deportiva", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_deport_act_ludi_dep, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Deporte\nActividad lúdico-deportiva", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### "B_deport_acon_fis"
+
+
+df <-  PEAMA %>%  group_by(B_deport_acon_fis) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_deport_acon_fis,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_deport_acon_fis="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_deport_acon_fis) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_deport_acon_fis, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Deporte\nAcondicionamiento físico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_deport_acon_fis, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Deporte\nAcondicionamiento físico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_deport_acon_fis, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Deporte\nAcondicionamiento físico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### "B_deport_proy_estrat"  
+
+df <-  PEAMA %>%  group_by(B_deport_proy_estrat) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_deport_proy_estrat,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_deport_proy_estrat="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_deport_proy_estrat) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_deport_proy_estrat, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Deporte\nProyecto estratégico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_deport_proy_estrat, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Deporte\nProyecto estratégico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_deport_proy_estrat, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Deporte\nProyecto estratégico", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+
+### "B_cultur"  
+
+df <-  PEAMA %>%  group_by(B_cultu) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_cultu,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_cultu="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_cultu) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_cultu, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Cultura", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_cultu, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Cultura", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_cultu, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Cultura", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### "B_cultu_act_ludic"  
+
+df <-  PEAMA %>%  group_by(B_cultu_act_ludic) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_cultu_act_ludic,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_cultu_act_ludic="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_cultu_act_ludic) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_cultu_act_ludic, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Cultura\nActividad lúdico-cultural", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_cultu_act_ludic, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Cultura\nActividad lúdico-cultural", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_cultu_act_ludic, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Cultura\nActividad lúdico-cultural", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+
+### "B_cultu_intercult"
+
+df <-  PEAMA %>%  group_by(B_cultur_intercult) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_cultur_intercult,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_cultur_intercult="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_cultur_intercult) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_cultur_intercult, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Cultura\nInterculturalidad", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_cultur_intercult, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Cultura\nInterculturalidad", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_cultur_intercult, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Cultura\nInterculturalidad", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+
+### "B_cultur_exp_tal"   
+
+df <-  PEAMA %>%  group_by(B_cultur_exp_tal) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_cultur_exp_tal,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_cultur_exp_tal="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_cultur_exp_tal) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_cultur_exp_tal, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Cultura\nExpresión de talentos", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_cultur_exp_tal, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Cultura\nExpresión de talentos", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_cultur_exp_tal, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Cultura\nExpresión de talentos", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+### "B_cultu_instrucc" 
+
+df <-  PEAMA %>%  group_by(B_cultu_instrucc) %>% count()
+df
+
+df <-  PEAMA %>%  group_by(B_cultu_instrucc,`SEDE PRESENCIA NACIONAL`) %>% count() %>% replace_na(list(B_cultu_instrucc="Sin información"))
+df
+
+df2 <- df %>% ungroup() %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=sum(n)) %>% group_by(B_cultu_instrucc) %>% mutate("Porcentaje"=round(n/N,2))
+df2
+
+color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
+
+ggplot(df, aes(B_cultu_instrucc, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity")  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Cultura\nInstrucción y promoción", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  coord_flip()
+
+ggplot(df, aes(B_cultu_instrucc, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Cultura\nInstrucción y promoción", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Número de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
+
+ggplot(df2, aes(B_cultu_instrucc, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)  + 
+  ggtitle(label = "Matriculados PEAMA - Participación en bienestar Cultura\nInstrucción y promoción", subtitle =  "(Cohorte 2011-01)") +
+  scale_fill_manual(values = color) + 
+  labs(fill="Sede de presencia nacional") +
+  xlab("Años de participación") +
+  ylab("Porcentaje de estudiantes") + 
+  theme_classic() +
+  facet_grid(`SEDE PRESENCIA NACIONAL`~ .) +
+  coord_flip() 
 ```

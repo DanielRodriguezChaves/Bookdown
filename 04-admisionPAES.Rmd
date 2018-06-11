@@ -397,50 +397,6 @@ sunburst + coord_polar('y') + theme_void()
 
 Se hace la misma descripción anterior a los estudiantes PAES pero por sede y facultad encontrándose que la mayor facultad con estudiantes admitidos es la de Minas en Medellín (74 estudiantes), seguida por Ingeniería Bogotá (65 estudiantes), Ciencias Bogotá (52 estudiantes), Ingeniería y Administración Palmira (45 estudiantes), Ciencias Humanas Bogotá (44 estudiantes) e Ingeniería y Administración Manizales (37 estudiantes), donde se observa un gran interés principalmente por la ingeniería en los admitidos PAES.
 
-### Estrato agrupado:
-
-```{r,echo=FALSE}
-df <-  PAES %>%  group_by(ESTRATO,PAES) %>% count() %>% replace_na(list(ESTRATO="Sin información"))
-
-df2 <- df %>% ungroup() %>% group_by(PAES) %>% mutate("N"=sum(n)) %>% group_by(ESTRATO) %>% mutate("Porcentaje"=round(n/N,2)*100)
-
-color <- c("#1E90FF", "#CD0000", "#6E8B3D", "#B23AEE")
-
-ggplot(df, aes(ESTRATO, n, fill=PAES)) + 
-  geom_bar(stat = "identity")  + 
-  ggtitle(label = "Admitidos PAES por estrato y programa", subtitle =  "(Cohorte 2011-01)") +
-  scale_fill_manual(values = color) + 
-  labs(fill="Sede de presencia nacional") +
-  xlab("Estrato socioeconómico") +
-  ylab("Número de estudiantes") + 
-  theme_classic() +
-  coord_flip()
-
-ggplot(df, aes(ESTRATO, n, fill=PAES)) + 
-  geom_bar(stat = "identity", show.legend = FALSE)  + 
-  ggtitle(label = "Admitidos PAES por estrato y programa", subtitle =  "(Cohorte 2011-01)") +
-  scale_fill_manual(values = color) + 
-  labs(fill="Sede de presencia nacional") +
-  xlab("Estrato socioeconómico") +
-  ylab("Número de estudiantes") + 
-  theme_classic() +
-  facet_grid(PAES~ .) +
-  coord_flip() 
-
-ggplot(df2, aes(ESTRATO, Porcentaje, fill=PAES)) + 
-  geom_bar(stat = "identity", show.legend = FALSE)  + 
-  ggtitle(label = "Admitidos PAES por estrato y programa", subtitle =  "(Cohorte 2011-01)") +
-  scale_fill_manual(values = color) + 
-  labs(fill="Sede de presencia nacional") +
-  xlab("Estrato socioeconómico") +
-  ylab("Porcentaje de estudiantes") + 
-  theme_classic() +
-  facet_grid(PAES~ .) +
-  coord_flip() 
-```
-
-### Estrato original:
-
 ```{r,echo=FALSE}
 df <-  PAES %>%  group_by(ESTRATO_ORIG,PAES) %>% count() %>% replace_na(list(ESTRATO_ORIG="Sin información"))
 

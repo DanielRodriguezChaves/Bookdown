@@ -31,7 +31,6 @@ load("P2011_1.RData")
 PAES <- P2011_1 %>% filter(TIPO_INS=="PAES",ADMITIDO=="Sí")
 REGULAR <- P2011_1 %>% filter(TIPO_INS=="Regular",ADMITIDO=="Sí")
 PEAMA <- P2011_1 %>% filter(TIPO_INS=="PEAMA",ADMITIDO=="Sí")
-rm(P2011_1);gc()
 shape_cundi.df <- read.table("shape.txt", header = TRUE, sep="|",fileEncoding = "UTF-8")
 shape_cundi.df$NOMBRE_DPT <- as.character(shape_cundi.df$NOMBRE_DPT)
 shape_cundi.df[shape_cundi.df$NOMBRE_DPT=="SANTAFE DE BOGOTA D.C","NOMBRE_DPT"] <- "BOGOTÁ D.C."
@@ -57,6 +56,68 @@ ggplot(ADMITIDO, aes(GRUPO, PROBABILIDAD, fill=GRUPO)) +
   theme_classic() +
   scale_fill_manual(values = color) 
 ```
+
+### Índice de absorción del admitido Regular
+
+```{r,echo=FALSE,warning=FALSE,error=FALSE,message=FALSE}
+df <- P2011_1 %>% filter(TIPO_INS=="Regular") %>% group_by(TIPO_INS) %>% summarise(ASPIRANTES=n()) %>% ungroup()
+df2 <- P2011_1 %>% filter(TIPO_INS=="Regular",ADMITIDO=="Sí") %>% group_by(TIPO_INS) %>% summarise(ADMITIDOS=n()) %>% ungroup()
+df <- df %>% left_join(df2) %>% mutate(INDICE=round(ADMITIDOS*100/ASPIRANTES,2))
+
+df <- df[,-1]
+
+knitr::kable(
+  df, booktabs = TRUE,
+  caption = 'Índice de absorción para los admitidos regulares'
+)
+```
+
+### Índices de absorción del admitido PAES
+
+```{r,echo=FALSE,warning=FALSE,error=FALSE,message=FALSE}
+df <- P2011_1 %>% filter(TIPO_INS=="PAES") %>% group_by(PAES) %>% summarise(ASPIRANTES=n()) %>% ungroup()
+df2 <- P2011_1 %>% filter(TIPO_INS=="PAES",ADMITIDO=="Sí") %>% group_by(PAES) %>% summarise(ADMITIDOS=n()) %>% ungroup()
+df <- df %>% left_join(df2) %>% mutate(INDICE=round(ADMITIDOS*100/ASPIRANTES,2))
+
+knitr::kable(
+  df, booktabs = TRUE,
+  caption = 'Índices de absorción por tipo de PAES'
+)
+```
+
+### Índices de absorción del admitido PEAMA
+
+```{r,echo=FALSE,warning=FALSE,error=FALSE,message=FALSE}
+df <- P2011_1 %>% filter(TIPO_INS=="PEAMA") %>% group_by(PEAMA) %>% summarise(ASPIRANTES=n()) %>% ungroup()
+df2 <- P2011_1 %>% filter(TIPO_INS=="PEAMA",ADMITIDO=="Sí") %>% group_by(PEAMA) %>% summarise(ADMITIDOS=n()) %>% ungroup()
+df <- df %>% left_join(df2) %>% mutate(INDICE=round(ADMITIDOS*100/ASPIRANTES,2))
+
+knitr::kable(
+  df, booktabs = TRUE,
+  caption = 'Índices de absorción por tipo de PEAMA'
+)
+```
+
+## Puntaje de admisión
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE,error=FALSE}
+df <- P2011_1 %>% filter(ADMITIDO=="Sí") %>% select(TIPO_INS,PTOTAL) %>% filter(is.na(PTOTAL)==FALSE)
+color <- c("#FFD700", "#0000FF", "#FF0000")
+df$PTOTAL <- as.numeric(df$PTOTAL)
+
+ggplot(df , aes(TIPO_INS,PTOTAL,fill=TIPO_INS)) +
+  geom_boxplot(show.legend = FALSE) +
+  xlab("") +
+  ylab("Puntaje de admisión") +
+  scale_fill_manual(values = color) + 
+  theme_classic() + 
+  ggtitle(label = "Puntaje total de admisión de los admitidos PAES, PEAMA y regulares", subtitle =  "(Cohorte 2011-01)") 
+```
+
+```{r,eval=TRUE,echo=FALSE,results='hide',warning=FALSE,error=FALSE,message=FALSE}
+rm(P2011_1);gc()
+```
+
 
 ## Ubicación de los admitidos
 

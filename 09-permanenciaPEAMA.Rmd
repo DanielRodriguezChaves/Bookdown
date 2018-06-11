@@ -845,10 +845,12 @@ ggplot(df, aes(`PERIODO desde el que inició el cambio`, n, fill=`SEDE PRESENCIA
   scale_y_continuous(breaks=1:2,labels=1:2) 
 ```
 
-## Graduados por periodo
+## Completó ciclo de estudios previsto por periodo
 
 ```{r,echo=FALSE, message=FALSE}
 df <- PEAMA %>%  filter(DESENLACE=="grad") %>% group_by(`SEDE PRESENCIA NACIONAL`, PERIODO_DESENLACE) %>% count()
+
+df <- df %>% filter(PERIODO_DESENLACE!="2017-03" & PERIODO_DESENLACE!="2017-01")
 
 df2 <- df %>% ungroup() %>%  left_join(PEAMA %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=n()) %>%  select(`SEDE PRESENCIA NACIONAL`,N) %>%  distinct()) %>% mutate("Porcentaje"=round(n/N,2)*100)
 
@@ -856,21 +858,21 @@ color <- c("#A52A2A", "#CD6600", "#96CDCD")
 
 ggplot(df, aes(PERIODO_DESENLACE, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Graduados de los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto de los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Programas PEAMA") +
   xlab("Periodo") +
-  ylab("Graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic() + 
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
 ggplot(df, aes(PERIODO_DESENLACE, n, fill=`SEDE PRESENCIA NACIONAL`)) + 
   geom_bar(stat = "identity", show.legend = FALSE)  + 
-  ggtitle(label = "Graduados de los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto de los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Programas PEAMA") +
   xlab("Periodo") +
-  ylab("Graduados") + 
+  ylab("Completaron ciclo de estudios previsto") + 
   theme_classic()  +
   facet_wrap(~`SEDE PRESENCIA NACIONAL`)+ 
   scale_y_continuous(breaks=1:9,labels=1:9) + 
@@ -878,20 +880,20 @@ ggplot(df, aes(PERIODO_DESENLACE, n, fill=`SEDE PRESENCIA NACIONAL`)) +
 
 ggplot(df2, aes(PERIODO_DESENLACE, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
   geom_bar(stat = "identity", show.legend = FALSE)  + 
-  ggtitle(label = "Graduados de los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto de los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Programas PEAMA") +
   xlab("Periodo") +
-  ylab("Porcentaje de graduados") + 
+  ylab("Porcentaje que completó ciclo de estudios previsto") + 
   theme_classic()  +
   facet_wrap(~`SEDE PRESENCIA NACIONAL`)+ 
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-## Graduados total
+## Completó ciclo de estudios previsto total
 
 ```{r,echo=FALSE, message=FALSE}
-df <- PEAMA %>%  filter(DESENLACE=="grad") %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% count()
+df <- PEAMA  %>% filter(PERIODO_DESENLACE!="2017-03" & PERIODO_DESENLACE!="2017-01") %>%  filter(DESENLACE=="grad") %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% count()
 
 
 df2 <- df %>% ungroup() %>%  left_join(PEAMA %>% group_by(`SEDE PRESENCIA NACIONAL`) %>% mutate("N"=n()) %>%  select(`SEDE PRESENCIA NACIONAL`,N) %>%  distinct()) %>% mutate("Porcentaje"=round(n/N,2)*100)
@@ -903,7 +905,7 @@ color <- c("#A52A2A", "#CD6600", "#96CDCD")
 
 ggplot(df3 %>%  filter(CATEGORIA!="Porcentaje"), aes(CATEGORIA, TOTAL, fill=`SEDE PRESENCIA NACIONAL`)) + 
   geom_bar(stat = "identity")  + 
-  ggtitle(label = "Bloqueo por completar ciclo de estudios de los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto de los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Programas PEAMA") +
   xlab("Periodo") +
@@ -912,7 +914,7 @@ ggplot(df3 %>%  filter(CATEGORIA!="Porcentaje"), aes(CATEGORIA, TOTAL, fill=`SED
 
 ggplot(df3%>%  filter(CATEGORIA!="Porcentaje"), aes(CATEGORIA, TOTAL, fill=`SEDE PRESENCIA NACIONAL`)) + 
   geom_bar(stat = "identity", show.legend = FALSE)  + 
-  ggtitle(label = "Bloqueo por completar ciclo de estudios de los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto de los matriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Programas PEAMA") +
   xlab("Periodo") +
@@ -922,11 +924,11 @@ ggplot(df3%>%  filter(CATEGORIA!="Porcentaje"), aes(CATEGORIA, TOTAL, fill=`SEDE
 
 ggplot(df2, aes(`SEDE PRESENCIA NACIONAL`, Porcentaje, fill=`SEDE PRESENCIA NACIONAL`)) + 
   geom_bar(stat = "identity", position="dodge", show.legend = FALSE)  + 
-  ggtitle(label = "Bloqueo por completar ciclo de estudios de los\nmatriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
+  ggtitle(label = "Completó ciclo de estudios previsto de los\nmatriculados PEAMA por programa", subtitle =  "(Cohorte 2011-01)") +
   scale_fill_manual(values = color) + 
   labs(fill="Programas PEAMA") +
   xlab("") +
-  ylab("Porcentaje de estudiantes graduados") + 
+  ylab("Porcentaje de estudiantes que completó ciclo de estudios previsto") + 
   theme_classic() +
   coord_flip()
 ```
